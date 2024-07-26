@@ -15,13 +15,14 @@ struct LatestMovieCell: View {
     var body: some View {
         VStack(alignment: .leading, spacing: 12) {
             ImageLoader(imageURL: imageURL)
-                .frame(width: 140, height: 200)
+                .frame(width: 160, height: 220)
                 .cornerRadius(16)
             
             Text(movie.title)
                 .foregroundStyle(.white)
                 .font(.caption)
                 .fontWeight(.semibold)
+                .lineLimit(1)
         }
         .padding(.horizontal)
     }
