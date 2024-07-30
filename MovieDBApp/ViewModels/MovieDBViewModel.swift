@@ -20,7 +20,9 @@ class MovieDBViewModel: ObservableObject {
     }
     @Published var topRated: [TopRatedMovieModel] = [] {
         didSet {
-            self.sortTopRatedMoviesByRating()
+            DispatchQueue.main.async {
+                self.sortTopRatedMoviesByRating()
+            }
         }
     }
     
