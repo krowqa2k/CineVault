@@ -37,10 +37,9 @@ struct TopRatedMovieView: View {
                 ScrollView(.horizontal){
                     LazyHStack {
                         ForEach(viewModel.topRated){ topRatedMovie in
-                            TopRatedMovieCell(movie: topRatedMovie, imageURL: topRatedMovie.fullPosterPath)
-                                .onTapGesture {
-                                    
-                                }
+                            NavigationLink(destination: TopRatedDetailView(imageName: topRatedMovie.fullPosterPath, movie: topRatedMovie)) {
+                                TopRatedMovieCell(movie: topRatedMovie, imageURL: topRatedMovie.fullPosterPath)
+                            }
                         }
                     }
                 }

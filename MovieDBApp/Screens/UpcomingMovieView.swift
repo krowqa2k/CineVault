@@ -37,10 +37,9 @@ struct UpcomingMovieView: View {
                 ScrollView(.horizontal){
                     LazyHStack {
                         ForEach(viewModel.upcoming){ upcomingMovie in
-                            UpcomingMovieCell(movie: upcomingMovie, imageURL: upcomingMovie.fullPosterPath)
-                                .onTapGesture {
-                                    
-                                }
+                            NavigationLink(destination: UpcomingMovieDetailView(imageName: upcomingMovie.fullPosterPath, movie: upcomingMovie)) {
+                                UpcomingMovieCell(movie: upcomingMovie, imageURL: upcomingMovie.fullPosterPath)
+                            }
                         }
                     }
                 }

@@ -19,37 +19,39 @@ struct LatestMovieView: View {
             Color.blackDB.ignoresSafeArea()
             
             VStack(spacing: 8) {
-                HStack() {
-                    Text("Now Playing")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .fontWeight(.medium)
-                    
-                    Spacer()
-                    
-                    Button(action: {
+                VStack(spacing: 8) {
+                    HStack() {
+                        Text("Now Playing")
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                            .fontWeight(.medium)
                         
-                    }, label: {
-                        Text("View all")
-                            .font(.subheadline)
-                            .foregroundStyle(.purpleDB)
-                    })
-                }
-                .padding(.horizontal, 20)
-                
-                ScrollView(.horizontal){
-                    LazyHStack {
-                        ForEach(viewModel.trendings){ latestMovie in
-                            LatestMovieCell(movie: latestMovie, imageURL: latestMovie.fullPosterPath)
-                                .onTapGesture {
-                                    
+                        Spacer()
+                        
+                        Button(action: {
+                            
+                        }, label: {
+                            Text("View all")
+                                .font(.subheadline)
+                                .foregroundStyle(.purpleDB)
+                        })
+                    }
+                    .padding(.horizontal, 20)
+                    
+                    ScrollView(.horizontal){
+                        LazyHStack {
+                            ForEach(viewModel.trendings){ latestMovie in
+                                NavigationLink(destination: NowPlayingDetailView(imageName: latestMovie.fullPosterPath, movie: latestMovie)) {
+                                    LatestMovieCell(movie: latestMovie, imageURL: latestMovie.fullPosterPath)
                                 }
+                            }
                         }
                     }
+                    .frame(maxHeight: 260)
+                    .scrollIndicators(.hidden)
                 }
-                .frame(maxHeight: 260)
-                .scrollIndicators(.hidden)
             }
+            .toolbar(.hidden, for: .navigationBar)
         }
     }
 }

@@ -18,20 +18,20 @@ struct MainView: View {
             Color.blackDB.ignoresSafeArea()
             ScrollView() {
                 HeaderView()
-                
+                    
                 FilterView(options: options, selection: $selection)
                     .padding()
-                
+                    
                 LazyVStack(spacing: 16) {
-                    
+                        
                     LatestMovieView()
-                    
+                        
                     PopularMovieView()
-                    
+                        
                     UpcomingMovieView()
-                    
+                        
                     TopRatedMovieView()
-                    
+                        
                     PopularActorView()
                 }
             }

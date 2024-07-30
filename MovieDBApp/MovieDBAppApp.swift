@@ -11,7 +11,9 @@ import SwiftUI
 struct MovieDBAppApp: App {
     var body: some Scene {
         WindowGroup {
-            MainView(viewModel: MovieDBViewModel())
+            NavigationStack{
+                MainView(viewModel: MovieDBViewModel())
+            }
         }
     }
 }
