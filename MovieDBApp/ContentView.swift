@@ -14,7 +14,7 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
-            LazyVStack(spacing: 12) {
+            LazyVStack(spacing: 16) {
                 HeaderView()
                 
                 LatestMovieView()

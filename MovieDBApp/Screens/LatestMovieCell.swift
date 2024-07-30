@@ -25,7 +25,7 @@ struct LatestMovieCell: View {
                 .lineLimit(1)
                 .frame(width: 160)
         }
-        .padding(.horizontal)
+        .padding(.horizontal,4)
     }
 }
 
