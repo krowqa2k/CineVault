@@ -1,15 +1,14 @@
 //
-//  LatestMovieCell.swift
+//  PopularMovieCell.swift
 //  MovieDBApp
 //
-//  Created by admin on 26/07/2024.
+//  Created by admin on 30/07/2024.
 //
 
 import SwiftUI
 
-struct LatestMovieCell: View {
-    
-    var movie: TrendingMovieModel = .mock
+struct PopularMovieCell: View {
+    var movie: PopularMovieModel = .mock
     var imageURL: String = Constants.mockImage
     
     var body: some View {
@@ -22,7 +21,7 @@ struct LatestMovieCell: View {
                 .foregroundStyle(.white)
                 .font(.caption)
                 .fontWeight(.semibold)
-                .lineLimit(1)
+                .lineLimit(2)
                 .frame(width: 160)
         }
         .padding(.horizontal)
@@ -33,8 +32,8 @@ struct LatestMovieCell: View {
     ZStack {
         Color.blackDB.ignoresSafeArea()
         HStack {
-            LatestMovieCell()
-            LatestMovieCell()
+            PopularMovieCell()
+            PopularMovieCell()
         }
         .padding()
     }

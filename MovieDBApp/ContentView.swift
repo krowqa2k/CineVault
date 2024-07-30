@@ -18,6 +18,8 @@ struct ContentView: View {
                 HeaderView()
                 
                 LatestMovieView()
+                
+                PopularMovieView()
             }
         }
     }
