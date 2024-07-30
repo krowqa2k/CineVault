@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct ContentView: View {
+struct MainView: View {
     
     @StateObject var viewModel: MovieDBViewModel
     @State private var options: [String] = ["Movies", "Series"]
@@ -42,5 +42,5 @@ struct ContentView: View {
 
 
 #Preview {
-    ContentView(viewModel: MovieDBViewModel())
+    MainView(viewModel: MovieDBViewModel())
 }
