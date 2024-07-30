@@ -23,6 +23,8 @@ struct ContentView: View {
                     PopularMovieView()
                     
                     UpcomingMovieView()
+                    
+                    TopRatedMovieView()
                 }
             }
             .scrollIndicators(.hidden)
