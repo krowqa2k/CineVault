@@ -11,6 +11,7 @@ class MovieDBViewModel: ObservableObject {
     
     @Published var trendings: [TrendingMovieModel] = []
     @Published var popular: [PopularMovieModel] = []
+    @Published var popularActor: [PopularActorModel] = []
     @Published var upcoming: [UpcomingMovieModel] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -34,6 +35,7 @@ class MovieDBViewModel: ObservableObject {
         getPopularData()
         getUpcomingData()
         getTopRatedData()
+        getPopularActorData()
         sortUpcomingMoviesByDate()
         sortTopRatedMoviesByRating()
     }
@@ -182,6 +184,42 @@ class MovieDBViewModel: ObservableObject {
                 do {
                     let decodedMovies = try JSONDecoder().decode(TopRatedResults.self, from: data)
                     self?.topRated = decodedMovies.results
+                } catch {
+                    print("Decoding error \(error)")
+                }
+            }
+        }
+        .resume()
+    }
+    
+    func getPopularActorData() {
+        guard let url = URL(string: "https://api.themoviedb.org/3/person/popular?api_key=\(MovieDBViewModel.api_key)") else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                print("No data.")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                print("Invalid response.")
+                return
+            }
+            
+            guard response.statusCode >= 200 && response.statusCode < 300 else {
+                print("Status code should be 2xx, but is \(response.statusCode)")
+                return
+            }
+            
+            guard error == nil else {
+                print("Error: \(String(describing: error))")
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                do {
+                    let decodedMovies = try JSONDecoder().decode(PopularActorResult.self, from: data)
+                    self?.popularActor = decodedMovies.results
                 } catch {
                     print("Decoding error \(error)")
                 }
