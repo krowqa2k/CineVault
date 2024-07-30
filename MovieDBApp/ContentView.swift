@@ -14,13 +14,18 @@ struct ContentView: View {
     var body: some View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
-            LazyVStack(spacing: 16) {
+            ScrollView() {
                 HeaderView()
-                
-                LatestMovieView()
-                
-                PopularMovieView()
+                LazyVStack(spacing: 16) {
+                    
+                    LatestMovieView()
+                    
+                    PopularMovieView()
+                    
+                    UpcomingMovieView()
+                }
             }
+            .scrollIndicators(.hidden)
         }
     }
 }

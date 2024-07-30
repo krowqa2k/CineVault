@@ -1,5 +1,5 @@
 //
-//  PopularMovieCell.swift
+//  UpcomingMovieCell.swift
 //  MovieDBApp
 //
 //  Created by admin on 30/07/2024.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct PopularMovieCell: View {
-    var movie: PopularMovieModel = .mock
+struct UpcomingMovieCell: View {
+    var movie: UpcomingMovieModel = .mock
     var imageURL: String = Constants.mockImage
     
     var body: some View {
@@ -32,8 +32,8 @@ struct PopularMovieCell: View {
     ZStack {
         Color.blackDB.ignoresSafeArea()
         HStack {
-            PopularMovieCell()
-            PopularMovieCell()
+            UpcomingMovieCell()
+            UpcomingMovieCell()
         }
         .padding()
     }
