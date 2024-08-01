@@ -55,7 +55,7 @@ struct PopularActorDetailView: View {
                     .padding(.horizontal)
                     .padding(.bottom, 2)
                 ForEach(actor.knownFor) { movie in
-                    Text("\(movie.title ?? ""),")
+                    Text(movie.originalTitle ?? "")
                 }
                     .font(.title3)
                     .foregroundStyle(.gray)
