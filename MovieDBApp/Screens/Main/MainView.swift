@@ -41,16 +41,13 @@ struct MainView: View {
                     }
                     else {
                        LazyVStack(spacing: 16) {
-                               
-                           AiringTodaySeriesView()
+                           OnTheAirSeriesView()
                                
                            PopularSeriesView()
+                           
+                           AiringTodaySeriesView()
                                
-                           UpcomingMovieView()
-                               
-                           TopRatedMovieView()
-                               
-                           PopularActorView()
+                           TopRatedSeriesView()
                        }
                        .transition(.move(edge: .trailing))
                    }

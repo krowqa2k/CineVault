@@ -33,8 +33,8 @@ struct OnTheAirSeriesModel: Codable, Identifiable {
             Constants.imageGet + posterPath
         }
     
-    static var mock: PopularSeriesModel {
-        PopularSeriesModel(
+    static var mock: OnTheAirSeriesModel {
+        OnTheAirSeriesModel(
             adult: false,
             id: 1234,
             originalLanguage: "en",
