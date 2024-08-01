@@ -14,7 +14,14 @@ class MovieDBViewModel: ObservableObject {
     @Published var popularActor: [PopularActorModel] = []
     @Published var airingToday: [AiringTodayModel] = []
     @Published var popularSeries: [PopularSeriesModel] = []
-    @Published var topRatedSeries: [TopRatedSeriesModel] = []
+    @Published var topRatedSeries: [TopRatedSeriesModel] = [] {
+        didSet {
+            DispatchQueue.main.async {
+                self.sortTopRatedSeriesByRating()
+            }
+        }
+    }
+    
     @Published var upcoming: [UpcomingMovieModel] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -22,6 +29,7 @@ class MovieDBViewModel: ObservableObject {
             }
         }
     }
+    
     @Published var topRated: [TopRatedMovieModel] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -44,6 +52,7 @@ class MovieDBViewModel: ObservableObject {
         getTopRatedSeriesData()
         sortUpcomingMoviesByDate()
         sortTopRatedMoviesByRating()
+        sortTopRatedSeriesByRating()
     }
     
     private func sortUpcomingMoviesByDate() {
@@ -52,6 +61,10 @@ class MovieDBViewModel: ObservableObject {
     
     private func sortTopRatedMoviesByRating() {
         topRated.sort { $0.voteAverage > $1.voteAverage}
+    }
+    
+    private func sortTopRatedSeriesByRating() {
+        topRatedSeries.sort { $0.voteAverage > $1.voteAverage}
     }
     
     func getTrendingsData() {
