@@ -42,7 +42,7 @@ struct MainView: View {
                     else {
                        LazyVStack(spacing: 16) {
                                
-                           LatestMovieView()
+                           AiringTodaySeriesView()
                                
                            PopularMovieView()
                                
@@ -55,7 +55,7 @@ struct MainView: View {
                        .transition(.move(edge: .trailing))
                    }
                 }
-                .animation(.easeInOut, value: selection)
+                .animation(.spring, value: selection)
             }
             .scrollIndicators(.hidden)
         }
