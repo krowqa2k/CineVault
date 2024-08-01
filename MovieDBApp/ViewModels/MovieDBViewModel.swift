@@ -14,6 +14,7 @@ class MovieDBViewModel: ObservableObject {
     @Published var popularActor: [PopularActorModel] = []
     @Published var airingToday: [AiringTodayModel] = []
     @Published var popularSeries: [PopularSeriesModel] = []
+    @Published var topRatedSeries: [TopRatedSeriesModel] = []
     @Published var upcoming: [UpcomingMovieModel] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -40,6 +41,7 @@ class MovieDBViewModel: ObservableObject {
         getPopularActorData()
         getAiringTodayData()
         getPopularSeriesData()
+        getTopRatedSeriesData()
         sortUpcomingMoviesByDate()
         sortTopRatedMoviesByRating()
     }
@@ -296,6 +298,42 @@ class MovieDBViewModel: ObservableObject {
                 do {
                     let decodedSeries = try JSONDecoder().decode(PopularSeriesResults.self, from: data)
                     self?.popularSeries = decodedSeries.results
+                } catch {
+                    print("Decoding error \(error)")
+                }
+            }
+        }
+        .resume()
+    }
+    
+    func getTopRatedSeriesData() {
+        guard let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=\(MovieDBViewModel.api_key)") else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                print("No data.")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                print("Invalid response.")
+                return
+            }
+            
+            guard response.statusCode >= 200 && response.statusCode < 300 else {
+                print("Status code should be 2xx, but is \(response.statusCode)")
+                return
+            }
+            
+            guard error == nil else {
+                print("Error: \(String(describing: error))")
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                do {
+                    let decodedSeries = try JSONDecoder().decode(TopRatedSeriesResults.self, from: data)
+                    self?.topRatedSeries = decodedSeries.results
                 } catch {
                     print("Decoding error \(error)")
                 }
