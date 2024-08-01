@@ -44,6 +44,7 @@
 		C1BA45602C5BC69E0092197D /* AiringTodayModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA455F2C5BC69E0092197D /* AiringTodayModel.swift */; };
 		C1BA45642C5BC96C0092197D /* AiringTodaySeriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45632C5BC96C0092197D /* AiringTodaySeriesCell.swift */; };
 		C1BA45662C5BCCCB0092197D /* PopularSeriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45652C5BCCCB0092197D /* PopularSeriesModel.swift */; };
+		C1BA45682C5BCDEA0092197D /* PopularSeriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45672C5BCDEA0092197D /* PopularSeriesCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -84,6 +85,7 @@
 		C1BA455F2C5BC69E0092197D /* AiringTodayModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiringTodayModel.swift; sourceTree = "<group>"; };
 		C1BA45632C5BC96C0092197D /* AiringTodaySeriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiringTodaySeriesCell.swift; sourceTree = "<group>"; };
 		C1BA45652C5BCCCB0092197D /* PopularSeriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSeriesModel.swift; sourceTree = "<group>"; };
+		C1BA45672C5BCDEA0092197D /* PopularSeriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSeriesCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -265,6 +267,7 @@
 			isa = PBXGroup;
 			children = (
 				C1BA45632C5BC96C0092197D /* AiringTodaySeriesCell.swift */,
+				C1BA45672C5BCDEA0092197D /* PopularSeriesCell.swift */,
 			);
 			path = SeriesCells;
 			sourceTree = "<group>";
@@ -357,6 +360,7 @@
 				84EDE7B12C541B0800481D2E /* HeaderView.swift in Sources */,
 				841FFB2A2C591D84006296D4 /* FilterView .swift in Sources */,
 				84616DD22C52E37400FF7466 /* MainView.swift in Sources */,
+				C1BA45682C5BCDEA0092197D /* PopularSeriesCell.swift in Sources */,
 				84EDE7A92C540BC900481D2E /* LatestMovieCell.swift in Sources */,
 				841FFB222C591465006296D4 /* TopRatedMovieCell.swift in Sources */,
 				C1BA45562C5BC2580092197D /* AiringTodaySeriesView.swift in Sources */,

@@ -36,4 +36,20 @@ struct PopularSeriesModel: Codable, Identifiable {
         case name
         case voteAverage = "vote_average"
     }
+    
+    var fullPosterPath: String {
+            Constants.imageGet + posterPath
+        }
+    
+    static var mock: PopularSeriesModel {
+        PopularSeriesModel(
+            adult: false,
+            id: 1234,
+            originalLanguage: "en",
+            overview: "overview",
+            posterPath: "jakis tam poster",
+            name: "House Of Dragon",
+            voteAverage: 7.68
+        )
+    }
 }

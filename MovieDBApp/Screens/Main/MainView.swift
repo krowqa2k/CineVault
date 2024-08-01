@@ -44,7 +44,7 @@ struct MainView: View {
                                
                            AiringTodaySeriesView()
                                
-                           PopularMovieView()
+                           PopularSeriesView()
                                
                            UpcomingMovieView()
                                

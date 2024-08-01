@@ -8,11 +8,29 @@
 import SwiftUI
 
 struct PopularSeriesCell: View {
+    var movie: PopularSeriesModel = .mock
+    var imageURL: String = Constants.mockImage
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
+        VStack(alignment: .leading, spacing: 12) {
+            ImageLoader(imageURL: imageURL)
+                .frame(width: 160, height: 220)
+                .cornerRadius(16)
+            
+            Text(movie.name)
+                .foregroundStyle(.white)
+                .font(.caption)
+                .fontWeight(.semibold)
+                .lineLimit(1)
+                .frame(width: 160)
+        }
+        .padding(.leading, 8)
     }
 }
 
 #Preview {
-    PopularSeriesCell()
+    ZStack {
+        Color.blackDB.ignoresSafeArea()
+        PopularSeriesCell()
+    }
 }
