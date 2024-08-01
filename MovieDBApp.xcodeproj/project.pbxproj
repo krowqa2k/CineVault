@@ -135,6 +135,7 @@
 		84616DCE2C52E37400FF7466 /* MovieDBApp */ = {
 			isa = PBXGroup;
 			children = (
+				C1BA45512C5BC1560092197D /* Components */,
 				84EDE7A52C54094F00481D2E /* Constants */,
 				84EDE7A42C54094000481D2E /* ViewModels */,
 				84EDE7A32C54093900481D2E /* Model */,
@@ -176,7 +177,6 @@
 				C1BA45532C5BC1A80092197D /* Main */,
 				C1BA45522C5BC1600092197D /* MovieScreens */,
 				C1BA45542C5BC1B90092197D /* SeriesScreens */,
-				C1BA45512C5BC1560092197D /* Components */,
 				84AE27F72C595F4100F0686A /* DetailScreens */,
 			);
 			path = Screens;
