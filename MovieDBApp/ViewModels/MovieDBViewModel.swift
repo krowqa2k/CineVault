@@ -14,6 +14,7 @@ class MovieDBViewModel: ObservableObject {
     @Published var popularActor: [PopularActorModel] = []
     @Published var airingToday: [AiringTodayModel] = []
     @Published var popularSeries: [PopularSeriesModel] = []
+    @Published var onTheAirSeries: [OnTheAirSeriesModel] = []
     @Published var topRatedSeries: [TopRatedSeriesModel] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -50,6 +51,7 @@ class MovieDBViewModel: ObservableObject {
         getAiringTodayData()
         getPopularSeriesData()
         getTopRatedSeriesData()
+        getOnTheAirSeriesData()
         sortUpcomingMoviesByDate()
         sortTopRatedMoviesByRating()
         sortTopRatedSeriesByRating()
@@ -284,7 +286,7 @@ class MovieDBViewModel: ObservableObject {
     }
     
     func getPopularSeriesData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/popular?api_key=\(MovieDBViewModel.api_key)") else {return}
+        guard let url = URL(string: "https://api.themoviedb.org/3/trending/tv/day?api_key=\(MovieDBViewModel.api_key)") else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {
@@ -347,6 +349,42 @@ class MovieDBViewModel: ObservableObject {
                 do {
                     let decodedSeries = try JSONDecoder().decode(TopRatedSeriesResults.self, from: data)
                     self?.topRatedSeries = decodedSeries.results
+                } catch {
+                    print("Decoding error \(error)")
+                }
+            }
+        }
+        .resume()
+    }
+    
+    func getOnTheAirSeriesData() {
+        guard let url = URL(string: "https://api.themoviedb.org/3/tv/on_the_air?api_key=\(MovieDBViewModel.api_key)") else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                print("No data.")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                print("Invalid response.")
+                return
+            }
+            
+            guard response.statusCode >= 200 && response.statusCode < 300 else {
+                print("Status code should be 2xx, but is \(response.statusCode)")
+                return
+            }
+            
+            guard error == nil else {
+                print("Error: \(String(describing: error))")
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                do {
+                    let decodedSeries = try JSONDecoder().decode(OnTheAirSeriesResults.self, from: data)
+                    self?.onTheAirSeries = decodedSeries.results
                 } catch {
                     print("Decoding error \(error)")
                 }
