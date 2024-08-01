@@ -56,11 +56,13 @@ struct NowPlayingDetailView: View {
                             )
                         ,alignment: .bottom
                     )
-                Text(movie.description)
-                    .font(.title3)
-                    .foregroundStyle(.gray)
-                    .padding(.horizontal)
-                    .multilineTextAlignment(.leading)
+                ScrollView(.vertical){
+                    Text(movie.description)
+                        .font(.title3)
+                        .foregroundStyle(.gray)
+                        .padding(.horizontal)
+                        .multilineTextAlignment(.leading)
+                }
             }
             .overlay(
                 Circle()

@@ -44,11 +44,13 @@ struct UpcomingMovieDetailView: View {
                             )
                         ,alignment: .bottom
                     )
-                Text(movie.overview)
-                    .font(.title3)
-                    .foregroundStyle(.gray)
-                    .padding(.horizontal)
-                    .multilineTextAlignment(.leading)
+                ScrollView(.vertical){
+                    Text(movie.overview)
+                        .font(.title3)
+                        .foregroundStyle(.gray)
+                        .padding(.horizontal)
+                        .multilineTextAlignment(.leading)
+                }
             }
             .overlay(
                 Circle()
