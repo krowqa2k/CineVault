@@ -46,6 +46,7 @@
 		C1BA45662C5BCCCB0092197D /* PopularSeriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45652C5BCCCB0092197D /* PopularSeriesModel.swift */; };
 		C1BA45682C5BCDEA0092197D /* PopularSeriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45672C5BCDEA0092197D /* PopularSeriesCell.swift */; };
 		C1BA456A2C5BCEA70092197D /* TopRatedSeriesModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45692C5BCEA70092197D /* TopRatedSeriesModel.swift */; };
+		C1BA456C2C5BD0170092197D /* TopRatedSeriesCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA456B2C5BD0170092197D /* TopRatedSeriesCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -88,6 +89,7 @@
 		C1BA45652C5BCCCB0092197D /* PopularSeriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSeriesModel.swift; sourceTree = "<group>"; };
 		C1BA45672C5BCDEA0092197D /* PopularSeriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSeriesCell.swift; sourceTree = "<group>"; };
 		C1BA45692C5BCEA70092197D /* TopRatedSeriesModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedSeriesModel.swift; sourceTree = "<group>"; };
+		C1BA456B2C5BD0170092197D /* TopRatedSeriesCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedSeriesCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -271,6 +273,7 @@
 			children = (
 				C1BA45632C5BC96C0092197D /* AiringTodaySeriesCell.swift */,
 				C1BA45672C5BCDEA0092197D /* PopularSeriesCell.swift */,
+				C1BA456B2C5BD0170092197D /* TopRatedSeriesCell.swift */,
 			);
 			path = SeriesCells;
 			sourceTree = "<group>";
@@ -368,6 +371,7 @@
 				841FFB222C591465006296D4 /* TopRatedMovieCell.swift in Sources */,
 				C1BA45562C5BC2580092197D /* AiringTodaySeriesView.swift in Sources */,
 				841FFB242C591597006296D4 /* PopularActorsModel.swift in Sources */,
+				C1BA456C2C5BD0170092197D /* TopRatedSeriesCell.swift in Sources */,
 				84AE27FD2C5978F500F0686A /* UpcomingMovieDetailView.swift in Sources */,
 				841FFB202C591356006296D4 /* TopRatedMovieView.swift in Sources */,
 				C1BA45662C5BCCCB0092197D /* PopularSeriesModel.swift in Sources */,

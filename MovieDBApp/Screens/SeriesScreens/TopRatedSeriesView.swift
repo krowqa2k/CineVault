@@ -8,9 +8,46 @@
 import SwiftUI
 
 struct TopRatedSeriesView: View {
+    @StateObject var viewModel: MovieDBViewModel = MovieDBViewModel()
+    
     var body: some View {
-        Text(/*@START_MENU_TOKEN@*/"Hello, World!"/*@END_MENU_TOKEN@*/)
-    }
+        ZStack {
+            Color.blackDB.ignoresSafeArea()
+            
+            VStack(spacing: 8) {
+                VStack(spacing: 8) {
+                    HStack() {
+                        Text("Top Rated Series")
+                            .font(.title2)
+                            .foregroundStyle(.white)
+                            .fontWeight(.medium)
+                        
+                        Spacer()
+                        
+                        Button(action: {
+                            
+                        }, label: {
+                            Text("View all")
+                                .font(.subheadline)
+                                .foregroundStyle(.purpleDB)
+                        })
+                    }
+                    .padding(.horizontal, 20)
+                    
+                    ScrollView(.horizontal){
+                        LazyHStack {
+                            ForEach(viewModel.topRatedSeries){ topRatedSeries in
+                                TopRatedSeriesCell(movie: topRatedSeries, imageURL: topRatedSeries.fullPosterPath)
+                                }
+                            }
+                        }
+                    }
+                    .frame(maxHeight: 280)
+                    .scrollIndicators(.hidden)
+                }
+            }
+            .toolbar(.hidden, for: .navigationBar)
+        }
 }
 
 #Preview {
