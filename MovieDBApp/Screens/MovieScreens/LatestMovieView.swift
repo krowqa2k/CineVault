@@ -28,13 +28,11 @@ struct LatestMovieView: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            
-                        }, label: {
+                        NavigationLink(destination: TrendingMovieListView()) {
                             Text("View all")
                                 .font(.subheadline)
                                 .foregroundStyle(.purpleDB)
-                        })
+                        }
                     }
                     .padding(.horizontal, 20)
                     

@@ -24,13 +24,11 @@ struct PopularSeriesView: View {
                         
                         Spacer()
                         
-                        Button(action: {
-                            
-                        }, label: {
+                        NavigationLink(destination: PopularMovieListView()) {
                             Text("View all")
                                 .font(.subheadline)
                                 .foregroundStyle(.purpleDB)
-                        })
+                        }
                     }
                     .padding(.horizontal, 20)
                     

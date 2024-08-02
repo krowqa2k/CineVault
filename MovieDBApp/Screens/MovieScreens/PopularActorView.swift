@@ -24,13 +24,11 @@ struct PopularActorView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        
-                    }, label: {
+                    NavigationLink(destination: PopularActorListView()) {
                         Text("View all")
                             .font(.subheadline)
                             .foregroundStyle(.purpleDB)
-                    })
+                    }
                 }
                 .padding(.horizontal, 20)
                 

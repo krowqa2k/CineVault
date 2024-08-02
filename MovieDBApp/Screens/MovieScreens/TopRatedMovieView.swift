@@ -24,13 +24,11 @@ struct TopRatedMovieView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        
-                    }, label: {
+                    NavigationLink(destination: TopRatedMovieListView()) {
                         Text("View all")
                             .font(.subheadline)
                             .foregroundStyle(.purpleDB)
-                    })
+                    }
                 }
                 .padding(.horizontal, 20)
                 

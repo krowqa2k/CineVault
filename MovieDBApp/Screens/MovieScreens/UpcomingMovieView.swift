@@ -24,13 +24,11 @@ struct UpcomingMovieView: View {
                     
                     Spacer()
                     
-                    Button(action: {
-                        
-                    }, label: {
+                    NavigationLink(destination: UpcomingMovieListView()) {
                         Text("View all")
                             .font(.subheadline)
                             .foregroundStyle(.purpleDB)
-                    })
+                    }
                 }
                 .padding(.horizontal, 20)
                 
