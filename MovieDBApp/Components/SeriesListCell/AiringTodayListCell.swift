@@ -21,7 +21,7 @@ struct AiringTodayListCell: View {
                     .font(.system(size: 15))
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
-                    .lineLimit(1)
+                    .multilineTextAlignment(.leading)
                 Text("Original Language: \(series.originalLanguage)")
                     .font(.system(size: 13))
                     .foregroundStyle(.gray)

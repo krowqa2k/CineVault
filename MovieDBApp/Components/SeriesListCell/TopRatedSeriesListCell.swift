@@ -21,7 +21,7 @@ struct TopRatedSeriesListCell: View {
                     .font(.system(size: 15))
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
-                    .lineLimit(1)
+                    .multilineTextAlignment(.leading)
                 if series.adult {
                     Text("For adults")
                         .font(.system(size: 13))

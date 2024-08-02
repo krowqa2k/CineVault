@@ -20,6 +20,7 @@ struct PopularMovieListCell: View {
                 Text(movie.title)
                     .font(.headline)
                     .foregroundStyle(.white)
+                    .multilineTextAlignment(.leading)
                 Text("Release date: \(movie.releaseDate)")
                     .font(.system(size: 14))
                     .foregroundStyle(.gray)
