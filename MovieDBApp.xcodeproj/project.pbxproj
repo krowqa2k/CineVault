@@ -72,6 +72,7 @@
 		C1C3910B2C5D3D950045BD27 /* PopularSeriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3910A2C5D3D950045BD27 /* PopularSeriesListView.swift */; };
 		C1C3910D2C5D3E030045BD27 /* TopRatedSeriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3910C2C5D3E030045BD27 /* TopRatedSeriesListView.swift */; };
 		C1C3910F2C5D3E950045BD27 /* OnTheAirSeriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3910E2C5D3E950045BD27 /* OnTheAirSeriesListView.swift */; };
+		C1C391142C5D427E0045BD27 /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C391132C5D427E0045BD27 /* SearchView .swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -140,6 +141,7 @@
 		C1C3910A2C5D3D950045BD27 /* PopularSeriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSeriesListView.swift; sourceTree = "<group>"; };
 		C1C3910C2C5D3E030045BD27 /* TopRatedSeriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedSeriesListView.swift; sourceTree = "<group>"; };
 		C1C3910E2C5D3E950045BD27 /* OnTheAirSeriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheAirSeriesListView.swift; sourceTree = "<group>"; };
+		C1C391132C5D427E0045BD27 /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -277,6 +279,7 @@
 			isa = PBXGroup;
 			children = (
 				84616DD12C52E37400FF7466 /* MainView.swift */,
+				C1C391132C5D427E0045BD27 /* SearchView .swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -499,6 +502,7 @@
 				C1C391072C5D3A7A0045BD27 /* PopularActorListView.swift in Sources */,
 				84EDE79F2C54029300481D2E /* ImageLoader.swift in Sources */,
 				C1C15FD32C5BE46100D1980D /* OnTheAirSeriesDetailView.swift in Sources */,
+				C1C391142C5D427E0045BD27 /* SearchView .swift in Sources */,
 				841FFB1E2C59114C006296D4 /* TopRatedMovieModel.swift in Sources */,
 				C1C390EE2C5D258A0045BD27 /* PopularMovieListCell.swift in Sources */,
 				C1BA456A2C5BCEA70092197D /* TopRatedSeriesModel.swift in Sources */,
