@@ -29,10 +29,15 @@ struct PopularActorListCell: View {
                         .font(.system(size: 14))
                         .foregroundStyle(.gray)
                 }
-                Text("Popularity rating: \(actor.popularity.formatted())")
-                    .font(.system(size: 14))
-                    .fontWeight(.semibold)
-                    .foregroundStyle(.green)
+                HStack(spacing: 2) {
+                    Image(systemName: "cellularbars")
+                        .foregroundStyle(.green)
+                        .font(.caption)
+                    Text("Popularity rating: \(actor.popularity.formatted())")
+                        .font(.system(size: 14))
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.green)
+                }
             }
             .frame(maxHeight: 150, alignment: .top)
         }
