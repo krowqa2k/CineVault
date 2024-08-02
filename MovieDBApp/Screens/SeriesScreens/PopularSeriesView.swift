@@ -24,7 +24,7 @@ struct PopularSeriesView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: PopularMovieListView()) {
+                        NavigationLink(destination: PopularSeriesListView()) {
                             Text("View all")
                                 .font(.subheadline)
                                 .foregroundStyle(.purpleDB)

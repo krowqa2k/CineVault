@@ -1,5 +1,5 @@
 //
-//  PopularMovieListView.swift
+//  PopularSeriesListView.swift
 //  MovieDBApp
 //
 //  Created by Mateusz Krówczyński on 02/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PopularMovieListView: View {
+struct PopularSeriesListView: View {
     @StateObject var viewModel: MovieDBViewModel = MovieDBViewModel()
     @Environment(\.dismiss) var dismiss
     
@@ -42,7 +42,7 @@ struct PopularMovieListView: View {
             })
             .frame(maxWidth: .infinity, alignment: .leading)
             .padding(.leading, 26)
-            Text("Popular Movies")
+            Text("Popular")
                 .foregroundStyle(.purpleDB)
                 .font(.headline)
                 .frame(maxWidth: .infinity, alignment: .center)
@@ -56,9 +56,9 @@ struct PopularMovieListView: View {
     
     private var moviesList: some View {
         ScrollView {
-            ForEach(viewModel.popular){ popularMovie in
-                NavigationLink(destination: PopularMovieDetailView(imageName: popularMovie.fullPosterPath, movie: popularMovie)) {
-                    PopularMovieListCell(imageName: popularMovie.fullPosterPath, movie: popularMovie)
+            ForEach(viewModel.popularSeries){ popularSeries in
+                NavigationLink(destination: PopularSeriesDetailView(imageName: popularSeries.fullPosterPath, movie: popularSeries)) {
+                    PopularSeriesListCell(imageName: popularSeries.fullPosterPath, series: popularSeries)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading)
@@ -69,5 +69,5 @@ struct PopularMovieListView: View {
 }
 
 #Preview {
-    PopularMovieListView()
+    PopularSeriesListView()
 }

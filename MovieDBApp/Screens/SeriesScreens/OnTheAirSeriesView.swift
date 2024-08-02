@@ -24,7 +24,7 @@ struct OnTheAirSeriesView: View {
                         
                         Spacer()
                         
-                        NavigationLink(destination: PopularMovieListView()) {
+                        NavigationLink(destination: OnTheAirSeriesListView()) {
                             Text("View all")
                                 .font(.subheadline)
                                 .foregroundStyle(.purpleDB)
