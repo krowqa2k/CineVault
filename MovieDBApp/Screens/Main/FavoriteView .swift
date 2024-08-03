@@ -36,6 +36,7 @@ struct FavoriteView_: View {
                 }
                 .padding(.top)
                 if viewModel.favoriteMoviesAndSeries.isEmpty {
+                    Spacer()
                     HStack(spacing: 0) {
                         Image(systemName: "movieclapper")
                             .font(.system(size: 100))
@@ -48,7 +49,6 @@ struct FavoriteView_: View {
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundStyle(.purpleDB)
-                    Spacer()
                 } else {
                     Text("ℹ️ If you want to delete favorite Movie/Series, just press and hold image for one second!")
                         .font(.headline)
