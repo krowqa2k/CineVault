@@ -41,33 +41,36 @@ struct MainView: View {
     }
     
     private var defaultView: some View {
-        ScrollView {
+        VStack(spacing: 4) {
             HeaderView()
                     
             FilterView(options: options, selection: $selection)
-                .padding()
-                    
-            ZStack {
-                if selection == "Movies" {
-                    LazyVStack(spacing: 16) {
-                        LatestMovieView()
-                        PopularMovieView()
-                        UpcomingMovieView()
-                        TopRatedMovieView()
-                        PopularActorView()
+                .padding(.bottom)
+                .padding(.horizontal)
+        
+            ScrollView(.vertical) {
+                ZStack {
+                    if selection == "Movies" {
+                        LazyVStack(spacing: 16) {
+                            LatestMovieView()
+                            PopularMovieView()
+                            UpcomingMovieView()
+                            TopRatedMovieView()
+                            PopularActorView()
+                        }
+                        .transition(.move(edge: .leading))
+                    } else {
+                        LazyVStack(spacing: 16) {
+                            OnTheAirSeriesView()
+                            PopularSeriesView()
+                            AiringTodaySeriesView()
+                            TopRatedSeriesView()
+                        }
+                        .transition(.move(edge: .trailing))
                     }
-                    .transition(.move(edge: .leading))
-                } else {
-                    LazyVStack(spacing: 16) {
-                        OnTheAirSeriesView()
-                        PopularSeriesView()
-                        AiringTodaySeriesView()
-                        TopRatedSeriesView()
-                    }
-                    .transition(.move(edge: .trailing))
                 }
+                .animation(.spring(), value: selection)
             }
-            .animation(.spring(), value: selection)
         }
     }
 }
