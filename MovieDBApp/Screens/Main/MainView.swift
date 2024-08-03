@@ -25,7 +25,7 @@ struct MainView: View {
                 case 1:
                     SearchView_()
                 case 2:
-                    SearchView_()
+                    FavoriteView_()
                 case 3:
                     AppInfoView()
                 default :
