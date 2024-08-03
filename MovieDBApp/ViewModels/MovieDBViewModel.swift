@@ -16,6 +16,7 @@ class MovieDBViewModel: ObservableObject {
     @Published var popularSeries: [PopularSeriesModel] = []
     @Published var onTheAirSeries: [OnTheAirSeriesModel] = []
     @Published var searchDB: [SearchDBModel] = []
+    @Published var favoriteMoviesAndSeries: Set<String> = []
     @Published var topRatedSeries: [TopRatedSeriesModel] = [] {
         didSet {
             DispatchQueue.main.async {
