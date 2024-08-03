@@ -60,7 +60,7 @@ class MovieDBViewModel: ObservableObject {
     }
     
     private func sortUpcomingMoviesByDate() {
-        upcoming.sort { $0.releaseDate > $1.releaseDate }
+        upcoming.sort { $1.releaseDate > $0.releaseDate }
     }
     
     private func sortTopRatedMoviesByRating() {
