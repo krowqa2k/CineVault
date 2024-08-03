@@ -13,15 +13,15 @@ struct SearchDBResults: Codable {
 }
 
 struct SearchDBModel: Codable, Identifiable {
-    let adult: Bool
+    let adult: Bool?
     let id: Int
     let title: String?
-    let overview: String
+    let overview: String?
     let posterPath: String?
-    let popularity: Double
+    let popularity: Double?
     let releaseDate: String?
-    let voteAverage: Double
-    let voteCount: Int
+    let voteAverage: Double?
+    let voteCount: Int?
     let name: String?
 
     enum CodingKeys: String, CodingKey {

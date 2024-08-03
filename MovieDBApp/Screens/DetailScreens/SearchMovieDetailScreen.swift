@@ -21,18 +21,18 @@ struct SearchMovieDetailScreen: View {
                     .overlay (
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(movie.adult ? "18+" : "")
+                                Text(movie.adult ?? false ? "18+" : "")
                                     .frame(width: 40, height: 40)
                                     .font(.headline)
                                     .foregroundStyle(.blackDB)
-                                    .background(movie.adult ? Color.red : .clear)
+                                    .background(movie.adult ?? false ? Color.red : .clear)
                                     .cornerRadius(12)
                                 Spacer()
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text("\(movie.voteAverage.formatted())")
+                                    Text("\(movie.voteAverage?.formatted() ?? "")")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -56,7 +56,7 @@ struct SearchMovieDetailScreen: View {
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(movie.overview)
+                    Text(movie.overview ?? "")
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)
