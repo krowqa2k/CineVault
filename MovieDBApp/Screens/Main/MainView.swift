@@ -10,7 +10,7 @@ import SwiftUI
 struct MainView: View {
     
     @State var index: Int
-    @StateObject var viewModel: MovieDBViewModel
+    @EnvironmentObject var viewModel: MovieDBViewModel
     @State private var options: [String] = ["Movies", "Series"]
     @AppStorage("db_home_filter") private var selection: String = "Movies"
     
@@ -77,5 +77,6 @@ struct MainView: View {
 
 
 #Preview {
-    MainView(index: 0, viewModel: MovieDBViewModel())
+    MainView(index: 0)
+        .environmentObject(MovieDBViewModel())
 }

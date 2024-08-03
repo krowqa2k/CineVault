@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TrendingMovieListView: View {
     
-    @StateObject var viewModel: MovieDBViewModel = MovieDBViewModel()
+    @EnvironmentObject var viewModel: MovieDBViewModel
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -71,4 +71,5 @@ struct TrendingMovieListView: View {
 
 #Preview {
     TrendingMovieListView()
+        .environmentObject(MovieDBViewModel())
 }

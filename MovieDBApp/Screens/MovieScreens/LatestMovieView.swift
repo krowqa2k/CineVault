@@ -12,7 +12,7 @@ struct LatestMovieView: View {
     var movie: TrendingMovieModel = .mock
     var imageURL: String = Constants.mockImage
     
-    @StateObject var viewModel: MovieDBViewModel = MovieDBViewModel()
+    @EnvironmentObject var viewModel: MovieDBViewModel
     
     var body: some View {
         ZStack {
@@ -55,5 +55,6 @@ struct LatestMovieView: View {
 }
 
 #Preview {
-    LatestMovieView(viewModel: MovieDBViewModel())
+    LatestMovieView()
+        .environmentObject(MovieDBViewModel())
 }

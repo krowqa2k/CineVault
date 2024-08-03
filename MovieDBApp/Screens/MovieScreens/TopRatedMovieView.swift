@@ -9,7 +9,7 @@ import SwiftUI
 
 struct TopRatedMovieView: View {
     
-    @StateObject var viewModel: MovieDBViewModel = MovieDBViewModel()
+    @EnvironmentObject var viewModel: MovieDBViewModel
     
     var body: some View {
         ZStack {
@@ -50,4 +50,5 @@ struct TopRatedMovieView: View {
 
 #Preview {
     TopRatedMovieView()
+        .environmentObject(MovieDBViewModel())
 }
