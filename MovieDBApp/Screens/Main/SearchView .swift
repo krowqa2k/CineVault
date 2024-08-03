@@ -57,6 +57,7 @@ struct SearchView_: View {
             .padding(.trailing,12)
             .padding(.leading, 0)
             .frame(maxWidth: .infinity)
+            .tint(.purpleDB)
         }
     }
     
