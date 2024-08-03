@@ -58,7 +58,7 @@ struct FavoriteView_: View {
                     LazyVGrid(columns: columns, alignment: .leading) {
                         ForEach(Array(viewModel.favoriteMoviesAndSeries), id: \.self){ favorite in
                             ImageLoader(imageURL: favorite)
-                                .frame(width: 120, height: 180)
+                                .frame(width: 120, height: 190)
                                 .cornerRadius(12)
                                 .onLongPressGesture(
                                     minimumDuration: 1) {
