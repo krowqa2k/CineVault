@@ -9,11 +9,15 @@ import SwiftUI
 
 @main
 struct MovieDBAppApp: App {
+    
+    @StateObject private var viewModel = MovieDBViewModel()
+    
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-                MainView(index: 0, viewModel: MovieDBViewModel())
+                MainView(index: 0)
             }
+            .environmentObject(viewModel)
         }
     }
 }

@@ -9,7 +9,8 @@ import SwiftUI
 
 struct FavoriteView_: View {
     
-    @StateObject var viewModel: MovieDBViewModel = MovieDBViewModel()
+    @EnvironmentObject var viewModel: MovieDBViewModel
+    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
     
     var body: some View {
         ZStack {
@@ -34,7 +35,6 @@ struct FavoriteView_: View {
                         .padding(.trailing)
                 }
                 .padding(.top)
-                Spacer()
                 if viewModel.favoriteMoviesAndSeries.isEmpty {
                     HStack(spacing: 0) {
                         Image(systemName: "movieclapper")
@@ -48,6 +48,27 @@ struct FavoriteView_: View {
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundStyle(.purpleDB)
+                    Spacer()
+                } else {
+                    Text("ℹ️ If you want to delete favorite Movie/Series, just press and hold image for one second!")
+                        .font(.headline)
+                        .foregroundStyle(.red)
+                        .multilineTextAlignment(.leading)
+                        .padding(.bottom, 12)
+                    LazyVGrid(columns: columns, alignment: .leading) {
+                        ForEach(Array(viewModel.favoriteMoviesAndSeries), id: \.self){ favorite in
+                            ImageLoader(imageURL: favorite)
+                                .frame(width: 120, height: 180)
+                                .cornerRadius(12)
+                                .onLongPressGesture(
+                                    minimumDuration: 1) {
+                                        withAnimation(.bouncy(duration: 0.5)) {
+                                            removeFavorite(item: favorite)
+                                        }
+                                    }
+                        }
+                    }
+                    .padding(.horizontal, 4)
                 }
                 Spacer()
                 
@@ -55,8 +76,13 @@ struct FavoriteView_: View {
             }
         }
     }
+    
+    private func removeFavorite(item: String) {
+        viewModel.favoriteMoviesAndSeries.remove(item)
+    }
 }
 
 #Preview {
     FavoriteView_()
+        .environmentObject(MovieDBViewModel())
 }
