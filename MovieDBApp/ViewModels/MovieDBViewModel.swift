@@ -15,6 +15,7 @@ class MovieDBViewModel: ObservableObject {
     @Published var airingToday: [AiringTodayModel] = []
     @Published var popularSeries: [PopularSeriesModel] = []
     @Published var onTheAirSeries: [OnTheAirSeriesModel] = []
+    @Published var searchDB: [SearchDBModel] = []
     @Published var topRatedSeries: [TopRatedSeriesModel] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -391,5 +392,46 @@ class MovieDBViewModel: ObservableObject {
             }
         }
         .resume()
+    }
+    
+    func searchDBData(query: String) {
+        
+        guard !query.isEmpty else { return }
+                
+        let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
+        guard let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(MovieDBViewModel.api_key)&query=\(queryEncoded)") else {return}
+        
+        URLSession.shared.dataTask(with: url) { (data, response, error) in
+            guard let data = data else {
+                print("No data.")
+                return
+            }
+            
+            guard let response = response as? HTTPURLResponse else {
+                print("Invalid response.")
+                return
+            }
+            
+            guard response.statusCode >= 200 && response.statusCode < 300 else {
+                print("Status code should be 2xx, but is \(response.statusCode)")
+                return
+            }
+            
+            guard error == nil else {
+                print("Error: \(String(describing: error))")
+                return
+            }
+            
+            DispatchQueue.main.async { [weak self] in
+                do {
+                    let decodedDB = try JSONDecoder().decode(SearchDBResults.self, from: data)
+                    self?.searchDB = decodedDB.results
+                } catch {
+                    print("Decoding error \(error)")
+                }
+            }
+        }
+        .resume()
+        
     }
 }
