@@ -15,6 +15,7 @@ struct SearchView_: View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
             VStack(spacing: 8) {
+                header
                 searchBar
                     .padding(.top)
                 Spacer()
@@ -24,6 +25,22 @@ struct SearchView_: View {
         }
         
         
+    }
+    
+    private var header: some View {
+        HStack {
+            Text("Search")
+                .font(.title)
+                .fontWeight(.semibold)
+                .foregroundStyle(Color.purpleDB)
+                .frame(maxWidth: .infinity, alignment: .leading)
+                .padding(.leading)
+            Image(systemName: "popcorn.fill")
+                .font(.system(size: 25))
+                .foregroundStyle(.white)
+                .frame(maxWidth: .infinity, alignment: .trailing)
+                .padding(.trailing)
+        }
     }
     
     private var searchBar: some View {
