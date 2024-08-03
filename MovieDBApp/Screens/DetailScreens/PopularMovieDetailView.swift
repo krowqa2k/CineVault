@@ -8,8 +8,11 @@
 import SwiftUI
 
 struct PopularMovieDetailView: View {
+    
+    @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
     var movie: PopularMovieModel = .mock
+    @State private var onClick: Bool = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -78,9 +81,34 @@ struct PopularMovieDetailView: View {
                         dismiss()
                     },alignment: .topLeading
             )
-            .frame(maxHeight: .infinity, alignment: .top)
+            .overlay(
+                Circle()
+                    .frame(width: 40, height: 40)
+                    .foregroundStyle(.blackDB.opacity(0.8))
+                    .overlay(
+                        Image(systemName: "heart.fill")
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .foregroundStyle(onClick ? .red : .white)
+                    )
+                    .padding()
+                    .onTapGesture {
+                        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
+                            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+                        } else {
+                            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+                        }
+                        onClick.toggle()
+                    },alignment: .topTrailing
+            )
         }
+        .onAppear(perform: {
+            updateOnClickState()
+        })
         .toolbar(.hidden, for: .navigationBar)
+    }
+    private func updateOnClickState() {
+        onClick = viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath)
     }
 }
 
@@ -88,5 +116,6 @@ struct PopularMovieDetailView: View {
     ZStack {
         Color.blackDB
         PopularMovieDetailView()
+            .environmentObject(MovieDBViewModel())
     }
 }
