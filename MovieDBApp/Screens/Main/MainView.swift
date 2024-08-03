@@ -27,7 +27,7 @@ struct MainView: View {
                 case 2:
                     SearchView_()
                 case 3:
-                    SearchView_()
+                    AppInfoView()
                 default :
                     defaultView
                     .scrollIndicators(.hidden)

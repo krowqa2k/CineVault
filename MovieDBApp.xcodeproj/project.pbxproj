@@ -40,6 +40,8 @@
 		C12D6D252C5E404700D5030F /* SearchDBModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12D6D242C5E404700D5030F /* SearchDBModel.swift */; };
 		C12D6D272C5E56B700D5030F /* SearchMovieDetailScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12D6D262C5E56B700D5030F /* SearchMovieDetailScreen.swift */; };
 		C12D6D292C5E57E500D5030F /* TabView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12D6D282C5E57E500D5030F /* TabView.swift */; };
+		C12D6D2B2C5E645200D5030F /* FavoriteView .swift in Sources */ = {isa = PBXBuildFile; fileRef = C12D6D2A2C5E645200D5030F /* FavoriteView .swift */; };
+		C12D6D2D2C5E64BE00D5030F /* AppInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C12D6D2C2C5E64BE00D5030F /* AppInfoView.swift */; };
 		C1BA45562C5BC2580092197D /* AiringTodaySeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45552C5BC2570092197D /* AiringTodaySeriesView.swift */; };
 		C1BA45582C5BC2600092197D /* PopularSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45572C5BC2600092197D /* PopularSeriesView.swift */; };
 		C1BA455A2C5BC26F0092197D /* TopRatedSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45592C5BC26F0092197D /* TopRatedSeriesView.swift */; };
@@ -112,6 +114,8 @@
 		C12D6D242C5E404700D5030F /* SearchDBModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchDBModel.swift; sourceTree = "<group>"; };
 		C12D6D262C5E56B700D5030F /* SearchMovieDetailScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SearchMovieDetailScreen.swift; sourceTree = "<group>"; };
 		C12D6D282C5E57E500D5030F /* TabView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabView.swift; sourceTree = "<group>"; };
+		C12D6D2A2C5E645200D5030F /* FavoriteView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FavoriteView .swift"; sourceTree = "<group>"; };
+		C12D6D2C2C5E64BE00D5030F /* AppInfoView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppInfoView.swift; sourceTree = "<group>"; };
 		C1BA45552C5BC2570092197D /* AiringTodaySeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiringTodaySeriesView.swift; sourceTree = "<group>"; };
 		C1BA45572C5BC2600092197D /* PopularSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSeriesView.swift; sourceTree = "<group>"; };
 		C1BA45592C5BC26F0092197D /* TopRatedSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedSeriesView.swift; sourceTree = "<group>"; };
@@ -297,6 +301,8 @@
 				84616DD12C52E37400FF7466 /* MainView.swift */,
 				C1C391132C5D427E0045BD27 /* SearchView .swift */,
 				C12D6D282C5E57E500D5030F /* TabView.swift */,
+				C12D6D2A2C5E645200D5030F /* FavoriteView .swift */,
+				C12D6D2C2C5E64BE00D5030F /* AppInfoView.swift */,
 			);
 			path = Main;
 			sourceTree = "<group>";
@@ -497,6 +503,7 @@
 				C1C15FD12C5BE43600D1980D /* TopRatedSeriesDetailView.swift in Sources */,
 				C1C391092C5D3D1C0045BD27 /* AiringTodayListView.swift in Sources */,
 				C1BA455A2C5BC26F0092197D /* TopRatedSeriesView.swift in Sources */,
+				C12D6D2D2C5E64BE00D5030F /* AppInfoView.swift in Sources */,
 				84EDE7B12C541B0800481D2E /* HeaderView.swift in Sources */,
 				841FFB2A2C591D84006296D4 /* FilterView .swift in Sources */,
 				C1C390FA2C5D28080045BD27 /* TopRatedSeriesListCell.swift in Sources */,
@@ -526,6 +533,7 @@
 				C1C390EE2C5D258A0045BD27 /* PopularMovieListCell.swift in Sources */,
 				C1BA456A2C5BCEA70092197D /* TopRatedSeriesModel.swift in Sources */,
 				C1C390FF2C5D29280045BD27 /* TrendingMovieListView.swift in Sources */,
+				C12D6D2B2C5E645200D5030F /* FavoriteView .swift in Sources */,
 				841FFB182C59097A006296D4 /* UpcomingMovieView.swift in Sources */,
 				84AE27FF2C5979F500F0686A /* TopRatedDetailView.swift in Sources */,
 				C1C390F22C5D25C80045BD27 /* TopRatedMovieListCell.swift in Sources */,
