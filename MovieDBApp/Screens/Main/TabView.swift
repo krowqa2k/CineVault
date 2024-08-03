@@ -36,7 +36,7 @@ struct TabView: View {
             Image(systemName: "popcorn.fill")
                 .foregroundStyle(.purpleDB)
                 .font(.system(size: 40))
-                .offset(y: -25)
+                .offset(y: -20)
             
             Spacer(minLength: 0)
             
@@ -59,7 +59,7 @@ struct TabView: View {
             .foregroundStyle(self.index == 3 ? .purpleDB : .white)
         }
         .padding(.horizontal, 35)
-        .background(Color.black.opacity(0.7))
+        .background(Color.blackDB)
     }
 }
 

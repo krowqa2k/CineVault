@@ -35,7 +35,7 @@ struct MainView: View {
                 Spacer()
                         
                 TabView(index: self.$index)
-                    .frame(height: 45)
+                    .frame(height: 35)
             }
         }
     }
