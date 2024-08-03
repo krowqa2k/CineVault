@@ -70,6 +70,19 @@ class MovieDBViewModel: ObservableObject {
         topRatedSeries.sort { $0.voteAverage > $1.voteAverage}
     }
     
+    func getYear(from dateString: String) -> String {
+        let dateFormatter = DateFormatter()
+        dateFormatter.dateFormat = "yyyy/MM/dd"
+        
+        if let date = dateFormatter.date(from: dateString) {
+            let calendar = Calendar.current
+            let year = calendar.component(.year, from: date)
+            return String(year)
+        } else {
+            return "Invalid date"
+        }
+    }
+    
     func getTrendingsData() {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(MovieDBViewModel.api_key)") else {return}
         
@@ -394,7 +407,7 @@ class MovieDBViewModel: ObservableObject {
         .resume()
     }
     
-    func searchDBData(query: String) {
+    func getSearchDBData(query: String) {
         
         guard !query.isEmpty else { return }
                 
