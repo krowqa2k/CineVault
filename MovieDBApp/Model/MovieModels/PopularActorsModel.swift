@@ -18,7 +18,7 @@ struct PopularActorModel: Codable, Identifiable {
     let name, originalName: String
     let popularity: Double
     let profilePath: String
-    let knownFor: [KnownForModel]
+    let knownFor: [KnownForModel]?
 
     enum CodingKeys: String, CodingKey {
         case adult, gender, id
@@ -31,7 +31,7 @@ struct PopularActorModel: Codable, Identifiable {
     
     var fullPosterPath: String {
             Constants.imageGet + profilePath
-        }
+    }
     
     static var mock: PopularActorModel {
         PopularActorModel(
@@ -60,7 +60,7 @@ struct PopularActorModel: Codable, Identifiable {
 struct KnownForModel: Codable, Identifiable {
     let id: Int
     let title, originalTitle: String?
-    let overview, posterPath: String
+    let overview, posterPath: String?
     let adult: Bool
     let popularity: Double
     let releaseDate: String?
@@ -78,8 +78,9 @@ struct KnownForModel: Codable, Identifiable {
     }
     
     var fullPosterPath: String {
-            Constants.imageGet + posterPath
-        }
+        guard let posterPath = posterPath else { return Constants.noImage }
+        return Constants.imageGet + posterPath
+    }
     
     static var mock: KnownForModel {
         KnownForModel(
