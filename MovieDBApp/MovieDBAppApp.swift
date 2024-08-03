@@ -12,7 +12,7 @@ struct MovieDBAppApp: App {
     var body: some Scene {
         WindowGroup {
             NavigationStack{
-                MainView(viewModel: MovieDBViewModel())
+                MainView(index: 0, viewModel: MovieDBViewModel())
             }
         }
     }
