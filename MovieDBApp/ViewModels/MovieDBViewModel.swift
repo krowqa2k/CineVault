@@ -157,9 +157,33 @@ class MovieDBViewModel: ObservableObject {
     }
     
     func getUpcomingData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?api_key=\(MovieDBViewModel.api_key)") else {return}
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming") else {
+            print("Invalid URL")
+            return
+        }
         
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
+        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
+        let queryItems: [URLQueryItem] = [
+            URLQueryItem(name: "language", value: "en-US"),
+            URLQueryItem(name: "page", value: "1"),
+            URLQueryItem(name: "region", value: "US"),
+        ]
+        components.queryItems = queryItems
+        
+        guard let finalURL = components.url else {
+            print("Invalid final URL")
+            return
+        }
+        
+        var request = URLRequest(url: finalURL)
+        request.httpMethod = "GET"
+        request.timeoutInterval = 10
+        request.allHTTPHeaderFields = [
+            "accept": "application/json",
+            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YzdjZWEzMDhkZWY5YzViMzgxYjhlOTYzYjlkZjYyYSIsIm5iZiI6MTcyMjcwNjI2Ny4yODUyOSwic3ViIjoiNjY5MjhmNTFjNDgwNTQ0MjIxMGRmNTY0Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.dW7sbDmzzUcT0xB8p5m1SgY4smDAuoCDplLfuTLLYvw"
+        ]
+        
+        URLSession.shared.dataTask(with: request) { (data, response, error) in
             guard let data = data else {
                 print("No data.")
                 return
