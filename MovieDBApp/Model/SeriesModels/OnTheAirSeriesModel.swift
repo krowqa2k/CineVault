@@ -16,7 +16,8 @@ struct OnTheAirSeriesModel: Codable, Identifiable {
     let adult: Bool
     let id: Int
     let originalLanguage, overview: String
-    let posterPath, name: String
+    let posterPath: String?
+    let name: String
     let voteAverage: Double
 
     enum CodingKeys: String, CodingKey {
@@ -30,8 +31,9 @@ struct OnTheAirSeriesModel: Codable, Identifiable {
     }
     
     var fullPosterPath: String {
-            Constants.imageGet + posterPath
-        }
+        guard let posterPath = posterPath else { return Constants.noImage }
+        return Constants.imageGet + posterPath
+    }
     
     static var mock: OnTheAirSeriesModel {
         OnTheAirSeriesModel(

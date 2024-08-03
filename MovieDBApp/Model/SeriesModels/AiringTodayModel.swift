@@ -19,7 +19,6 @@ struct AiringTodayResult: Codable {
     }
 }
 
-// MARK: - Result
 struct AiringTodayModel: Codable, Identifiable {
     let adult: Bool
     let backdropPath: String
@@ -28,7 +27,8 @@ struct AiringTodayModel: Codable, Identifiable {
     let originCountry: [String]
     let originalLanguage, originalName, overview: String
     let popularity: Double
-    let posterPath, firstAirDate, name: String
+    let posterPath: String?
+    let firstAirDate, name: String
     let voteAverage: Double
     let voteCount: Int
 
@@ -49,8 +49,9 @@ struct AiringTodayModel: Codable, Identifiable {
     }
     
     var fullPosterPath: String {
-            Constants.imageGet + posterPath
-        }
+        guard let posterPath = posterPath else { return Constants.noImage }
+        return Constants.imageGet + posterPath
+    }
     
     static var mock: AiringTodayModel {
         AiringTodayModel(

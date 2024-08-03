@@ -21,7 +21,8 @@ struct UpcomingMovieModel: Codable, Identifiable {
     let adult: Bool
     let id: Int
     let originalLanguage, originalTitle, overview: String
-    let posterPath, releaseDate, title: String
+    let posterPath: String?
+    let releaseDate, title: String
 
     enum CodingKeys: String, CodingKey {
         case adult
@@ -35,8 +36,9 @@ struct UpcomingMovieModel: Codable, Identifiable {
     }
     
     var fullPosterPath: String {
-            Constants.imageGet + posterPath
-        }
+        guard let posterPath = posterPath else { return Constants.noImage }
+        return Constants.imageGet + posterPath
+    }
     
     static var mock: UpcomingMovieModel {
         UpcomingMovieModel(

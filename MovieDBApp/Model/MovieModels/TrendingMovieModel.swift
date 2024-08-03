@@ -18,7 +18,7 @@ struct TrendingMovieModel: Identifiable, Codable {
     let id: Int
     let title: String
     let description: String
-    let posterPath: String
+    let posterPath: String?
     let adult: Bool
     let releaseDate: String
     let voteAverage: Double
@@ -34,8 +34,9 @@ struct TrendingMovieModel: Identifiable, Codable {
     }
     
     var fullPosterPath: String {
-            Constants.imageGet + posterPath
-        }
+        guard let posterPath = posterPath else { return Constants.noImage }
+        return Constants.imageGet + posterPath
+    }
     
     static var mock: TrendingMovieModel {
         TrendingMovieModel(

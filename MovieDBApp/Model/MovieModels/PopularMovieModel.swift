@@ -17,7 +17,8 @@ struct PopularMovieModel: Codable, Identifiable {
     let id: Int
     let originalTitle, overview: String
     let popularity: Double
-    let posterPath, releaseDate, title: String
+    let posterPath: String?
+    let releaseDate, title: String
     let voteAverage: Double
 
     enum CodingKeys: String, CodingKey {
@@ -32,8 +33,9 @@ struct PopularMovieModel: Codable, Identifiable {
     }
     
     var fullPosterPath: String {
-            Constants.imageGet + posterPath
-        }
+        guard let posterPath = posterPath else { return Constants.noImage }
+        return Constants.imageGet + posterPath
+    }
     
     static var mock: PopularMovieModel {
         PopularMovieModel(
