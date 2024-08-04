@@ -10,7 +10,7 @@ import SwiftUI
 struct FavoriteView_: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
-    let columns = [GridItem(.adaptive(minimum: 80, maximum: 100))]
+    let columns = [GridItem(.adaptive(minimum: 110, maximum: 160))]
     
     var body: some View {
         ZStack {
@@ -61,7 +61,7 @@ struct FavoriteView_: View {
                         LazyVGrid(columns: columns, alignment: .leading) {
                             ForEach(Array(viewModel.favoriteMoviesAndSeries), id: \.self){ favorite in
                                 ImageLoader(imageURL: favorite)
-                                    .frame(width: 80, height: 120)
+                                    .frame(width: 110, height: 160)
                                     .cornerRadius(12)
                                     .simultaneousGesture(
                                         LongPressGesture(minimumDuration: 0.5).onEnded({ _ in
