@@ -8,82 +8,86 @@
 import Foundation
 
 class MovieDBViewModel: ObservableObject {
-    
     private let favoritesManager = FavoritesManager()
-    @Published var trendings: [TrendingMovieModel] = []
-    @Published var popular: [PopularMovieModel] = []
-    @Published var popularActor: [PopularActorModel] = []
-    @Published var airingToday: [AiringTodayModel] = []
-    @Published var popularSeries: [PopularSeriesModel] = []
-    @Published var onTheAirSeries: [OnTheAirSeriesModel] = []
-    @Published var searchDB: [SearchDBModel] = []
-    @Published var topRatedSeries: [TopRatedSeriesModel] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.sortTopRatedSeriesByRating()
-            }
-        }
-    }
-    
-    @Published var upcoming: [UpcomingMovieModel] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.sortUpcomingMoviesByDate()
-            }
-        }
-    }
-    
-    @Published var topRated: [TopRatedMovieModel] = [] {
-        didSet {
-            DispatchQueue.main.async {
-                self.sortTopRatedMoviesByRating()
-            }
-        }
-    }
+    @Published private(set) var trendings: [TrendingMovieModel] = []
+    @Published private(set) var popular: [PopularMovieModel] = []
+    @Published private(set) var popularActor: [PopularActorModel] = []
+    @Published private(set) var airingToday: [AiringTodayModel] = []
+    @Published private(set) var popularSeries: [PopularSeriesModel] = []
+    @Published private(set) var onTheAirSeries: [OnTheAirSeriesModel] = []
+    @Published private(set) var searchDB: [SearchDBModel] = []
+    @Published private(set) var topRatedSeries: [TopRatedSeriesModel] = []
+    @Published private(set) var upcoming: [UpcomingMovieModel] = []
+    @Published private(set) var topRated: [TopRatedMovieModel] = []
     
     @Published var favoriteMoviesAndSeries: Set<String> {
-            didSet {
-                favoritesManager.favoriteMoviesAndSeries = favoriteMoviesAndSeries
-            }
+        didSet {
+            favoritesManager.favoriteMoviesAndSeries = favoriteMoviesAndSeries
+        }
     }
     
     static let api_key: String = "5c7cea308def9c5b381b8e963b9df62a"
+    private let queue = DispatchQueue(label: "com.moviedbapp.apiqueue", qos: .background, attributes: .concurrent)
     
-    
-    init(){
+    init() {
         self.favoriteMoviesAndSeries = favoritesManager.favoriteMoviesAndSeries
-        getTrendingsData()
-        getPopularData()
-        getUpcomingData()
-        getTopRatedData()
-        getPopularActorData()
-        getAiringTodayData()
-        getPopularSeriesData()
-        getTopRatedSeriesData()
-        getOnTheAirSeriesData()
-        sortUpcomingMoviesByDate()
-        sortTopRatedMoviesByRating()
-        sortTopRatedSeriesByRating()
+        loadInitialData()
+    }
+    
+    private func loadInitialData() {
+        queue.async { [weak self] in
+            self?.getTrendingsData()
+            self?.getPopularData()
+            self?.getUpcomingData()
+            self?.getTopRatedData()
+            self?.getPopularActorData()
+            self?.getAiringTodayData()
+            self?.getPopularSeriesData()
+            self?.getTopRatedSeriesData()
+            self?.getOnTheAirSeriesData()
+        }
     }
     
     func addFavorite(posterPath: String) {
-        favoriteMoviesAndSeries.insert(posterPath)
+        DispatchQueue.main.async {
+            self.favoriteMoviesAndSeries.insert(posterPath)
+        }
     }
 
     func removeFavorite(posterPath: String) {
-        favoriteMoviesAndSeries.remove(posterPath)
+        DispatchQueue.main.async {
+            self.favoriteMoviesAndSeries.remove(posterPath)
+        }
     }
     
-    private func sortUpcomingMoviesByDate() {
-        upcoming.sort { $1.releaseDate > $0.releaseDate }
+    func sortUpcomingMoviesByDate() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            let sortedUpcoming = self.upcoming.sorted { $1.releaseDate > $0.releaseDate }
+            DispatchQueue.main.async {
+                self.upcoming = sortedUpcoming
+            }
+        }
     }
     
-    private func sortTopRatedMoviesByRating() {
-        topRated.sort { $0.voteAverage > $1.voteAverage}
+    func sortTopRatedMoviesByRating() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            let sortedTopRated = self.topRated.sorted { $0.voteAverage > $1.voteAverage }
+            DispatchQueue.main.async {
+                self.topRated = sortedTopRated
+            }
+        }
     }
     
-    private func sortTopRatedSeriesByRating() {
-        topRatedSeries.sort { $0.voteAverage > $1.voteAverage}
+    func sortTopRatedSeriesByRating() {
+        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
+            guard let self = self else { return }
+            let sortedTopRatedSeries = self.topRatedSeries.sorted { $0.voteAverage > $1.voteAverage }
+            DispatchQueue.main.async {
+                self.topRatedSeries = sortedTopRatedSeries
+            }
+        }
     }
     
     func getYear(from dateString: String) -> String {
@@ -99,392 +103,113 @@ class MovieDBViewModel: ObservableObject {
         }
     }
     
-    func getTrendingsData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
+    private func performAPICall<T: Decodable>(url: URL, completion: @escaping (T?) -> Void) {
         URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
+            guard let data = data,
+                  let response = response as? HTTPURLResponse,
+                  200...299 ~= response.statusCode,
+                  error == nil else {
+                print("API call failed: \(url)")
+                DispatchQueue.main.async {
+                    completion(nil)
+                }
                 return
             }
             
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedMovies = try JSONDecoder().decode(TrendingResults.self, from: data)
-                    self?.trendings = decodedMovies.results
-                } catch {
-                    print("Decoding error \(error)")
+            do {
+                let decodedData = try JSONDecoder().decode(T.self, from: data)
+                DispatchQueue.main.async {
+                    completion(decodedData)
+                }
+            } catch {
+                print("Decoding error: \(error)")
+                DispatchQueue.main.async {
+                    completion(nil)
                 }
             }
+        }.resume()
+    }
+    
+    func getTrendingsData() {
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: TrendingResults?) in
+            self?.trendings = result?.results ?? []
         }
-        .resume()
     }
     
     func getPopularData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedMovies = try JSONDecoder().decode(PopularMovieResults.self, from: data)
-                    self?.popular = decodedMovies.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: PopularMovieResults?) in
+            self?.popular = result?.results ?? []
         }
-        .resume()
     }
     
     func getUpcomingData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming") else {
-            print("Invalid URL")
-            return
-        }
-        
-        var components = URLComponents(url: url, resolvingAgainstBaseURL: true)!
-        let queryItems: [URLQueryItem] = [
+        guard var components = URLComponents(string: "https://api.themoviedb.org/3/movie/upcoming") else { return }
+        components.queryItems = [
+            URLQueryItem(name: "api_key", value: MovieDBViewModel.api_key),
             URLQueryItem(name: "language", value: "en-US"),
             URLQueryItem(name: "page", value: "1"),
-            URLQueryItem(name: "region", value: "US"),
+            URLQueryItem(name: "region", value: "US")
         ]
-        components.queryItems = queryItems
+        guard let url = components.url else { return }
         
-        guard let finalURL = components.url else {
-            print("Invalid final URL")
-            return
+        performAPICall(url: url) { [weak self] (result: UpcomingResults?) in
+            self?.upcoming = result?.results ?? []
+            self?.sortUpcomingMoviesByDate()
         }
-        
-        var request = URLRequest(url: finalURL)
-        request.httpMethod = "GET"
-        request.timeoutInterval = 10
-        request.allHTTPHeaderFields = [
-            "accept": "application/json",
-            "Authorization": "Bearer eyJhbGciOiJIUzI1NiJ9.eyJhdWQiOiI1YzdjZWEzMDhkZWY5YzViMzgxYjhlOTYzYjlkZjYyYSIsIm5iZiI6MTcyMjcwNjI2Ny4yODUyOSwic3ViIjoiNjY5MjhmNTFjNDgwNTQ0MjIxMGRmNTY0Iiwic2NvcGVzIjpbImFwaV9yZWFkIl0sInZlcnNpb24iOjF9.dW7sbDmzzUcT0xB8p5m1SgY4smDAuoCDplLfuTLLYvw"
-        ]
-        
-        URLSession.shared.dataTask(with: request) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedMovies = try JSONDecoder().decode(UpcomingResults.self, from: data)
-                    self?.upcoming = decodedMovies.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
-        }
-        .resume()
     }
     
     func getTopRatedData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedMovies = try JSONDecoder().decode(TopRatedResults.self, from: data)
-                    self?.topRated = decodedMovies.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: TopRatedResults?) in
+            self?.topRated = result?.results ?? []
+            self?.sortTopRatedMoviesByRating()
         }
-        .resume()
     }
     
     func getPopularActorData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/person/popular?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedMovies = try JSONDecoder().decode(PopularActorResult.self, from: data)
-                    self?.popularActor = decodedMovies.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/person/popular?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: PopularActorResult?) in
+            self?.popularActor = result?.results ?? []
         }
-        .resume()
     }
     
     func getAiringTodayData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/airing_today?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedSeries = try JSONDecoder().decode(AiringTodayResult.self, from: data)
-                    self?.airingToday = decodedSeries.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/tv/airing_today?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: AiringTodayResult?) in
+            self?.airingToday = result?.results ?? []
         }
-        .resume()
     }
     
     func getPopularSeriesData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/trending/tv/day?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedSeries = try JSONDecoder().decode(PopularSeriesResults.self, from: data)
-                    self?.popularSeries = decodedSeries.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/trending/tv/day?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: PopularSeriesResults?) in
+            self?.popularSeries = result?.results ?? []
         }
-        .resume()
     }
     
     func getTopRatedSeriesData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedSeries = try JSONDecoder().decode(TopRatedSeriesResults.self, from: data)
-                    self?.topRatedSeries = decodedSeries.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: TopRatedSeriesResults?) in
+            self?.topRatedSeries = result?.results ?? []
+            self?.sortTopRatedSeriesByRating()
         }
-        .resume()
     }
     
     func getOnTheAirSeriesData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/on_the_air?api_key=\(MovieDBViewModel.api_key)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedSeries = try JSONDecoder().decode(OnTheAirSeriesResults.self, from: data)
-                    self?.onTheAirSeries = decodedSeries.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/tv/on_the_air?api_key=\(MovieDBViewModel.api_key)") else { return }
+        performAPICall(url: url) { [weak self] (result: OnTheAirSeriesResults?) in
+            self?.onTheAirSeries = result?.results ?? []
         }
-        .resume()
     }
     
     func getSearchDBData(query: String) {
-        
         guard !query.isEmpty else { return }
-                
         let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=\(MovieDBViewModel.api_key)&query=\(queryEncoded)") else {return}
-        
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data else {
-                print("No data.")
-                return
-            }
-            
-            guard let response = response as? HTTPURLResponse else {
-                print("Invalid response.")
-                return
-            }
-            
-            guard response.statusCode >= 200 && response.statusCode < 300 else {
-                print("Status code should be 2xx, but is \(response.statusCode)")
-                return
-            }
-            
-            guard error == nil else {
-                print("Error: \(String(describing: error))")
-                return
-            }
-            
-            DispatchQueue.main.async { [weak self] in
-                do {
-                    let decodedDB = try JSONDecoder().decode(SearchDBResults.self, from: data)
-                    self?.searchDB = decodedDB.results
-                } catch {
-                    print("Decoding error \(error)")
-                }
-            }
+        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=\(MovieDBViewModel.api_key)&query=\(queryEncoded)") else { return }
+        performAPICall(url: url) { [weak self] (result: SearchDBResults?) in
+            self?.searchDB = result?.results ?? []
         }
-        .resume()
-        
     }
 }
