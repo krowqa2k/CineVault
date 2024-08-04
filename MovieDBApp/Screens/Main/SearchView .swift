@@ -50,7 +50,7 @@ struct SearchView_: View {
                 .foregroundStyle(.purpleDB)
                 .padding(.leading)
                 .padding(.trailing, 0)
-            TextField("Search movies", text: $query) {
+            TextField("Search Movies, TV Series...", text: $query) {
                 viewModel.getSearchDBData(query: query)
             }
             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -70,13 +70,22 @@ struct SearchView_: View {
                             .frame(width: 110, height: 160)
                             .cornerRadius(16)
                         VStack(alignment: .leading, spacing: 8){
-                            Text(row.title ?? "")
+                            Text(row.name ?? row.title ?? "")
                                 .font(.headline)
                                 .foregroundStyle(.white)
                                 .multilineTextAlignment(.leading)
-                            Text(viewModel.getYear(from: row.releaseDate ?? ""))
-                                .font(.system(size: 14))
+                            Text(viewModel.getYear(from: row.releaseDate ?? row.firstAirDate ?? "No Data :("))
+                                .font(.subheadline)
                                 .foregroundStyle(.gray)
+                                .multilineTextAlignment(.leading)
+                            HStack(spacing: 4) {
+                                Image(systemName: "star.fill")
+                                    .font(.subheadline)
+                                    .foregroundStyle(.yellow)
+                                Text(String(format: "%.2f", row.voteAverage ?? 0.0))
+                                    .foregroundColor(.white)
+                                    .font(.subheadline)
+                            }
                         }
                         .frame(maxHeight: 150, alignment: .top)
                     }
