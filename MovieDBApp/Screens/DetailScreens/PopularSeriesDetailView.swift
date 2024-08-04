@@ -22,47 +22,7 @@ struct PopularSeriesDetailView: View {
                 ImageLoader(imageURL: imageName).ignoresSafeArea(edges: .top)
                     .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
                     .overlay (
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text(movie.adult ? "18+" : "")
-                                    .frame(width: 40, height: 40)
-                                    .font(.headline)
-                                    .foregroundStyle(.blackDB)
-                                    .background(movie.adult ? Color.red : .clear)
-                                    .cornerRadius(12)
-                                Spacer()
-                                HStack {
-                                    Image(systemName: "star.fill")
-                                        .font(.headline)
-                                        .foregroundStyle(.yellow)
-                                    Text("\(movie.voteAverage.formatted())")
-                                        .font(.headline)
-                                        .foregroundStyle(.yellow)
-                                }
-                                .padding(4)
-                                .background(Color.blackDB)
-                                .cornerRadius(12)
-                            }
-                            .padding(.horizontal)
-                            
-                            Text(movie.name)
-                                .font(.system(size: 26))
-                                .fontWeight(.medium)
-                                .foregroundStyle(.white)
-                                .padding(.horizontal)
-                            
-                            Text("First Aired on: \(movie.firstAirDate)")
-                                .font(.footnote)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.gray)
-                                .padding(.horizontal)
-                        }
-                            .frame(maxWidth: .infinity)
-                            .frame(maxHeight: 100)
-                            .padding(.bottom)
-                            .background(
-                                LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
-                            )
+                        imageOverlay
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
@@ -74,39 +34,12 @@ struct PopularSeriesDetailView: View {
                 }
             }
             .overlay(
-                Circle()
-                    .frame(width: 40, height: 40)
-                    .foregroundStyle(.blackDB.opacity(0.8))
-                    .overlay(
-                        Image(systemName: "xmark")
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .foregroundStyle(.white)
-                    )
-                    .padding()
-                    .onTapGesture {
-                        dismiss()
-                    },alignment: .topLeading
+                dismissButton
+                ,alignment: .topLeading
             )
             .overlay(
-                Circle()
-                    .frame(width: 40, height: 40)
-                    .foregroundStyle(.blackDB.opacity(0.8))
-                    .overlay(
-                        Image(systemName: "heart.fill")
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .foregroundStyle(onClick ? .red : .white)
-                    )
-                    .padding()
-                    .onTapGesture {
-                        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
-                            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
-                        } else {
-                            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
-                        }
-                        onClick.toggle()
-                    },alignment: .topTrailing
+                addToFavoritesButton
+                ,alignment: .topTrailing
             )
         }
         .onAppear(perform: {
@@ -116,6 +49,88 @@ struct PopularSeriesDetailView: View {
     }
     private func updateOnClickState() {
         onClick = viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath)
+    }
+    
+    private var imageOverlay: some View {
+        VStack(alignment: .leading) {
+            HStack {
+                Text(movie.adult ? "18+" : "")
+                    .frame(width: 40, height: 40)
+                    .font(.headline)
+                    .foregroundStyle(.blackDB)
+                    .background(movie.adult ? Color.red : .clear)
+                    .cornerRadius(12)
+                Spacer()
+                HStack {
+                    Image(systemName: "star.fill")
+                        .font(.headline)
+                        .foregroundStyle(.yellow)
+                    Text("\(movie.voteAverage.formatted())")
+                        .font(.headline)
+                        .foregroundStyle(.yellow)
+                }
+                .padding(4)
+                .background(Color.blackDB)
+                .cornerRadius(12)
+            }
+            .padding(.horizontal)
+            
+            Text(movie.name)
+                .font(.system(size: 26))
+                .fontWeight(.medium)
+                .foregroundStyle(.white)
+                .padding(.horizontal)
+            
+            Text("First Aired on: \(movie.firstAirDate ?? "No Data :(")")
+                .font(.footnote)
+                .fontWeight(.medium)
+                .foregroundStyle(.gray)
+                .padding(.horizontal)
+        }
+            .frame(maxWidth: .infinity)
+            .frame(maxHeight: 100)
+            .padding(.bottom)
+            .background(
+                LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
+            )
+        
+    }
+    
+    private var dismissButton: some View {
+        Circle()
+            .frame(width: 40, height: 40)
+            .foregroundStyle(.blackDB.opacity(0.8))
+            .overlay(
+                Image(systemName: "xmark")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.white)
+            )
+            .padding()
+            .onTapGesture {
+                dismiss()
+            }
+    }
+    
+    private var addToFavoritesButton: some View {
+        Circle()
+            .frame(width: 40, height: 40)
+            .foregroundStyle(.blackDB.opacity(0.8))
+            .overlay(
+                Image(systemName: "heart.fill")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .foregroundStyle(onClick ? .red : .white)
+            )
+            .padding()
+            .onTapGesture {
+                if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
+                    viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+                } else {
+                    viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+                }
+                onClick.toggle()
+            }
     }
 }
 

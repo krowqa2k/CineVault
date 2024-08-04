@@ -51,7 +51,7 @@ struct TopRatedSeriesDetailView: View {
                                 .foregroundStyle(.white)
                                 .padding(.horizontal)
                             
-                            Text("First Aired on: \(movie.firstAirDate)")
+                            Text("First Aired on: \(movie.firstAirDate ?? "No data :(")")
                                 .font(.footnote)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.gray)
