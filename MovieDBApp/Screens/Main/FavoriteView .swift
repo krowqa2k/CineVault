@@ -10,7 +10,7 @@ import SwiftUI
 struct FavoriteView_: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
-    let columns = [GridItem(.flexible()), GridItem(.flexible()), GridItem(.flexible())]
+    let columns = [GridItem(.adaptive(minimum: 80, maximum: 100))]
     
     var body: some View {
         ZStack {
@@ -56,20 +56,24 @@ struct FavoriteView_: View {
                         .multilineTextAlignment(.leading)
                         .padding(.bottom, 12)
                         .padding(.horizontal)
-                    LazyVGrid(columns: columns, alignment: .leading) {
-                        ForEach(Array(viewModel.favoriteMoviesAndSeries), id: \.self){ favorite in
-                            ImageLoader(imageURL: favorite)
-                                .frame(width: 120, height: 180)
-                                .cornerRadius(12)
-                                .onLongPressGesture(
-                                    minimumDuration: 1) {
-                                        withAnimation(.bouncy(duration: 0.5)) {
-                                            removeFavorite(item: favorite)
-                                        }
-                                    }
+                    
+                    ScrollView(.vertical) {
+                        LazyVGrid(columns: columns, alignment: .leading) {
+                            ForEach(Array(viewModel.favoriteMoviesAndSeries), id: \.self){ favorite in
+                                ImageLoader(imageURL: favorite)
+                                    .frame(width: 80, height: 120)
+                                    .cornerRadius(12)
+                                    .simultaneousGesture(
+                                        LongPressGesture(minimumDuration: 0.5).onEnded({ _ in
+                                            withAnimation(.bouncy(duration: 0.5)) {
+                                                removeFavorite(item: favorite)
+                                            }
+                                        })
+                                    )
+                            }
                         }
+                        .padding(.horizontal, 4)
                     }
-                    .padding(.horizontal, 4)
                 }
                 Spacer()
                 
