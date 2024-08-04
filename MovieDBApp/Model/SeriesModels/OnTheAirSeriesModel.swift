@@ -19,6 +19,7 @@ struct OnTheAirSeriesModel: Codable, Identifiable {
     let posterPath: String?
     let name: String
     let voteAverage: Double
+    let firstAirDate: String?
 
     enum CodingKeys: String, CodingKey {
         case adult
@@ -28,6 +29,7 @@ struct OnTheAirSeriesModel: Codable, Identifiable {
         case posterPath = "poster_path"
         case name
         case voteAverage = "vote_average"
+        case firstAirDate = "first_Air_Date"
     }
     
     var fullPosterPath: String {
@@ -43,7 +45,8 @@ struct OnTheAirSeriesModel: Codable, Identifiable {
             overview: "overview",
             posterPath: "jakis tam poster",
             name: "House Of Dragon",
-            voteAverage: 7.68
+            voteAverage: 7.68,
+            firstAirDate: "2022/08/06"
         )
     }
 }

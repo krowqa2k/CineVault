@@ -8,7 +8,7 @@
 import SwiftUI
 
 @main
-struct MovieDBAppApp: App {
+struct CineVault: App {
     
     @StateObject private var viewModel = MovieDBViewModel()
     

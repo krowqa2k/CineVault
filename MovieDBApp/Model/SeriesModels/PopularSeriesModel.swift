@@ -26,6 +26,7 @@ struct PopularSeriesModel: Codable, Identifiable {
     let originalLanguage, overview: String
     let posterPath: String?
     let name: String
+    let firstAirDate: String?
     let voteAverage: Double
 
     enum CodingKeys: String, CodingKey {
@@ -36,6 +37,7 @@ struct PopularSeriesModel: Codable, Identifiable {
         case posterPath = "poster_path"
         case name
         case voteAverage = "vote_average"
+        case firstAirDate = "first_air_date"
     }
     
     var fullPosterPath: String {
@@ -51,6 +53,7 @@ struct PopularSeriesModel: Codable, Identifiable {
             overview: "overview",
             posterPath: "jakis tam poster",
             name: "House Of Dragon",
+            firstAirDate: "2022/08/23",
             voteAverage: 7.68
         )
     }
