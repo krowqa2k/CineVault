@@ -35,7 +35,7 @@ struct SearchMovieDetailScreen: View {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text("\(movie.voteAverage?.formatted() ?? "")")
+                                    Text("\(movie.voteAverage?.formatted() ?? "No data :(")")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -45,21 +45,28 @@ struct SearchMovieDetailScreen: View {
                             }
                             .padding(.horizontal)
                             
-                            Text(movie.title ?? "")
+                            Text(movie.title ?? movie.name ?? "")
                                 .font(.title)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
                                 .padding(.horizontal)
+                            
+                            Text("Release Date: \(movie.releaseDate ?? movie.firstAirDate ?? "No data :(")")
+                                .font(.footnote)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.gray)
+                                .padding(.horizontal)
                         }
                             .frame(maxWidth: .infinity)
                             .frame(maxHeight: 100)
+                            .padding(.bottom)
                             .background(
                                 LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
                             )
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(movie.overview ?? "")
+                    Text(movie.overview ?? "No data :(")
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)

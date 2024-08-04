@@ -50,9 +50,16 @@ struct TopRatedDetailView: View {
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
                                 .padding(.horizontal)
+                            
+                            Text("Release Date: \(movie.releaseDate)")
+                                .font(.footnote)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.gray)
+                                .padding(.horizontal)
                         }
                             .frame(maxWidth: .infinity)
                             .frame(maxHeight: 100)
+                            .padding(.bottom)
                             .background(
                                 LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
                             )
