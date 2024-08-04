@@ -9,6 +9,7 @@ import Foundation
 
 class MovieDBViewModel: ObservableObject {
     
+    private let favoritesManager = FavoritesManager()
     @Published var trendings: [TrendingMovieModel] = []
     @Published var popular: [PopularMovieModel] = []
     @Published var popularActor: [PopularActorModel] = []
@@ -16,7 +17,6 @@ class MovieDBViewModel: ObservableObject {
     @Published var popularSeries: [PopularSeriesModel] = []
     @Published var onTheAirSeries: [OnTheAirSeriesModel] = []
     @Published var searchDB: [SearchDBModel] = []
-    @Published var favoriteMoviesAndSeries: Set<String> = []
     @Published var topRatedSeries: [TopRatedSeriesModel] = [] {
         didSet {
             DispatchQueue.main.async {
@@ -41,10 +41,17 @@ class MovieDBViewModel: ObservableObject {
         }
     }
     
+    @Published var favoriteMoviesAndSeries: Set<String> {
+            didSet {
+                favoritesManager.favoriteMoviesAndSeries = favoriteMoviesAndSeries
+            }
+    }
+    
     static let api_key: String = "5c7cea308def9c5b381b8e963b9df62a"
     
     
     init(){
+        self.favoriteMoviesAndSeries = favoritesManager.favoriteMoviesAndSeries
         getTrendingsData()
         getPopularData()
         getUpcomingData()
@@ -57,6 +64,14 @@ class MovieDBViewModel: ObservableObject {
         sortUpcomingMoviesByDate()
         sortTopRatedMoviesByRating()
         sortTopRatedSeriesByRating()
+    }
+    
+    func addFavorite(posterPath: String) {
+        favoriteMoviesAndSeries.insert(posterPath)
+    }
+
+    func removeFavorite(posterPath: String) {
+        favoriteMoviesAndSeries.remove(posterPath)
     }
     
     private func sortUpcomingMoviesByDate() {
