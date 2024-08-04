@@ -20,7 +20,7 @@
 		841FFB262C5917BB006296D4 /* PopularActorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841FFB252C5917BB006296D4 /* PopularActorView.swift */; };
 		841FFB282C591826006296D4 /* PopularActorCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 841FFB272C591826006296D4 /* PopularActorCell.swift */; };
 		841FFB2A2C591D84006296D4 /* FilterView .swift in Sources */ = {isa = PBXBuildFile; fileRef = 841FFB292C591D84006296D4 /* FilterView .swift */; };
-		84616DD02C52E37400FF7466 /* MovieDBAppApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84616DCF2C52E37400FF7466 /* MovieDBAppApp.swift */; };
+		84616DD02C52E37400FF7466 /* CineVault.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84616DCF2C52E37400FF7466 /* CineVault.swift */; };
 		84616DD22C52E37400FF7466 /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 84616DD12C52E37400FF7466 /* MainView.swift */; };
 		84616DD42C52E37500FF7466 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84616DD32C52E37500FF7466 /* Assets.xcassets */; };
 		84616DD72C52E37500FF7466 /* Preview Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 84616DD62C52E37500FF7466 /* Preview Assets.xcassets */; };
@@ -95,7 +95,7 @@
 		841FFB272C591826006296D4 /* PopularActorCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularActorCell.swift; sourceTree = "<group>"; };
 		841FFB292C591D84006296D4 /* FilterView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "FilterView .swift"; sourceTree = "<group>"; };
 		84616DCC2C52E37400FF7466 /* MovieDBApp.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = MovieDBApp.app; sourceTree = BUILT_PRODUCTS_DIR; };
-		84616DCF2C52E37400FF7466 /* MovieDBAppApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MovieDBAppApp.swift; sourceTree = "<group>"; };
+		84616DCF2C52E37400FF7466 /* CineVault.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CineVault.swift; sourceTree = "<group>"; };
 		84616DD12C52E37400FF7466 /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
 		84616DD32C52E37500FF7466 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		84616DD62C52E37500FF7466 /* Preview Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = "Preview Assets.xcassets"; sourceTree = "<group>"; };
@@ -191,7 +191,7 @@
 				84EDE7A42C54094000481D2E /* ViewModels */,
 				84EDE7A32C54093900481D2E /* Model */,
 				84EDE7A22C54093200481D2E /* Screens */,
-				84616DCF2C52E37400FF7466 /* MovieDBAppApp.swift */,
+				84616DCF2C52E37400FF7466 /* CineVault.swift */,
 				84616DD32C52E37500FF7466 /* Assets.xcassets */,
 				84616DD52C52E37500FF7466 /* Preview Content */,
 			);
@@ -524,7 +524,7 @@
 				C1C15FCF2C5BE41500D1980D /* PopularSeriesDetailView.swift in Sources */,
 				C1BA45662C5BCCCB0092197D /* PopularSeriesModel.swift in Sources */,
 				C1C390F02C5D25B20045BD27 /* UpcomingMovieListCell.swift in Sources */,
-				84616DD02C52E37400FF7466 /* MovieDBAppApp.swift in Sources */,
+				84616DD02C52E37400FF7466 /* CineVault.swift in Sources */,
 				C1C391072C5D3A7A0045BD27 /* PopularActorListView.swift in Sources */,
 				84EDE79F2C54029300481D2E /* ImageLoader.swift in Sources */,
 				C1C15FD32C5BE46100D1980D /* OnTheAirSeriesDetailView.swift in Sources */,
@@ -691,6 +691,7 @@
 				DEVELOPMENT_TEAM = ZQ7FA3QJBQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CineVault;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
@@ -720,6 +721,7 @@
 				DEVELOPMENT_TEAM = ZQ7FA3QJBQ;
 				ENABLE_PREVIEWS = YES;
 				GENERATE_INFOPLIST_FILE = YES;
+				INFOPLIST_KEY_CFBundleDisplayName = CineVault;
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
