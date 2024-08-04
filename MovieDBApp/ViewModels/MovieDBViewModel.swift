@@ -80,7 +80,7 @@ class MovieDBViewModel: ObservableObject {
             let year = calendar.component(.year, from: date)
             return String(year)
         } else {
-            return "Invalid date"
+            return ""
         }
     }
     
