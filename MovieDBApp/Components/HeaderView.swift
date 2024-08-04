@@ -9,8 +9,6 @@ import SwiftUI
 
 struct HeaderView: View {
     
-    @State var userName: String = "Mateusz"
-    
     var body: some View {
         VStack {
             HStack {
@@ -18,14 +16,8 @@ struct HeaderView: View {
                     Text("Welcome 👋")
                         .font(.subheadline)
                         .foregroundStyle(Color.gray)
-                    if userName.isEmpty {
-                        Text("")
-                            .font(.title)
-                            .foregroundStyle(.white)
-                            .fontWeight(.medium)
-                    }
-                    Text("\(userName)")
-                        .font(.title2)
+                    Text("To the CineVault!")
+                        .font(.title3)
                         .foregroundStyle(.white)
                         .fontWeight(.medium)
                 }
