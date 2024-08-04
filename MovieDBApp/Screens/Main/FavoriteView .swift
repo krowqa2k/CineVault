@@ -51,14 +51,15 @@ struct FavoriteView_: View {
                         .foregroundStyle(.purpleDB)
                 } else {
                     Text("ℹ️ If you want to delete favorite Movie/Series, just press and hold image for one second!")
-                        .font(.headline)
-                        .foregroundStyle(.red)
+                        .font(.subheadline)
+                        .foregroundStyle(.gray)
                         .multilineTextAlignment(.leading)
                         .padding(.bottom, 12)
+                        .padding(.horizontal)
                     LazyVGrid(columns: columns, alignment: .leading) {
                         ForEach(Array(viewModel.favoriteMoviesAndSeries), id: \.self){ favorite in
                             ImageLoader(imageURL: favorite)
-                                .frame(width: 120, height: 190)
+                                .frame(width: 120, height: 180)
                                 .cornerRadius(12)
                                 .onLongPressGesture(
                                     minimumDuration: 1) {
