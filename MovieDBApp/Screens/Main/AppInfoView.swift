@@ -32,7 +32,7 @@ struct AppInfoView: View {
                         .padding(.trailing)
                         .padding(.bottom, 50)
                 }
-                Text("Info about me")
+                Text("Info About Creator")
                     .font(.title2)
                     .fontWeight(.semibold)
                     .foregroundStyle(.purpleDB)
