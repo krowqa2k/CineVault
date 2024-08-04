@@ -187,6 +187,7 @@
 		84616DCE2C52E37400FF7466 /* MovieDBApp */ = {
 			isa = PBXGroup;
 			children = (
+				84616DCF2C52E37400FF7466 /* CineVault.swift */,
 				C1C390E52C5D20070045BD27 /* Extensions */,
 				C1BA45512C5BC1560092197D /* Components */,
 				84EDE7A52C54094F00481D2E /* Constants */,
@@ -194,7 +195,6 @@
 				84EDE7A42C54094000481D2E /* ViewModels */,
 				84EDE7A32C54093900481D2E /* Model */,
 				84EDE7A22C54093200481D2E /* Screens */,
-				84616DCF2C52E37400FF7466 /* CineVault.swift */,
 				84616DD32C52E37500FF7466 /* Assets.xcassets */,
 				84616DD52C52E37500FF7466 /* Preview Content */,
 			);

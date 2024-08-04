@@ -32,7 +32,7 @@ struct AiringTodaySeriesDetailView: View {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text("\(movie.voteAverage.formatted())")
+                                    Text(String(format: "%.2f", movie.voteAverage))
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }

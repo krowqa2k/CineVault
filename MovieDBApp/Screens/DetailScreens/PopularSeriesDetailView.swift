@@ -65,7 +65,7 @@ struct PopularSeriesDetailView: View {
                     Image(systemName: "star.fill")
                         .font(.headline)
                         .foregroundStyle(.yellow)
-                    Text("\(series.voteAverage.formatted())")
+                    Text(String(format: "%.2f", series.voteAverage))
                         .font(.headline)
                         .foregroundStyle(.yellow)
                 }

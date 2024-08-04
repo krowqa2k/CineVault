@@ -35,7 +35,7 @@ struct SearchMovieDetailScreen: View {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text("\(movie.voteAverage?.formatted() ?? "No data :(")")
+                                    Text(String(format: "%.2f", movie.voteAverage ?? "No Data :("))
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
