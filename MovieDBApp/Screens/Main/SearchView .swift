@@ -58,22 +58,16 @@ struct SearchView_: View {
             .padding(.leading, 0)
             .frame(maxWidth: .infinity)
             .tint(.purpleDB)
-            .overlay (
-                HStack {
-                    Spacer()
-                    if !query.isEmpty {
-                        Image(systemName: "xmark.circle.fill")
-                            .padding(8)
-                            .padding(.trailing)
-                            .padding(.leading)
-                            .onTapGesture {
-                                query = ""
-                                viewModel.getSearchDBData(query: query)
-                            }
-                    }
+            
+            if !query.isEmpty {
+                Image(systemName: "xmark.circle.fill")
+                    .padding(.trailing,24)
+                    .background(Color.blackDB.opacity(0.01))
+                    .onTapGesture {
+                        query = ""
+                        viewModel.getSearchDBData(query: query)
                 }
-                , alignment: .trailing
-            )
+            }
         }
     }
     
