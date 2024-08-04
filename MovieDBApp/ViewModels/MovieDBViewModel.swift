@@ -437,7 +437,7 @@ class MovieDBViewModel: ObservableObject {
         guard !query.isEmpty else { return }
                 
         let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/movie?api_key=\(MovieDBViewModel.api_key)&query=\(queryEncoded)") else {return}
+        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=\(MovieDBViewModel.api_key)&query=\(queryEncoded)") else {return}
         
         URLSession.shared.dataTask(with: url) { (data, response, error) in
             guard let data = data else {

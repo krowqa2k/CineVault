@@ -22,6 +22,8 @@ struct SearchDBModel: Codable, Identifiable {
     let releaseDate: String?
     let voteAverage: Double?
     let voteCount: Int?
+    let firstAirDate: String?
+    let profilePath: String?
     let name: String?
 
     enum CodingKeys: String, CodingKey {
@@ -33,12 +35,16 @@ struct SearchDBModel: Codable, Identifiable {
         case releaseDate = "release_date"
         case voteAverage = "vote_average"
         case voteCount = "vote_count"
+        case firstAirDate = "first_air_date"
+        case profilePath = "profile_path"
         case name
     }
     
     var fullPosterPath: String {
         if let posterPath = posterPath {
             Constants.imageGet + posterPath
+        } else if let profilePath = profilePath {
+            Constants.imageGet + profilePath
         } else {
             Constants.noImage
         }
@@ -55,6 +61,8 @@ struct SearchDBModel: Codable, Identifiable {
             releaseDate: "2008/09/10",
             voteAverage: 8.7,
             voteCount: 25215,
+            firstAirDate: "2008/09/10",
+            profilePath: Constants.mockImage,
             name: "The Dark Knight "
         )
     }
