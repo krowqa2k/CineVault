@@ -11,7 +11,7 @@ struct OnTheAirSeriesDetailView: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
-    var movie: OnTheAirSeriesModel = .mock
+    var series: OnTheAirSeriesModel = .mock
     @State private var onClick: Bool = false
     @Environment(\.dismiss) var dismiss
     
@@ -24,18 +24,18 @@ struct OnTheAirSeriesDetailView: View {
                     .overlay (
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(movie.adult ? "18+" : "")
+                                Text(series.adult ? "18+" : "")
                                     .frame(width: 40, height: 40)
                                     .font(.headline)
                                     .foregroundStyle(.blackDB)
-                                    .background(movie.adult ? Color.red : .clear)
+                                    .background(series.adult ? Color.red : .clear)
                                     .cornerRadius(12)
                                 Spacer()
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text("\(movie.voteAverage.formatted())")
+                                    Text("\(series.voteAverage.formatted())")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -45,7 +45,7 @@ struct OnTheAirSeriesDetailView: View {
                             }
                             .padding(.horizontal)
                             
-                            Text(movie.name)
+                            Text(series.name)
                                 .font(.system(size: 26))
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
@@ -59,7 +59,7 @@ struct OnTheAirSeriesDetailView: View {
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(movie.overview)
+                    Text(series.overview)
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)
@@ -94,10 +94,12 @@ struct OnTheAirSeriesDetailView: View {
                     )
                     .padding()
                     .onTapGesture {
-                        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
-                            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+                        if viewModel.favoriteMoviesAndSeries.contains(series.fullPosterPath){
+                            viewModel.favoriteMoviesAndSeries.remove(series.fullPosterPath)
+                            viewModel.removeFavorite(posterPath: series.fullPosterPath)
                         } else {
-                            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+                            viewModel.favoriteMoviesAndSeries.insert(series.fullPosterPath)
+                            viewModel.addFavorite(posterPath: series.fullPosterPath)
                         }
                         onClick.toggle()
                     },alignment: .topTrailing
@@ -109,7 +111,7 @@ struct OnTheAirSeriesDetailView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
     private func updateOnClickState() {
-        onClick = viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath)
+        onClick = viewModel.favoriteMoviesAndSeries.contains(series.fullPosterPath)
     }
 }
 

@@ -102,8 +102,10 @@ struct PopularMovieDetailView: View {
                     .onTapGesture {
                         if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
                             viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+                            viewModel.removeFavorite(posterPath: movie.fullPosterPath)
                         } else {
                             viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+                            viewModel.addFavorite(posterPath: movie.fullPosterPath)
                         }
                         onClick.toggle()
                     },alignment: .topTrailing
