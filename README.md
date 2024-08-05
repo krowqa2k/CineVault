@@ -30,6 +30,7 @@ Technologies Used
 - Xcode 15.4: The development environment used for building the app.
 - SDWebImage: For asynchronous image loading and caching.
 - Lottie: For adding rich animations to the app.
+- API: Free API from The Movie Database (TMDB) 
 
 App Demonstration: 
 
