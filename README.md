@@ -11,15 +11,18 @@ CineVault includes four main views:
 - Discover popular films and upcoming releases.
 - Check out the highest-rated movies and popular actors.
 - Explore TV shows including those currently airing, popular shows, upcoming episodes, and the highest-rated series.
+  
 2. Search View
 - Search through the entire database for movies, TV shows, or actors.
 - Find specific content quickly and easily using the search functionality.
+  
 3. Favorites View
 - View and manage your list of favorite movies and TV shows.
 - Keep track of the content you love for easy access.
+  
 4. About View
 - Get information about the CineVault application and its creator.
-- 
+  
 Technologies Used
 
 - SwiftUI: For building the user interface.
@@ -29,7 +32,5 @@ Technologies Used
 - Lottie: For adding rich animations to the app.
 
 App Demonstration: 
-
-
 https://github.com/user-attachments/assets/c7f5b026-af0a-4987-99d8-555a73862f36
 
