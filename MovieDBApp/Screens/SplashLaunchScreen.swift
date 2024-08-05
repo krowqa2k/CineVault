@@ -43,7 +43,7 @@ struct LottieView: UIViewRepresentable {
             animationView.centerYAnchor.constraint(equalTo: view.centerYAnchor)
         ])
         
-        animationView.animationSpeed = 1.5
+        animationView.animationSpeed = 1
         
         return view
     }
