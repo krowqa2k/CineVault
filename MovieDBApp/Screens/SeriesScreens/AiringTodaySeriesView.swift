@@ -17,7 +17,7 @@ struct AiringTodaySeriesView: View {
             VStack(spacing: 8) {
                 VStack(spacing: 8) {
                     HStack() {
-                        Text("Airing Today")
+                        Text("New Episode Today!")
                             .font(.title2)
                             .foregroundStyle(.white)
                             .fontWeight(.medium)
