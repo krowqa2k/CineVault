@@ -32,5 +32,7 @@ Technologies Used
 - Lottie: For adding rich animations to the app.
 
 App Demonstration: 
+
+
 https://github.com/user-attachments/assets/c7f5b026-af0a-4987-99d8-555a73862f36
 
