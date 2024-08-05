@@ -8,46 +8,66 @@
 import SwiftUI
 
 struct MainView: View {
-    
     @State var index: Int
     @EnvironmentObject var viewModel: MovieDBViewModel
     @State private var options: [String] = ["Movies", "Series"]
+    @State private var isShowingSplash = true
     @AppStorage("db_home_filter") private var selection: String = "Movies"
     
     var body: some View {
-    ZStack {
-        Color.blackDB.ignoresSafeArea()
-            VStack {
-                switch index {
-                case 0:
-                    defaultView
-                    .scrollIndicators(.hidden)
-                case 1:
-                    SearchView_()
-                case 2:
-                    FavoriteView_()
-                case 3:
-                    AppInfoView()
-                default :
-                    defaultView
-                    .scrollIndicators(.hidden)
+        ZStack {
+            if isShowingSplash {
+                SplashLaunchScreen()
+                    .transition(.opacity)
+                    .zIndex(1)
+            }
+            
+            mainContent
+                .opacity(isShowingSplash ? 0 : 1)
+                .animation(.easeIn(duration: 0.2), value: isShowingSplash)
+        }
+        .onAppear {
+            DispatchQueue.main.asyncAfter(deadline: .now() + 5) { 
+                withAnimation {
+                    isShowingSplash = false
                 }
-                Spacer()
-                        
-                TabView(index: self.$index)
-                    .frame(height: 35)
             }
         }
+    }
+    
+    private var mainContent: some View {
+        VStack {
+            switch index {
+            case 0:
+                defaultView
+                    .scrollIndicators(.hidden)
+            case 1:
+                SearchView_()
+            case 2:
+                FavoriteView_()
+            case 3:
+                AppInfoView()
+            default:
+                defaultView
+                    .scrollIndicators(.hidden)
+            }
+            
+            Spacer()
+            
+            TabView(index: self.$index)
+                .frame(height: 35)
+        }
+        .background(Color.blackDB.ignoresSafeArea())
     }
     
     private var defaultView: some View {
         VStack(spacing: 4) {
             HeaderView()
-                    
+            
             FilterView(options: options, selection: $selection)
                 .padding(.bottom)
                 .padding(.horizontal)
-        
+            
             ScrollView(.vertical) {
                 ZStack {
                     if selection == "Movies" {
@@ -74,7 +94,6 @@ struct MainView: View {
         }
     }
 }
-
 
 #Preview {
     MainView(index: 0)
