@@ -46,6 +46,7 @@
 		C1A7AB652C60D952007F5655 /* SplashLaunchScreen.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1A7AB642C60D952007F5655 /* SplashLaunchScreen.swift */; };
 		C1A7AB682C60D9E9007F5655 /* Lottie in Frameworks */ = {isa = PBXBuildFile; productRef = C1A7AB672C60D9E9007F5655 /* Lottie */; };
 		C1A7AB6A2C60DB66007F5655 /* PopcornAnimation.json in Resources */ = {isa = PBXBuildFile; fileRef = C1A7AB692C60DB66007F5655 /* PopcornAnimation.json */; };
+		C1B4A1F82C614DED00CD8D54 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C1B4A1F72C614DED00CD8D54 /* LaunchScreen.storyboard */; };
 		C1BA45562C5BC2580092197D /* AiringTodaySeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45552C5BC2570092197D /* AiringTodaySeriesView.swift */; };
 		C1BA45582C5BC2600092197D /* PopularSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45572C5BC2600092197D /* PopularSeriesView.swift */; };
 		C1BA455A2C5BC26F0092197D /* TopRatedSeriesView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1BA45592C5BC26F0092197D /* TopRatedSeriesView.swift */; };
@@ -123,6 +124,7 @@
 		C15572B42C5FB6D800B49FCE /* FavoriteDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FavoriteDataManager.swift; sourceTree = "<group>"; };
 		C1A7AB642C60D952007F5655 /* SplashLaunchScreen.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SplashLaunchScreen.swift; sourceTree = "<group>"; };
 		C1A7AB692C60DB66007F5655 /* PopcornAnimation.json */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text.json; path = PopcornAnimation.json; sourceTree = "<group>"; };
+		C1B4A1F72C614DED00CD8D54 /* LaunchScreen.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C1BA45552C5BC2570092197D /* AiringTodaySeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AiringTodaySeriesView.swift; sourceTree = "<group>"; };
 		C1BA45572C5BC2600092197D /* PopularSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PopularSeriesView.swift; sourceTree = "<group>"; };
 		C1BA45592C5BC26F0092197D /* TopRatedSeriesView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedSeriesView.swift; sourceTree = "<group>"; };
@@ -204,6 +206,7 @@
 				84616DD32C52E37500FF7466 /* Assets.xcassets */,
 				C1A7AB692C60DB66007F5655 /* PopcornAnimation.json */,
 				84616DD52C52E37500FF7466 /* Preview Content */,
+				C1B4A1F72C614DED00CD8D54 /* LaunchScreen.storyboard */,
 			);
 			path = MovieDBApp;
 			sourceTree = "<group>";
@@ -497,6 +500,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				84616DD72C52E37500FF7466 /* Preview Assets.xcassets in Resources */,
+				C1B4A1F82C614DED00CD8D54 /* LaunchScreen.storyboard in Resources */,
 				C1A7AB6A2C60DB66007F5655 /* PopcornAnimation.json in Resources */,
 				84616DD42C52E37500FF7466 /* Assets.xcassets in Resources */,
 			);
@@ -719,6 +723,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
@@ -749,6 +754,7 @@
 				INFOPLIST_KEY_UIApplicationSceneManifest_Generation = YES;
 				INFOPLIST_KEY_UIApplicationSupportsIndirectInputEvents = YES;
 				INFOPLIST_KEY_UILaunchScreen_Generation = YES;
+				INFOPLIST_KEY_UILaunchStoryboardName = LaunchScreen.storyboard;
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPad = "UIInterfaceOrientationPortrait UIInterfaceOrientationPortraitUpsideDown UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				INFOPLIST_KEY_UISupportedInterfaceOrientations_iPhone = "UIInterfaceOrientationPortrait UIInterfaceOrientationLandscapeLeft UIInterfaceOrientationLandscapeRight";
 				LD_RUNPATH_SEARCH_PATHS = (
