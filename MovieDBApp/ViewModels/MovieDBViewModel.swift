@@ -9,6 +9,8 @@ import Foundation
 
 class MovieDBViewModel: ObservableObject {
     private let favoritesManager = FavoritesManager()
+    private let webService = WebService()
+    
     @Published private(set) var trendings: [TrendingMovieModel] = []
     @Published private(set) var popular: [PopularMovieModel] = []
     @Published private(set) var popularActor: [PopularActorModel] = []
@@ -26,27 +28,10 @@ class MovieDBViewModel: ObservableObject {
         }
     }
     
-    static let api_key: String = "5c7cea308def9c5b381b8e963b9df62a"
-    private let queue = DispatchQueue(label: "com.moviedbapp.apiqueue", qos: .background, attributes: .concurrent)
-    
     init() {
         self.favoriteMoviesAndSeries = favoritesManager.favoriteMoviesAndSeries
-        loadInitialData()
     }
     
-    private func loadInitialData() {
-        queue.async { [weak self] in
-            self?.getTrendingsData()
-            self?.getPopularData()
-            self?.getUpcomingData()
-            self?.getTopRatedData()
-            self?.getPopularActorData()
-            self?.getAiringTodayData()
-            self?.getPopularSeriesData()
-            self?.getTopRatedSeriesData()
-            self?.getOnTheAirSeriesData()
-        }
-    }
     
     func addFavorite(posterPath: String) {
         DispatchQueue.main.async {
@@ -103,113 +88,84 @@ class MovieDBViewModel: ObservableObject {
         }
     }
     
-    private func performAPICall<T: Decodable>(url: URL, completion: @escaping (T?) -> Void) {
-        URLSession.shared.dataTask(with: url) { (data, response, error) in
-            guard let data = data,
-                  let response = response as? HTTPURLResponse,
-                  200...299 ~= response.statusCode,
-                  error == nil else {
-                print("API call failed: \(url)")
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
-                return
-            }
-            
+    private func updateData<T: Decodable>(fetch: @escaping () async throws -> T, update: @escaping (T) -> Void) {
+        Task {
             do {
-                let decodedData = try JSONDecoder().decode(T.self, from: data)
-                DispatchQueue.main.async {
-                    completion(decodedData)
-                }
+                let result = try await fetch()
+                update(result)
             } catch {
-                print("Decoding error: \(error)")
-                DispatchQueue.main.async {
-                    completion(nil)
-                }
+                print("Error fetching data: \(error)")
             }
-        }.resume()
+        }
     }
     
     func getTrendingsData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: TrendingResults?) in
-            self?.trendings = result?.results ?? []
+        updateData(fetch: webService.getTrendingsData) { [weak self] (result: TrendingResults) in
+            self?.trendings = result.results
         }
     }
     
     func getPopularData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: PopularMovieResults?) in
-            self?.popular = result?.results ?? []
+        updateData(fetch: webService.getPopularData) { [weak self] (result: PopularMovieResults) in
+            self?.popular = result.results
         }
     }
     
     func getUpcomingData() {
-        guard var components = URLComponents(string: "https://api.themoviedb.org/3/movie/upcoming") else { return }
-        components.queryItems = [
-            URLQueryItem(name: "api_key", value: MovieDBViewModel.api_key),
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1"),
-            URLQueryItem(name: "region", value: "US")
-        ]
-        guard let url = components.url else { return }
-        
-        performAPICall(url: url) { [weak self] (result: UpcomingResults?) in
-            self?.upcoming = result?.results ?? []
+        updateData(fetch: webService.getUpcomingData) { [weak self] (result: UpcomingResults) in
+            self?.upcoming = result.results
             self?.sortUpcomingMoviesByDate()
         }
     }
     
     func getTopRatedData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: TopRatedResults?) in
-            self?.topRated = result?.results ?? []
+        updateData(fetch: webService.getTopRatedData) { [weak self] (result: TopRatedResults) in
+            self?.topRated = result.results
             self?.sortTopRatedMoviesByRating()
         }
     }
     
     func getPopularActorData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/person/popular?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: PopularActorResult?) in
-            self?.popularActor = result?.results ?? []
+        updateData(fetch: webService.getPopularActorData) { [weak self] (result: PopularActorResult) in
+            self?.popularActor = result.results
         }
     }
     
     func getAiringTodayData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/airing_today?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: AiringTodayResult?) in
-            self?.airingToday = result?.results ?? []
+        updateData(fetch: webService.getAiringTodayData) { [weak self] (result: AiringTodayResult) in
+            self?.airingToday = result.results
         }
     }
     
     func getPopularSeriesData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/trending/tv/day?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: PopularSeriesResults?) in
-            self?.popularSeries = result?.results ?? []
+        updateData(fetch: webService.getPopularSeriesData) { [weak self] (result: PopularSeriesResults) in
+            self?.popularSeries = result.results
         }
     }
     
     func getTopRatedSeriesData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: TopRatedSeriesResults?) in
-            self?.topRatedSeries = result?.results ?? []
+        updateData(fetch: webService.getTopRatedSeriesData) { [weak self] (result: TopRatedSeriesResults) in
+            self?.topRatedSeries = result.results
             self?.sortTopRatedSeriesByRating()
         }
     }
     
     func getOnTheAirSeriesData() {
-        guard let url = URL(string: "https://api.themoviedb.org/3/tv/on_the_air?api_key=\(MovieDBViewModel.api_key)") else { return }
-        performAPICall(url: url) { [weak self] (result: OnTheAirSeriesResults?) in
-            self?.onTheAirSeries = result?.results ?? []
+        updateData(fetch: webService.getOnTheAirSeriesData) { [weak self] (result: OnTheAirSeriesResults) in
+            self?.onTheAirSeries = result.results
         }
     }
     
     func getSearchDBData(query: String) {
-        guard !query.isEmpty else { return }
-        let queryEncoded = query.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed) ?? ""
-        guard let url = URL(string: "https://api.themoviedb.org/3/search/multi?api_key=\(MovieDBViewModel.api_key)&query=\(queryEncoded)") else { return }
-        performAPICall(url: url) { [weak self] (result: SearchDBResults?) in
-            self?.searchDB = result?.results ?? []
+        Task {
+            do {
+                let result = try await webService.getSearchDBData(query: query)
+                DispatchQueue.main.async {
+                    self.searchDB = result.results
+                }
+            } catch {
+                print("Error fetching search data: \(error)")
+            }
         }
     }
 }
