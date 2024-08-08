@@ -45,6 +45,9 @@ struct UpcomingMovieView: View {
                 .scrollIndicators(.hidden)
             }
         }
+        .task {
+            viewModel.getUpcomingData()
+        }
     }
 }
 

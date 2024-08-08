@@ -83,6 +83,7 @@
 		C1C3910D2C5D3E030045BD27 /* TopRatedSeriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3910C2C5D3E030045BD27 /* TopRatedSeriesListView.swift */; };
 		C1C3910F2C5D3E950045BD27 /* OnTheAirSeriesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C3910E2C5D3E950045BD27 /* OnTheAirSeriesListView.swift */; };
 		C1C391142C5D427E0045BD27 /* SearchView .swift in Sources */ = {isa = PBXBuildFile; fileRef = C1C391132C5D427E0045BD27 /* SearchView .swift */; };
+		C1F1E2652C65148600889BCC /* WebService.swift in Sources */ = {isa = PBXBuildFile; fileRef = C1F1E2642C65148600889BCC /* WebService.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -161,6 +162,7 @@
 		C1C3910C2C5D3E030045BD27 /* TopRatedSeriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TopRatedSeriesListView.swift; sourceTree = "<group>"; };
 		C1C3910E2C5D3E950045BD27 /* OnTheAirSeriesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnTheAirSeriesListView.swift; sourceTree = "<group>"; };
 		C1C391132C5D427E0045BD27 /* SearchView .swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "SearchView .swift"; sourceTree = "<group>"; };
+		C1F1E2642C65148600889BCC /* WebService.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WebService.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -199,6 +201,7 @@
 				C1C390E52C5D20070045BD27 /* Extensions */,
 				C1BA45512C5BC1560092197D /* Components */,
 				84EDE7A52C54094F00481D2E /* Constants */,
+				C1F1E2632C65146500889BCC /* Services */,
 				C15572B32C5FB6C600B49FCE /* Managers */,
 				84EDE7A42C54094000481D2E /* ViewModels */,
 				84EDE7A32C54093900481D2E /* Model */,
@@ -433,6 +436,15 @@
 			path = MovieListCell;
 			sourceTree = "<group>";
 		};
+		C1F1E2632C65146500889BCC /* Services */ = {
+			isa = PBXGroup;
+			children = (
+				C1F1E2642C65148600889BCC /* WebService.swift */,
+			);
+			name = Services;
+			path = Managers/Services;
+			sourceTree = "<group>";
+		};
 /* End PBXGroup section */
 
 /* Begin PBXNativeTarget section */
@@ -577,6 +589,7 @@
 				84EDE7AF2C54106B00481D2E /* TrendingMovieModel.swift in Sources */,
 				C1C391052C5D39F70045BD27 /* TopRatedMovieListView.swift in Sources */,
 				C1C390F62C5D27100045BD27 /* AiringTodayListCell.swift in Sources */,
+				C1F1E2652C65148600889BCC /* WebService.swift in Sources */,
 				C1BA45602C5BC69E0092197D /* AiringTodayModel.swift in Sources */,
 				C12D6D252C5E404700D5030F /* SearchDBModel.swift in Sources */,
 				C1BA45642C5BC96C0092197D /* AiringTodaySeriesCell.swift in Sources */,

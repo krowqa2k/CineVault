@@ -23,6 +23,9 @@ struct AiringTodayListView: View {
                     .scrollIndicators(.hidden)
             }
         }
+        .task {
+            viewModel.getAiringTodayData()
+        }
         .toolbar(.hidden, for: .navigationBar)
     }
     
@@ -57,7 +60,7 @@ struct AiringTodayListView: View {
     private var moviesList: some View {
         ScrollView {
             ForEach(viewModel.airingToday){ airingTodaySeries in
-                NavigationLink(destination: AiringTodaySeriesDetailView(imageName: airingTodaySeries.fullPosterPath, movie: airingTodaySeries)) {
+                NavigationLink(destination: AiringTodaySeriesDetailView(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)) {
                     AiringTodayListCell(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)

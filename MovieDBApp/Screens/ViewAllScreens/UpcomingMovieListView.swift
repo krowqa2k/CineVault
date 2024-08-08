@@ -24,6 +24,9 @@ struct UpcomingMovieListView: View {
                     .scrollIndicators(.hidden)
             }
         }
+        .task {
+            viewModel.getUpcomingData()
+        }
         .toolbar(.hidden, for: .navigationBar)
     }
     

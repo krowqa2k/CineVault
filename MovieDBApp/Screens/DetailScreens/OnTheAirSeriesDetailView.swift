@@ -24,18 +24,20 @@ struct OnTheAirSeriesDetailView: View {
                     .overlay (
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(series.adult ? "18+" : "")
-                                    .frame(width: 40, height: 40)
-                                    .font(.headline)
-                                    .foregroundStyle(.blackDB)
-                                    .background(series.adult ? Color.red : .clear)
-                                    .cornerRadius(12)
+                                if let seriesAdult = series.adult {
+                                    Text(seriesAdult ? "18+" : "")
+                                        .frame(width: 40, height: 40)
+                                        .font(.headline)
+                                        .foregroundStyle(.blackDB)
+                                        .background(seriesAdult ? Color.red : .clear)
+                                        .cornerRadius(12)
+                                }
                                 Spacer()
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text(String(format: "%.2f", series.voteAverage))
+                                    Text(String(format: "%.2f", series.voteAverage ?? 0))
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -45,7 +47,7 @@ struct OnTheAirSeriesDetailView: View {
                             }
                             .padding(.horizontal)
                             
-                            Text(series.name)
+                            Text(series.name ?? "")
                                 .font(.system(size: 26))
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
@@ -59,7 +61,7 @@ struct OnTheAirSeriesDetailView: View {
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(series.overview)
+                    Text(series.overview ?? "")
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)

@@ -13,12 +13,12 @@ struct OnTheAirSeriesResults: Codable {
 }
 
 struct OnTheAirSeriesModel: Codable, Identifiable {
-    let adult: Bool
-    let id: Int
-    let originalLanguage, overview: String
+    let adult: Bool?
+    let id: Int?
+    let originalLanguage, overview: String?
     let posterPath: String?
-    let name: String
-    let voteAverage: Double
+    let name: String?
+    let voteAverage: Double?
     let firstAirDate: String?
 
     enum CodingKeys: String, CodingKey {

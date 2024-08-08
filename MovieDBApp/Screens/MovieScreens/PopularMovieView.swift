@@ -45,6 +45,9 @@ struct PopularMovieView: View {
                 .scrollIndicators(.hidden)
             }
         }
+        .task {
+            viewModel.getPopularData()
+        }
     }
 }
 

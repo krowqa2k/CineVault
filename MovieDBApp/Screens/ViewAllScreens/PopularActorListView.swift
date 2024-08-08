@@ -24,6 +24,9 @@ struct PopularActorListView: View {
                     .scrollIndicators(.hidden)
             }
         }
+        .task {
+            viewModel.getPopularActorData()
+        }
         .toolbar(.hidden, for: .navigationBar)
     }
     

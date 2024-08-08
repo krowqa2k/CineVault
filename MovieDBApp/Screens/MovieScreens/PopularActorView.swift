@@ -45,6 +45,9 @@ struct PopularActorView: View {
                 .scrollIndicators(.hidden)
             }
         }
+        .task {
+            viewModel.getPopularActorData()
+        }
     }
 }
 

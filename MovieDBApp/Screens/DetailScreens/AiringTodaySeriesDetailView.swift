@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AiringTodaySeriesDetailView: View {
     var imageName: String = Constants.mockImage
-    var movie: AiringTodayModel = .mock
+    var series: AiringTodayModel = .mock
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -21,18 +21,21 @@ struct AiringTodaySeriesDetailView: View {
                     .overlay (
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(movie.adult ? "18+" : "")
-                                    .frame(width: 40, height: 40)
-                                    .font(.headline)
-                                    .foregroundStyle(.blackDB)
-                                    .background(movie.adult ? Color.red : .clear)
-                                    .cornerRadius(12)
+                                if let seriesAdult = series.adult {
+                                    Text(seriesAdult ? "18+" : "")
+                                        .frame(width: 40, height: 40)
+                                        .font(.headline)
+                                        .foregroundStyle(.blackDB)
+                                        .background(seriesAdult ? Color.red : .clear)
+                                        .cornerRadius(12)
+                                }
+    
                                 Spacer()
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text(String(format: "%.2f", movie.voteAverage))
+                                    Text(String(format: "%.2f", series.voteAverage ?? ""))
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -42,13 +45,13 @@ struct AiringTodaySeriesDetailView: View {
                             }
                             .padding(.horizontal)
                             
-                            Text(movie.name)
+                            Text(series.name ?? "")
                                 .font(.system(size: 26))
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
                                 .padding(.horizontal)
                             
-                            Text("Release Date: \(movie.firstAirDate)")
+                            Text("Release Date: \(series.firstAirDate ?? "")")
                                 .font(.footnote)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.gray)
@@ -63,7 +66,7 @@ struct AiringTodaySeriesDetailView: View {
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(movie.overview)
+                    Text(series.overview ?? "")
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)

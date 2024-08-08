@@ -46,6 +46,9 @@ struct OnTheAirSeriesView: View {
                     .scrollIndicators(.hidden)
                 }
             }
+            .task {
+                viewModel.getOnTheAirSeriesData()
+            }
             .toolbar(.hidden, for: .navigationBar)
         }
 }

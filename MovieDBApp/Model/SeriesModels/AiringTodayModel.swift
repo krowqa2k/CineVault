@@ -20,17 +20,17 @@ struct AiringTodayResult: Codable {
 }
 
 struct AiringTodayModel: Codable, Identifiable {
-    let adult: Bool
-    let backdropPath: String
-    let genreIDS: [Int]
-    let id: Int
-    let originCountry: [String]
-    let originalLanguage, originalName, overview: String
-    let popularity: Double
+    let adult: Bool?
+    let backdropPath: String?
+    let genreIDS: [Int]?
+    let id: Int?
+    let originCountry: [String]?
+    let originalLanguage, originalName, overview: String?
+    let popularity: Double?
     let posterPath: String?
-    let firstAirDate, name: String
-    let voteAverage: Double
-    let voteCount: Int
+    let firstAirDate, name: String?
+    let voteAverage: Double?
+    let voteCount: Int?
 
     enum CodingKeys: String, CodingKey {
         case adult

@@ -51,7 +51,9 @@ struct SearchView_: View {
                 .padding(.leading)
                 .padding(.trailing, 0)
             TextField("Search Movies, TV Series...", text: $query) {
-                viewModel.getSearchDBData(query: query)
+                Task {
+                    viewModel.getSearchDBData(query:query)
+                }
             }
             .textFieldStyle(RoundedBorderTextFieldStyle())
             .padding(.trailing,12)
@@ -65,7 +67,9 @@ struct SearchView_: View {
                     .background(Color.blackDB.opacity(0.01))
                     .onTapGesture {
                         query = ""
-                        viewModel.getSearchDBData(query: query)
+                        Task {
+                            viewModel.getSearchDBData(query:query)
+                        }
                 }
             }
         }

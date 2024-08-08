@@ -17,15 +17,15 @@ struct OnTheAirSeriesListCell: View {
                 .frame(width: 110, height: 160)
                 .cornerRadius(16)
             VStack(alignment: .leading, spacing: 8){
-                Text(series.name)
+                Text(series.name ?? "")
                     .font(.system(size: 15))
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.leading)
-                Text("Original Language: \(series.originalLanguage)")
+                Text("Original Language: \(series.originalLanguage ?? "")")
                     .font(.system(size: 13))
                     .foregroundStyle(.gray)
-                if series.adult {
+                if let seriesAdult = series.adult {
                     Text("For adults")
                         .font(.system(size: 13))
                         .foregroundStyle(.red)
@@ -34,7 +34,7 @@ struct OnTheAirSeriesListCell: View {
                     Image(systemName: "star.fill")
                         .font(.headline)
                         .foregroundStyle(.yellow)
-                    Text(String(format: "%.2f", series.voteAverage))
+                    Text(String(format: "%.2f", series.voteAverage ?? 0))
                         .font(.headline)
                         .foregroundStyle(.yellow)
                 }

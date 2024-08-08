@@ -35,7 +35,7 @@ struct AiringTodaySeriesView: View {
                     ScrollView(.horizontal){
                         LazyHStack {
                             ForEach(viewModel.airingToday){ airingToday in
-                                NavigationLink(destination: AiringTodaySeriesDetailView(imageName: airingToday.fullPosterPath, movie: airingToday)) {
+                                NavigationLink(destination: AiringTodaySeriesDetailView(imageName: airingToday.fullPosterPath, series: airingToday)) {
                                     AiringTodaySeriesCell(movie: airingToday, imageURL: airingToday.fullPosterPath)
                                 }
                                 }
@@ -46,6 +46,9 @@ struct AiringTodaySeriesView: View {
                     .scrollIndicators(.hidden)
                 }
             }
+        .task {
+            viewModel.getAiringTodayData()
+        }
             .toolbar(.hidden, for: .navigationBar)
         }
     }

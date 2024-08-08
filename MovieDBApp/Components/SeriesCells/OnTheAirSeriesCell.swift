@@ -17,7 +17,7 @@ struct OnTheAirSeriesCell: View {
                 .frame(width: 160, height: 220)
                 .cornerRadius(16)
             
-            Text(movie.name)
+            Text(movie.name ?? "")
                 .foregroundStyle(.white)
                 .font(.caption)
                 .fontWeight(.semibold)
