@@ -1,6 +1,6 @@
-CineVault
-
-CineVault is a comprehensive movie and TV show database application designed to provide users with an immersive cinematic experience. Built with SwiftUI and following the MVVM architecture, CineVault offers a range of features and functionalities to explore and manage your favorite movies and TV shows.
+🍿 CineVault
+It's my first Big SwiftUI independent project which taught me the basics of SwiftUI. I focused on proccesing the API calls and format the data properly into movies/series/actors. 
+🍿 CineVault is a comprehensive movie and TV show database application designed to provide users with an immersive cinematic experience. Built with SwiftUI and following the MVVM architecture, CineVault offers a range of features and functionalities to explore and manage your favorite movies and TV shows.
 
 Features
 
@@ -26,6 +26,7 @@ CineVault includes four main views:
 Technologies Used
 
 - SwiftUI: For building the user interface.
+- Concurrency
 - MVVM Architecture: For a clean separation of concerns and improved testability.
 - Xcode 15.4: The development environment used for building the app.
 - SDWebImage: For asynchronous image loading and caching.
