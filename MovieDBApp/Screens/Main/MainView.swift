@@ -78,6 +78,7 @@ struct MainView: View {
                             TopRatedMovieView()
                             PopularActorView()
                         }
+                        .padding(.bottom, 20)
                         .transition(.move(edge: .leading))
                     } else {
                         LazyVStack(spacing: 16) {
@@ -86,6 +87,7 @@ struct MainView: View {
                             AiringTodaySeriesView()
                             TopRatedSeriesView()
                         }
+                        .padding(.bottom, 20)
                         .transition(.move(edge: .trailing))
                     }
                 }
