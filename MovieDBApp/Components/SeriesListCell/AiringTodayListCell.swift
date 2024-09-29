@@ -25,7 +25,7 @@ struct AiringTodayListCell: View {
                 Text("Original Language: \(series.originalLanguage ?? "")")
                     .font(.system(size: 13))
                     .foregroundStyle(.gray)
-                if let seriesAdult = series.adult {
+                if series.adult != nil {
                     Text("For adults")
                         .font(.system(size: 13))
                         .foregroundStyle(.red)
