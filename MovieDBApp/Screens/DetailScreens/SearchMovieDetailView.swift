@@ -39,7 +39,7 @@ struct SearchMovieDetailView: View {
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
-                                .padding(4)
+                                .padding(8)
                                 .background(Color.blackDB)
                                 .cornerRadius(12)
                             }
