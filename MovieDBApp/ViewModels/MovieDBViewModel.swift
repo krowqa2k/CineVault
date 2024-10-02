@@ -7,20 +7,21 @@
 
 import Foundation
 
-class MovieDBViewModel: ObservableObject {
+@MainActor
+final class MovieDBViewModel: ObservableObject {
     private let favoritesManager = FavoritesManager()
     private let webService = WebService()
     
-    @Published private(set) var trendings: [TrendingMovieModel] = []
-    @Published private(set) var popular: [PopularMovieModel] = []
-    @Published private(set) var popularActor: [PopularActorModel] = []
-    @Published private(set) var airingToday: [AiringTodayModel] = []
-    @Published private(set) var popularSeries: [PopularSeriesModel] = []
-    @Published private(set) var onTheAirSeries: [OnTheAirSeriesModel] = []
+    @Published private(set) var trendings: [MovieModel] = []
+    @Published private(set) var popular: [MovieModel] = []
+    @Published private(set) var popularActor: [ActorModel] = []
+    @Published private(set) var airingToday: [SeriesModel] = []
+    @Published private(set) var popularSeries: [SeriesModel] = []
+    @Published private(set) var onTheAirSeries: [SeriesModel] = []
     @Published private(set) var searchDB: [SearchDBModel] = []
-    @Published private(set) var topRatedSeries: [TopRatedSeriesModel] = []
-    @Published private(set) var upcoming: [UpcomingMovieModel] = []
-    @Published private(set) var topRated: [TopRatedMovieModel] = []
+    @Published private(set) var topRatedSeries: [SeriesModel] = []
+    @Published private(set) var upcoming: [MovieModel] = []
+    @Published private(set) var topRated: [MovieModel] = []
     
     @Published var favoriteMoviesAndSeries: Set<String> {
         didSet {
@@ -32,46 +33,36 @@ class MovieDBViewModel: ObservableObject {
         self.favoriteMoviesAndSeries = favoritesManager.favoriteMoviesAndSeries
     }
     
-    
     func addFavorite(posterPath: String) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.favoriteMoviesAndSeries.insert(posterPath)
         }
     }
 
     func removeFavorite(posterPath: String) {
-        DispatchQueue.main.async {
+        Task { @MainActor in
             self.favoriteMoviesAndSeries.remove(posterPath)
         }
     }
     
     func sortUpcomingMoviesByDate() {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
+        Task { @MainActor in
             let sortedUpcoming = self.upcoming.sorted { $1.releaseDate > $0.releaseDate }
-            DispatchQueue.main.async {
-                self.upcoming = sortedUpcoming
-            }
+            self.upcoming = sortedUpcoming
         }
     }
     
     func sortTopRatedMoviesByRating() {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
+        Task { @MainActor in
             let sortedTopRated = self.topRated.sorted { $0.voteAverage > $1.voteAverage }
-            DispatchQueue.main.async {
-                self.topRated = sortedTopRated
-            }
+            self.topRated = sortedTopRated
         }
     }
     
     func sortTopRatedSeriesByRating() {
-        DispatchQueue.global(qos: .userInitiated).async { [weak self] in
-            guard let self = self else { return }
-            let sortedTopRatedSeries = self.topRatedSeries.sorted { $0.voteAverage > $1.voteAverage }
-            DispatchQueue.main.async {
-                self.topRatedSeries = sortedTopRatedSeries
-            }
+        Task { @MainActor in
+            let sortedTopRatedSeries = self.topRatedSeries.sorted { $0.voteAverage ?? 0 > $1.voteAverage ?? 0 }
+            self.topRatedSeries = sortedTopRatedSeries
         }
     }
     
@@ -92,7 +83,9 @@ class MovieDBViewModel: ObservableObject {
         Task {
             do {
                 let result = try await fetch()
-                update(result)
+                await MainActor.run {
+                    update(result)
+                }
             } catch {
                 print("Error fetching data: \(error)")
             }
@@ -100,58 +93,58 @@ class MovieDBViewModel: ObservableObject {
     }
     
     func getTrendingsData() {
-        updateData(fetch: webService.getTrendingsData) { [weak self] (result: TrendingResults) in
+        updateData(fetch: webService.getTrendingsData) { [weak self] (result: MovieResults) in
             self?.trendings = result.results
         }
     }
     
     func getPopularData() {
-        updateData(fetch: webService.getPopularData) { [weak self] (result: PopularMovieResults) in
+        updateData(fetch: webService.getPopularData) { [weak self] (result: MovieResults) in
             self?.popular = result.results
         }
     }
     
     func getUpcomingData() {
-        updateData(fetch: webService.getUpcomingData) { [weak self] (result: UpcomingResults) in
+        updateData(fetch: webService.getUpcomingData) { [weak self] (result: MovieResults) in
             self?.upcoming = result.results
             self?.sortUpcomingMoviesByDate()
         }
     }
     
     func getTopRatedData() {
-        updateData(fetch: webService.getTopRatedData) { [weak self] (result: TopRatedResults) in
+        updateData(fetch: webService.getTopRatedData) { [weak self] (result: MovieResults) in
             self?.topRated = result.results
             self?.sortTopRatedMoviesByRating()
         }
     }
     
     func getPopularActorData() {
-        updateData(fetch: webService.getPopularActorData) { [weak self] (result: PopularActorResult) in
+        updateData(fetch: webService.getPopularActorData) { [weak self] (result: ActorResults) in
             self?.popularActor = result.results
         }
     }
     
     func getAiringTodayData() {
-        updateData(fetch: webService.getAiringTodayData) { [weak self] (result: AiringTodayResult) in
+        updateData(fetch: webService.getAiringTodayData) { [weak self] (result: SeriesResults) in
             self?.airingToday = result.results
         }
     }
     
     func getPopularSeriesData() {
-        updateData(fetch: webService.getPopularSeriesData) { [weak self] (result: PopularSeriesResults) in
+        updateData(fetch: webService.getPopularSeriesData) { [weak self] (result: SeriesResults) in
             self?.popularSeries = result.results
         }
     }
     
     func getTopRatedSeriesData() {
-        updateData(fetch: webService.getTopRatedSeriesData) { [weak self] (result: TopRatedSeriesResults) in
+        updateData(fetch: webService.getTopRatedSeriesData) { [weak self] (result: SeriesResults) in
             self?.topRatedSeries = result.results
             self?.sortTopRatedSeriesByRating()
         }
     }
     
     func getOnTheAirSeriesData() {
-        updateData(fetch: webService.getOnTheAirSeriesData) { [weak self] (result: OnTheAirSeriesResults) in
+        updateData(fetch: webService.getOnTheAirSeriesData) { [weak self] (result: SeriesResults) in
             self?.onTheAirSeries = result.results
         }
     }
@@ -160,7 +153,7 @@ class MovieDBViewModel: ObservableObject {
         Task {
             do {
                 let result = try await webService.getSearchDBData(query: query)
-                DispatchQueue.main.async {
+                await MainActor.run {
                     self.searchDB = result.results
                 }
             } catch {

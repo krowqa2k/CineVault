@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct PopularActorCell: View {
-    var actor: PopularActorModel = .mock
+    var actor: ActorModel = .mock
     var imageURL: String = Constants.mockImage
     
     var body: some View {

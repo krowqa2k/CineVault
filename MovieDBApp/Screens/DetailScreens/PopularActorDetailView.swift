@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PopularActorDetailView: View {
     var imageName: String = Constants.mockImage
-    var actor: PopularActorModel = .mock
+    var actor: ActorModel = .mock
     @Environment(\.dismiss) var dismiss
     
     var body: some View {

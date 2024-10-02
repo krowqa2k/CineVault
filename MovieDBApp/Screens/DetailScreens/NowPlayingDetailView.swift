@@ -11,7 +11,7 @@ struct NowPlayingDetailView: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
-    var movie: TrendingMovieModel = .mock
+    var movie: MovieModel = .mock
     @State private var onClick: Bool = false
     @Environment(\.dismiss) var dismiss
     

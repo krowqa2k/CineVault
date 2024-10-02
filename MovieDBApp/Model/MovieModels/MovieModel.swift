@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct TopRatedResults: Codable {
+struct MovieResults: Codable {
     let page: Int
-    let results: [TopRatedMovieModel]
+    let results: [MovieModel]
 }
 
-struct TopRatedMovieModel: Codable, Identifiable {
+struct MovieModel: Codable, Identifiable {
     let adult: Bool
     let id: Int
     let originalLanguage, originalTitle, overview: String
@@ -39,8 +39,8 @@ struct TopRatedMovieModel: Codable, Identifiable {
         return Constants.imageGet + posterPath
     }
     
-    static var mock: TopRatedMovieModel {
-        TopRatedMovieModel(
+    static var mock: MovieModel {
+        MovieModel(
             adult: false,
             id: 278,
             originalLanguage: "en",

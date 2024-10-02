@@ -9,7 +9,7 @@ import SwiftUI
 
 struct UpcomingMovieDetailView: View {
     var imageName: String = Constants.mockImage
-    var movie: UpcomingMovieModel = .mock
+    var movie: MovieModel = .mock
     @Environment(\.dismiss) var dismiss
     
     var body: some View {

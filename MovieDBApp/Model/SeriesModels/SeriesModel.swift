@@ -7,9 +7,9 @@
 
 import Foundation
 
-struct AiringTodayResult: Codable {
+struct SeriesResults: Codable {
     let page: Int
-    let results: [AiringTodayModel]
+    let results: [SeriesModel]
     let totalPages, totalResults: Int
 
     enum CodingKeys: String, CodingKey {
@@ -19,7 +19,7 @@ struct AiringTodayResult: Codable {
     }
 }
 
-struct AiringTodayModel: Codable, Identifiable {
+struct SeriesModel: Codable, Identifiable {
     let adult: Bool?
     let backdropPath: String?
     let genreIDS: [Int]?
@@ -53,9 +53,9 @@ struct AiringTodayModel: Codable, Identifiable {
         return Constants.imageGet + posterPath
     }
     
-    static var mock: AiringTodayModel {
-        AiringTodayModel(
-            adult: false,
+    static var mock: SeriesModel {
+        SeriesModel(
+            adult: true,
             backdropPath: "/AbLzUrHtZ0WbvgYQsD0bMzitYEW.jpg",
             genreIDS: [9648],
             id: 211089,

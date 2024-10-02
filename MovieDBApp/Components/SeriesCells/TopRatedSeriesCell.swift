@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TopRatedSeriesCell: View {
-    var movie: TopRatedSeriesModel = .mock
+    var movie: SeriesModel = .mock
     var imageURL: String = Constants.mockImage
     
     var body: some View {
@@ -17,7 +17,7 @@ struct TopRatedSeriesCell: View {
                 .frame(width: 160, height: 220)
                 .cornerRadius(16)
             
-            Text(movie.name)
+            Text(movie.name ?? "")
                 .foregroundStyle(.white)
                 .font(.caption)
                 .fontWeight(.semibold)

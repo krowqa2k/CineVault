@@ -9,7 +9,7 @@ import SwiftUI
 
 struct PopularActorListCell: View {
     var imageName: String = Constants.mockImage
-    var actor: PopularActorModel = .mock
+    var actor: ActorModel = .mock
     
     var body: some View {
         HStack(spacing: 12) {

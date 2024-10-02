@@ -9,7 +9,7 @@ import SwiftUI
 
 struct OnTheAirSeriesListCell: View {
     var imageName: String = Constants.mockImage
-    var series: OnTheAirSeriesModel = .mock
+    var series: SeriesModel = .mock
     
     var body: some View {
         HStack(spacing: 12) {
@@ -25,10 +25,12 @@ struct OnTheAirSeriesListCell: View {
                 Text("Original Language: \(series.originalLanguage ?? "")")
                     .font(.system(size: 13))
                     .foregroundStyle(.gray)
-                if series.adult != nil {
-                    Text("For adults")
-                        .font(.system(size: 13))
-                        .foregroundStyle(.red)
+                if let adult = series.adult {
+                    if adult {
+                        Text("For adults")
+                            .font(.system(size: 13))
+                            .foregroundStyle(.red)
+                    }
                 }
                 HStack {
                     Image(systemName: "star.fill")

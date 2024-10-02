@@ -9,7 +9,7 @@ import SwiftUI
 
 struct AiringTodaySeriesDetailView: View {
     var imageName: String = Constants.mockImage
-    var series: AiringTodayModel = .mock
+    var series: SeriesModel = .mock
     @Environment(\.dismiss) var dismiss
     
     var body: some View {

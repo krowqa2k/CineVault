@@ -11,7 +11,7 @@ struct OnTheAirSeriesDetailView: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
-    var series: OnTheAirSeriesModel = .mock
+    var series: SeriesModel = .mock
     @State private var onClick: Bool = false
     @Environment(\.dismiss) var dismiss
     

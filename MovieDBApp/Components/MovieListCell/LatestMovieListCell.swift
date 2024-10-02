@@ -10,7 +10,7 @@ import SwiftUI
 struct LatestMovieListCell: View {
     
     var imageName: String = Constants.mockImage
-    var movie: TrendingMovieModel = .mock
+    var movie: MovieModel = .mock
     
     var body: some View {
         HStack(spacing: 12) {

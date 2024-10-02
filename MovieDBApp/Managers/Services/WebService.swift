@@ -31,21 +31,21 @@ final class WebService {
         }
     }
     
-    func getTrendingsData() async throws -> TrendingResults {
+    func getTrendingsData() async throws -> MovieResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/now_playing?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
     }
     
-    func getPopularData() async throws -> PopularMovieResults {
+    func getPopularData() async throws -> MovieResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/popular?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
     }
     
-    func getUpcomingData() async throws -> UpcomingResults {
+    func getUpcomingData() async throws -> MovieResults {
         var components = URLComponents(string: "https://api.themoviedb.org/3/movie/upcoming")
         components?.queryItems = [
             URLQueryItem(name: "api_key", value: Self.apiKey),
@@ -59,42 +59,42 @@ final class WebService {
         return try await fetch(url: url)
     }
     
-    func getTopRatedData() async throws -> TopRatedResults {
+    func getTopRatedData() async throws -> MovieResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/movie/top_rated?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
     }
     
-    func getPopularActorData() async throws -> PopularActorResult {
+    func getPopularActorData() async throws -> ActorResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/person/popular?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
     }
     
-    func getAiringTodayData() async throws -> AiringTodayResult {
+    func getAiringTodayData() async throws -> SeriesResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/tv/airing_today?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
     }
     
-    func getPopularSeriesData() async throws -> PopularSeriesResults {
+    func getPopularSeriesData() async throws -> SeriesResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/trending/tv/day?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
     }
     
-    func getTopRatedSeriesData() async throws -> TopRatedSeriesResults {
+    func getTopRatedSeriesData() async throws -> SeriesResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/tv/top_rated?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
     }
     
-    func getOnTheAirSeriesData() async throws -> OnTheAirSeriesResults {
+    func getOnTheAirSeriesData() async throws -> SeriesResults {
         guard let url = URL(string: "https://api.themoviedb.org/3/tv/on_the_air?api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }

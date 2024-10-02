@@ -11,7 +11,7 @@ struct TopRatedSeriesDetailView: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
-    var series: TopRatedSeriesModel = .mock
+    var series: SeriesModel = .mock
     @State private var onClick: Bool = false
     @Environment(\.dismiss) var dismiss
     
@@ -24,18 +24,18 @@ struct TopRatedSeriesDetailView: View {
                     .overlay (
                         VStack(alignment: .leading) {
                             HStack {
-                                Text(series.adult ? "18+" : "")
+                                Text(series.adult ?? false ? "18+" : "")
                                     .frame(width: 40, height: 40)
                                     .font(.headline)
                                     .foregroundStyle(.blackDB)
-                                    .background(series.adult ? Color.red : .clear)
+                                    .background(series.adult ?? false ? Color.red : .clear)
                                     .cornerRadius(12)
                                 Spacer()
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text(String(format: "%.2f", series.voteAverage))
+                                    Text(String(format: "%.2f", series.voteAverage ?? ""))
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -45,7 +45,7 @@ struct TopRatedSeriesDetailView: View {
                             }
                             .padding(.horizontal)
                             
-                            Text(series.name)
+                            Text(series.name ?? "")
                                 .font(.system(size: 26))
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
@@ -66,7 +66,7 @@ struct TopRatedSeriesDetailView: View {
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(series.overview)
+                    Text(series.overview ?? "")
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)

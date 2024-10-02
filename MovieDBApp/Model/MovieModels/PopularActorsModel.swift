@@ -7,12 +7,12 @@
 
 import Foundation
 
-struct PopularActorResult: Codable {
+struct ActorResults: Codable {
     let page: Int
-    let results: [PopularActorModel]
+    let results: [ActorModel]
 }
 
-struct PopularActorModel: Codable, Identifiable {
+struct ActorModel: Codable, Identifiable {
     let adult: Bool
     let gender, id: Int
     let name, originalName: String
@@ -33,8 +33,8 @@ struct PopularActorModel: Codable, Identifiable {
             Constants.imageGet + profilePath
     }
     
-    static var mock: PopularActorModel {
-        PopularActorModel(
+    static var mock: ActorModel {
+        ActorModel(
             adult: false,
             gender: 2,
             id: 64,
