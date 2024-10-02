@@ -61,7 +61,7 @@ struct UpcomingMovieListView: View {
     private var moviesList: some View {
         ScrollView {
             ForEach(viewModel.upcoming){ upcomingMovie in
-                NavigationLink(destination: UpcomingMovieDetailView(imageName: upcomingMovie.fullPosterPath, movie: upcomingMovie)) {
+                NavigationLink(destination: MovieDetailView(imageName: upcomingMovie.fullPosterPath, movie: upcomingMovie)) {
                     UpcomingMovieListCell(imageName: upcomingMovie.fullPosterPath, movie: upcomingMovie)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)

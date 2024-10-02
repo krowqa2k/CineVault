@@ -1,17 +1,17 @@
 //
-//  OnTheAirSeriesDetailView.swift
+//  PopularMovieDetailView.swift
 //  MovieDBApp
 //
-//  Created by Mateusz Krówczyński on 01/08/2024.
+//  Created by admin on 30/07/2024.
 //
 
 import SwiftUI
 
-struct OnTheAirSeriesDetailView: View {
+struct MovieDetailView: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
-    var series: SeriesModel = .mock
+    var movie: MovieModel = .mock
     @State private var onClick: Bool = false
     @Environment(\.dismiss) var dismiss
     
@@ -24,20 +24,18 @@ struct OnTheAirSeriesDetailView: View {
                     .overlay (
                         VStack(alignment: .leading) {
                             HStack {
-                                if let seriesAdult = series.adult {
-                                    Text(seriesAdult ? "18+" : "")
-                                        .frame(width: 40, height: 40)
-                                        .font(.headline)
-                                        .foregroundStyle(.blackDB)
-                                        .background(seriesAdult ? Color.red : .clear)
-                                        .cornerRadius(12)
-                                }
+                                Text(movie.adult ? "18+" : "")
+                                    .frame(width: 40, height: 40)
+                                    .font(.headline)
+                                    .foregroundStyle(.blackDB)
+                                    .background(movie.adult ? Color.red : .clear)
+                                    .cornerRadius(12)
                                 Spacer()
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text(String(format: "%.2f", series.voteAverage ?? 0))
+                                    Text(String(format: "%.2f", movie.voteAverage))
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -47,27 +45,33 @@ struct OnTheAirSeriesDetailView: View {
                             }
                             .padding(.horizontal)
                             
-                            Text(series.name ?? "")
-                                .font(.system(size: 26))
+                            Text(movie.title)
+                                .font(.title)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
+                                .padding(.horizontal)
+                            
+                            Text("Release Date: \(movie.releaseDate)")
+                                .font(.footnote)
+                                .fontWeight(.medium)
+                                .foregroundStyle(.gray)
                                 .padding(.horizontal)
                         }
                             .frame(maxWidth: .infinity)
                             .frame(maxHeight: 100)
+                            .padding(.bottom)
                             .background(
                                 LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
                             )
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(series.overview ?? "")
+                    Text(movie.overview)
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)
                         .multilineTextAlignment(.leading)
                 }
-                    
             }
             .overlay(
                 Circle()
@@ -96,12 +100,12 @@ struct OnTheAirSeriesDetailView: View {
                     )
                     .padding()
                     .onTapGesture {
-                        if viewModel.favoriteMoviesAndSeries.contains(series.fullPosterPath){
-                            viewModel.favoriteMoviesAndSeries.remove(series.fullPosterPath)
-                            viewModel.removeFavorite(posterPath: series.fullPosterPath)
+                        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
+                            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+                            viewModel.removeFavorite(posterPath: movie.fullPosterPath)
                         } else {
-                            viewModel.favoriteMoviesAndSeries.insert(series.fullPosterPath)
-                            viewModel.addFavorite(posterPath: series.fullPosterPath)
+                            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+                            viewModel.addFavorite(posterPath: movie.fullPosterPath)
                         }
                         onClick.toggle()
                     },alignment: .topTrailing
@@ -113,11 +117,14 @@ struct OnTheAirSeriesDetailView: View {
         .toolbar(.hidden, for: .navigationBar)
     }
     private func updateOnClickState() {
-        onClick = viewModel.favoriteMoviesAndSeries.contains(series.fullPosterPath)
+        onClick = viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath)
     }
 }
 
 #Preview {
-    OnTheAirSeriesDetailView()
-        .environmentObject(MovieDBViewModel())
+    ZStack {
+        Color.blackDB
+        MovieDetailView()
+            .environmentObject(MovieDBViewModel())
+    }
 }

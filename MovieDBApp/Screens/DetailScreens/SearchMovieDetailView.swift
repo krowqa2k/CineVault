@@ -1,15 +1,18 @@
 //
-//  AiringTodaySeriesDetailView.swift
+//  SearchMovieDetailView.swift
 //  MovieDBApp
 //
-//  Created by Mateusz Krówczyński on 01/08/2024.
+//  Created by Mateusz Krówczyński on 02/10/2024.
 //
 
 import SwiftUI
 
-struct AiringTodaySeriesDetailView: View {
+struct SearchMovieDetailView: View {
+    
+    @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
-    var series: SeriesModel = .mock
+    var movie: SearchDBModel = .mock
+    @State private var onClick: Bool = false
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -21,21 +24,18 @@ struct AiringTodaySeriesDetailView: View {
                     .overlay (
                         VStack(alignment: .leading) {
                             HStack {
-                                if let seriesAdult = series.adult {
-                                    Text(seriesAdult ? "18+" : "")
-                                        .frame(width: 40, height: 40)
-                                        .font(.headline)
-                                        .foregroundStyle(.blackDB)
-                                        .background(seriesAdult ? Color.red : .clear)
-                                        .cornerRadius(12)
-                                }
-    
+                                Text(movie.adult ?? false ? "18+" : "")
+                                    .frame(width: 40, height: 40)
+                                    .font(.headline)
+                                    .foregroundStyle(.blackDB)
+                                    .background(movie.adult ?? false ? Color.red : .clear)
+                                    .cornerRadius(12)
                                 Spacer()
                                 HStack {
                                     Image(systemName: "star.fill")
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
-                                    Text(String(format: "%.2f", series.voteAverage ?? ""))
+                                    Text(String(format: "%.2f", movie.voteAverage ?? "No Data :("))
                                         .font(.headline)
                                         .foregroundStyle(.yellow)
                                 }
@@ -45,13 +45,13 @@ struct AiringTodaySeriesDetailView: View {
                             }
                             .padding(.horizontal)
                             
-                            Text(series.name ?? "")
-                                .font(.system(size: 26))
+                            Text(movie.title ?? movie.name ?? "")
+                                .font(.title)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.white)
                                 .padding(.horizontal)
                             
-                            Text("Release Date: \(series.firstAirDate ?? "")")
+                            Text("Release Date: \(movie.releaseDate ?? movie.firstAirDate ?? "No data :(")")
                                 .font(.footnote)
                                 .fontWeight(.medium)
                                 .foregroundStyle(.gray)
@@ -66,7 +66,7 @@ struct AiringTodaySeriesDetailView: View {
                         ,alignment: .bottom
                     )
                 ScrollView(.vertical){
-                    Text(series.overview ?? "")
+                    Text(movie.overview ?? "No data :(")
                         .font(.title3)
                         .foregroundStyle(.gray)
                         .padding(.horizontal)
@@ -88,12 +88,40 @@ struct AiringTodaySeriesDetailView: View {
                         dismiss()
                     },alignment: .topLeading
             )
-            .frame(maxHeight: .infinity, alignment: .top)
+            .overlay(
+                Circle()
+                    .frame(width: 40, height: 40)
+                    .foregroundStyle(.blackDB.opacity(0.8))
+                    .overlay(
+                        Image(systemName: "heart.fill")
+                            .font(.title3)
+                            .fontWeight(.medium)
+                            .foregroundStyle(onClick ? .red : .white)
+                    )
+                    .padding()
+                    .onTapGesture {
+                        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
+                            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+                            viewModel.removeFavorite(posterPath: movie.fullPosterPath)
+                        } else {
+                            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+                            viewModel.addFavorite(posterPath: movie.fullPosterPath)
+                        }
+                        onClick.toggle()
+                    },alignment: .topTrailing
+            )
         }
+        .onAppear(perform: {
+            updateOnClickState()
+        })
         .toolbar(.hidden, for: .navigationBar)
+    }
+    private func updateOnClickState() {
+        onClick = viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath)
     }
 }
 
 #Preview {
-    AiringTodaySeriesDetailView()
+    SearchMovieDetailView()
+        .environmentObject(MovieDBViewModel())
 }

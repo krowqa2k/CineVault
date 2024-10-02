@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PopularSeriesDetailView: View {
+struct SeriesDetailView: View {
     
     @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
@@ -137,6 +137,6 @@ struct PopularSeriesDetailView: View {
 }
 
 #Preview {
-    PopularSeriesDetailView()
+    SeriesDetailView()
         .environmentObject(MovieDBViewModel())
 }

@@ -35,7 +35,7 @@ struct TopRatedMovieView: View {
                 ScrollView(.horizontal){
                     LazyHStack {
                         ForEach(viewModel.topRated){ topRatedMovie in
-                            NavigationLink(destination: TopRatedDetailView(imageName: topRatedMovie.fullPosterPath, movie: topRatedMovie)) {
+                            NavigationLink(destination: MovieDetailView(imageName: topRatedMovie.fullPosterPath, movie: topRatedMovie)) {
                                 TopRatedMovieCell(movie: topRatedMovie, imageURL: topRatedMovie.fullPosterPath)
                             }
                         }

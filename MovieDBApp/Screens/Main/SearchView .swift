@@ -78,7 +78,7 @@ struct SearchView_: View {
     private var moviesResult: some View {
         ScrollView(.vertical) {
             ForEach(viewModel.searchDB) { row in
-                NavigationLink(destination: SearchMovieDetailScreen(imageName: row.fullPosterPath, movie: row)) {
+                NavigationLink(destination: SearchMovieDetailView(imageName: row.fullPosterPath, movie: row)) {
                     HStack(spacing: 12) {
                         ImageLoader(imageURL: row.fullPosterPath)
                             .frame(width: 110, height: 160)

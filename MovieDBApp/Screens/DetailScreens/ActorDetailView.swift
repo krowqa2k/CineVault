@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PopularActorDetailView: View {
+struct ActorDetailView: View {
     var imageName: String = Constants.mockImage
     var actor: ActorModel = .mock
     @Environment(\.dismiss) var dismiss
@@ -84,5 +84,5 @@ struct PopularActorDetailView: View {
 }
 
 #Preview {
-    PopularActorDetailView()
+    ActorDetailView()
 }

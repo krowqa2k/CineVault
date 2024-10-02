@@ -35,7 +35,7 @@ struct OnTheAirSeriesView: View {
                     ScrollView(.horizontal){
                         LazyHStack {
                             ForEach(viewModel.onTheAirSeries){ onAirSeries in
-                                NavigationLink(destination: OnTheAirSeriesDetailView(imageName: onAirSeries.fullPosterPath, series: onAirSeries)) {
+                                NavigationLink(destination: SeriesDetailView(imageName: onAirSeries.fullPosterPath, series: onAirSeries)) {
                                     OnTheAirSeriesCell(movie: onAirSeries, imageURL: onAirSeries.fullPosterPath)
                                 }
                                 }

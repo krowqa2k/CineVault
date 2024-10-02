@@ -60,7 +60,7 @@ struct AiringTodayListView: View {
     private var moviesList: some View {
         ScrollView {
             ForEach(viewModel.airingToday){ airingTodaySeries in
-                NavigationLink(destination: AiringTodaySeriesDetailView(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)) {
+                NavigationLink(destination: SeriesDetailView(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)) {
                     AiringTodayListCell(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)

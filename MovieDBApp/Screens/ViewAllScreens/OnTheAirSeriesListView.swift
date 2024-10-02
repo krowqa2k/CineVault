@@ -60,7 +60,7 @@ struct OnTheAirSeriesListView: View {
     private var moviesList: some View {
         ScrollView {
             ForEach(viewModel.onTheAirSeries){ onAirSeries in
-                NavigationLink(destination: OnTheAirSeriesDetailView(imageName: onAirSeries.fullPosterPath, series: onAirSeries)) {
+                NavigationLink(destination: SeriesDetailView(imageName: onAirSeries.fullPosterPath, series: onAirSeries)) {
                     OnTheAirSeriesListCell(imageName: onAirSeries.fullPosterPath, series: onAirSeries)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)

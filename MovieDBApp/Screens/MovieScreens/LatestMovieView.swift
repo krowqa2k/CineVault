@@ -39,7 +39,7 @@ struct LatestMovieView: View {
                     ScrollView(.horizontal){
                         LazyHStack {
                             ForEach(viewModel.trendings){ latestMovie in
-                                NavigationLink(destination: NowPlayingDetailView(imageName: latestMovie.fullPosterPath, movie: latestMovie)) {
+                                NavigationLink(destination: MovieDetailView(imageName: latestMovie.fullPosterPath, movie: latestMovie)) {
                                     LatestMovieCell(movie: latestMovie, imageURL: latestMovie.fullPosterPath)
                                 }
                             }

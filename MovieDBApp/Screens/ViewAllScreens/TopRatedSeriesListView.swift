@@ -60,7 +60,7 @@ struct TopRatedSeriesListView: View {
     private var moviesList: some View {
         ScrollView {
             ForEach(viewModel.topRatedSeries){ topRatedSeries in
-                NavigationLink(destination: TopRatedSeriesDetailView(imageName: topRatedSeries.fullPosterPath, series: topRatedSeries)) {
+                NavigationLink(destination: SeriesDetailView(imageName: topRatedSeries.fullPosterPath, series: topRatedSeries)) {
                     TopRatedSeriesListCell(imageName: topRatedSeries.fullPosterPath, series: topRatedSeries)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)
