@@ -40,7 +40,7 @@ struct LatestMovieView: View {
                         LazyHStack {
                             ForEach(viewModel.trendings){ latestMovie in
                                 NavigationLink(destination: MovieDetailView(imageName: latestMovie.fullPosterPath, movie: latestMovie)) {
-                                    LatestMovieCell(movie: latestMovie, imageURL: latestMovie.fullPosterPath)
+                                    MovieCell(movie: latestMovie, imageURL: latestMovie.fullPosterPath)
                                 }
                             }
                         }

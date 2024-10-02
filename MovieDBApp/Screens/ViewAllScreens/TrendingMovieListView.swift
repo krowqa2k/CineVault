@@ -62,7 +62,7 @@ struct TrendingMovieListView: View {
         ScrollView {
             ForEach(viewModel.trendings){ latestMovie in
                 NavigationLink(destination: MovieDetailView(imageName: latestMovie.fullPosterPath, movie: latestMovie)) {
-                    LatestMovieListCell(imageName: latestMovie.fullPosterPath, movie: latestMovie)
+                    MovieListCell(imageName: latestMovie.fullPosterPath, movie: latestMovie)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading)

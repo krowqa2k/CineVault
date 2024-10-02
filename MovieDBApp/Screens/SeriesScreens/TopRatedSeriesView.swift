@@ -36,7 +36,7 @@ struct TopRatedSeriesView: View {
                         LazyHStack {
                             ForEach(viewModel.topRatedSeries){ topRatedSeries in
                                 NavigationLink(destination: SeriesDetailView(imageName: topRatedSeries.fullPosterPath, series: topRatedSeries)) {
-                                    TopRatedSeriesCell(movie: topRatedSeries, imageURL: topRatedSeries.fullPosterPath)
+                                    SeriesCell(movie: topRatedSeries, imageURL: topRatedSeries.fullPosterPath)
                                 }
                                 }
                             }

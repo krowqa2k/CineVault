@@ -61,7 +61,7 @@ struct AiringTodayListView: View {
         ScrollView {
             ForEach(viewModel.airingToday){ airingTodaySeries in
                 NavigationLink(destination: SeriesDetailView(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)) {
-                    AiringTodayListCell(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)
+                    SeriesListCell(imageName: airingTodaySeries.fullPosterPath, series: airingTodaySeries)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading)

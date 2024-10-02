@@ -36,7 +36,7 @@ struct UpcomingMovieView: View {
                     LazyHStack {
                         ForEach(viewModel.upcoming){ upcomingMovie in
                             NavigationLink(destination: MovieDetailView(imageName: upcomingMovie.fullPosterPath, movie: upcomingMovie)) {
-                                UpcomingMovieCell(movie: upcomingMovie, imageURL: upcomingMovie.fullPosterPath)
+                                MovieCell(movie: upcomingMovie, imageURL: upcomingMovie.fullPosterPath)
                             }
                         }
                     }

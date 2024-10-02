@@ -36,7 +36,7 @@ struct AiringTodaySeriesView: View {
                         LazyHStack {
                             ForEach(viewModel.airingToday){ airingToday in
                                 NavigationLink(destination: SeriesDetailView(imageName: airingToday.fullPosterPath, series: airingToday)) {
-                                    AiringTodaySeriesCell(movie: airingToday, imageURL: airingToday.fullPosterPath)
+                                    SeriesCell(movie: airingToday, imageURL: airingToday.fullPosterPath)
                                 }
                                 }
                             }

@@ -1,14 +1,15 @@
 //
-//  PopularSeriesCell.swift
+//  LatestMovieCell.swift
 //  MovieDBApp
 //
-//  Created by Mateusz Krówczyński on 01/08/2024.
+//  Created by admin on 26/07/2024.
 //
 
 import SwiftUI
 
-struct PopularSeriesCell: View {
-    var movie: SeriesModel = .mock
+struct MovieCell: View {
+    
+    var movie: MovieModel = .mock
     var imageURL: String = Constants.mockImage
     
     var body: some View {
@@ -17,7 +18,7 @@ struct PopularSeriesCell: View {
                 .frame(width: 160, height: 220)
                 .cornerRadius(16)
             
-            Text(movie.name ?? "")
+            Text(movie.title)
                 .foregroundStyle(.white)
                 .font(.caption)
                 .fontWeight(.semibold)
@@ -31,6 +32,10 @@ struct PopularSeriesCell: View {
 #Preview {
     ZStack {
         Color.blackDB.ignoresSafeArea()
-        PopularSeriesCell()
+        HStack {
+            MovieCell()
+            MovieCell()
+        }
+        .padding()
     }
 }

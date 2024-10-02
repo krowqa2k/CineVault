@@ -36,7 +36,7 @@ struct PopularActorView: View {
                     LazyHStack {
                         ForEach(viewModel.popularActor){ popularActor in
                             NavigationLink(destination: ActorDetailView(imageName: popularActor.fullPosterPath, actor: popularActor)) {
-                                PopularActorCell(actor: popularActor, imageURL: popularActor.fullPosterPath)
+                                ActorCell(actor: popularActor, imageURL: popularActor.fullPosterPath)
                             }
                         }
                     }

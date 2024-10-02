@@ -36,7 +36,7 @@ struct OnTheAirSeriesView: View {
                         LazyHStack {
                             ForEach(viewModel.onTheAirSeries){ onAirSeries in
                                 NavigationLink(destination: SeriesDetailView(imageName: onAirSeries.fullPosterPath, series: onAirSeries)) {
-                                    OnTheAirSeriesCell(movie: onAirSeries, imageURL: onAirSeries.fullPosterPath)
+                                    SeriesCell(movie: onAirSeries, imageURL: onAirSeries.fullPosterPath)
                                 }
                                 }
                             }

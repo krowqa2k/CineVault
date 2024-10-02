@@ -1,5 +1,5 @@
 //
-//  TopRatedMovieCell.swift
+//  PopularActorCell.swift
 //  MovieDBApp
 //
 //  Created by admin on 30/07/2024.
@@ -7,8 +7,8 @@
 
 import SwiftUI
 
-struct TopRatedMovieCell: View {
-    var movie: MovieModel = .mock
+struct ActorCell: View {
+    var actor: ActorModel = .mock
     var imageURL: String = Constants.mockImage
     
     var body: some View {
@@ -17,7 +17,7 @@ struct TopRatedMovieCell: View {
                 .frame(width: 160, height: 220)
                 .cornerRadius(16)
             
-            Text(movie.title)
+            Text(actor.name)
                 .foregroundStyle(.white)
                 .font(.caption)
                 .fontWeight(.semibold)
@@ -32,8 +32,8 @@ struct TopRatedMovieCell: View {
     ZStack {
         Color.blackDB.ignoresSafeArea()
         HStack {
-            TopRatedMovieCell()
-            TopRatedMovieCell()
+            ActorCell()
+            ActorCell()
         }
         .padding()
     }

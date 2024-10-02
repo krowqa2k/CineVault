@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct PopularActorListCell: View {
+struct ActorListCell: View {
     var imageName: String = Constants.mockImage
     var actor: ActorModel = .mock
     
@@ -47,6 +47,6 @@ struct PopularActorListCell: View {
 #Preview {
     ZStack {
         Color.blackDB.ignoresSafeArea()
-        PopularActorListCell()
+        ActorListCell()
     }
 }

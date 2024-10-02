@@ -61,7 +61,7 @@ struct PopularMovieListView: View {
         ScrollView {
             ForEach(viewModel.popular){ popularMovie in
                 NavigationLink(destination: MovieDetailView(imageName: popularMovie.fullPosterPath, movie: popularMovie)) {
-                    PopularMovieListCell(imageName: popularMovie.fullPosterPath, movie: popularMovie)
+                    MovieListCell(imageName: popularMovie.fullPosterPath, movie: popularMovie)
                         .padding(.top, 12)
                         .frame(maxWidth: .infinity, alignment: .leading)
                         .padding(.leading)

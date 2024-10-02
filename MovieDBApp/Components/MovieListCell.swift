@@ -1,5 +1,5 @@
 //
-//  PopularMovieListCell.swift
+//  LatestMovieListCell.swift
 //  MovieDBApp
 //
 //  Created by Mateusz Krówczyński on 02/08/2024.
@@ -7,7 +7,8 @@
 
 import SwiftUI
 
-struct PopularMovieListCell: View {
+struct MovieListCell: View {
+    
     var imageName: String = Constants.mockImage
     var movie: MovieModel = .mock
     
@@ -39,5 +40,8 @@ struct PopularMovieListCell: View {
 }
 
 #Preview {
-    PopularMovieListCell()
+    ZStack {
+        Color.blackDB.ignoresSafeArea()
+        MovieListCell()
+    }
 }

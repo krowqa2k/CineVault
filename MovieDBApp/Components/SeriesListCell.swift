@@ -1,5 +1,5 @@
 //
-//  TopRatedSeriesListCell.swift
+//  AiringTodayListCell.swift
 //  MovieDBApp
 //
 //  Created by Mateusz Krówczyński on 02/08/2024.
@@ -7,7 +7,7 @@
 
 import SwiftUI
 
-struct TopRatedSeriesListCell: View {
+struct SeriesListCell: View {
     var imageName: String = Constants.mockImage
     var series: SeriesModel = .mock
     
@@ -22,6 +22,10 @@ struct TopRatedSeriesListCell: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.leading)
+                Text("Original Language: \(series.originalLanguage ?? "")")
+                    .font(.system(size: 13))
+                    .foregroundStyle(.gray)
+                
                 if let adult = series.adult {
                     if adult {
                         Text("For adults")
@@ -33,7 +37,7 @@ struct TopRatedSeriesListCell: View {
                     Image(systemName: "star.fill")
                         .font(.headline)
                         .foregroundStyle(.yellow)
-                    Text(String(format: "%.2f", series.voteAverage ?? ""))
+                    Text(String(format: "%.2f", series.voteAverage ?? 0))
                         .font(.headline)
                         .foregroundStyle(.yellow)
                 }
@@ -44,5 +48,8 @@ struct TopRatedSeriesListCell: View {
 }
 
 #Preview {
-    TopRatedSeriesListCell()
+    ZStack {
+        Color.blackDB.ignoresSafeArea()
+        SeriesListCell()
+    }
 }
