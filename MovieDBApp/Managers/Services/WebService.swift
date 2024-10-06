@@ -46,14 +46,7 @@ final class WebService {
     }
     
     func getUpcomingData() async throws -> MovieResults {
-        var components = URLComponents(string: "https://api.themoviedb.org/3/movie/upcoming")
-        components?.queryItems = [
-            URLQueryItem(name: "api_key", value: Self.apiKey),
-            URLQueryItem(name: "language", value: "en-US"),
-            URLQueryItem(name: "page", value: "1"),
-            URLQueryItem(name: "region", value: "US")
-        ]
-        guard let url = components?.url else {
+        guard let url = URL(string: "https://api.themoviedb.org/3/movie/upcoming?language=en-US&page=1&region=pl&api_key=\(Self.apiKey)") else {
             throw WebServiceError.invalidURL
         }
         return try await fetch(url: url)
