@@ -42,6 +42,7 @@ struct MovieDetailView: View {
                                 .padding(8)
                                 .background(Color.blackDB)
                                 .cornerRadius(12)
+                                .opacity(movie.voteAverage != 0 ? 1:0)
                             }
                             .padding(.horizontal)
                             
