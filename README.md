@@ -2,8 +2,6 @@
 
 It's my first Big SwiftUI independent project which taught me the basics of SwiftUI. I focused on proccesing the API calls and format the data properly into movies/series/actors. 
 
-*Yep I know that I made many files that are useless and should have made them as one reusable components (models, components views, views) I was learning and In my newer projects I don't make same mistake :)). I will refactor it some time later probably.*
-
 🍿 CineVault is a comprehensive movie and TV show database application designed to provide users with an immersive cinematic experience. Built with SwiftUI and following the MVVM architecture, CineVault offers a range of features and functionalities to explore and manage your favorite movies and TV shows.
 
 Features
