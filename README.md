@@ -36,9 +36,19 @@ Technologies Used
 - API: Free API from The Movie Database (TMDB) 
 
 App Demonstration: 
+<div align="center">
+  <img src="https://github.com/user-attachments/assets/39191591-26ba-4931-a0c1-0ba771580c3d" alt="Screenshot 8" width="250"/>
+  <img src="https://github.com/user-attachments/assets/05fbf585-b544-481f-a6be-bb5912ddb03d" alt="Screenshot 2" width="250"/>
+  <img src="https://github.com/user-attachments/assets/f8fcaa13-100b-4201-8bea-e9d7adb3b77b" alt="Screenshot 3" width="250"/>
+  <img src="https://github.com/user-attachments/assets/399f6255-fed3-43e4-a1b2-a5887f21a108" alt="Screenshot 1" width="250"/>
+  <img src="https://github.com/user-attachments/assets/53158b91-1cab-406d-a354-f187b9314d96" alt="Screenshot 4" width="250"/>
+  <img src="https://github.com/user-attachments/assets/470ff72d-1a58-461b-ab55-4a891615fced" alt="Screenshot 5" width="250"/>
+  <img src="https://github.com/user-attachments/assets/4cfb1731-600f-4fbb-956a-ef319fbee6fc" alt="Screenshot 6" width="250"/>
+  <img src="https://github.com/user-attachments/assets/c0090a7c-3b45-41b3-98bf-3ac037e1cd96" alt="Screenshot 7" width="250"/>
+  <img src="https://github.com/user-attachments/assets/e089db8b-e81b-4499-8f30-7ea45601f602" alt="Screenshot 9" width="250"/>
+  <img src="https://github.com/user-attachments/assets/7d7b098a-5ad3-4e91-baeb-5512799ce359" alt="Screenshot 10" width="250"/>
+</div>
 
-
-https://github.com/user-attachments/assets/215e83b9-ca08-4e2c-8280-3e8bb4bbc54d
 
 
 
