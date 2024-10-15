@@ -19,7 +19,9 @@ struct SearchView_: View {
                 searchBar
                     .padding(.top)
                 Spacer()
-                moviesResult
+                if !query.isEmpty {
+                    moviesResult
+                }
             }
             .toolbar(.hidden, for: .navigationBar)
         }
@@ -52,7 +54,7 @@ struct SearchView_: View {
                 .padding(.trailing, 0)
             TextField("Search Movies, TV Series...", text: $query) {
                 Task {
-                    viewModel.getSearchDBData(query:query)
+                    await viewModel.getSearchDBData(query:query)
                 }
             }
             .textFieldStyle(RoundedBorderTextFieldStyle())
@@ -67,9 +69,6 @@ struct SearchView_: View {
                     .background(Color.blackDB.opacity(0.01))
                     .onTapGesture {
                         query = ""
-                        Task {
-                            viewModel.getSearchDBData(query:query)
-                        }
                 }
             }
         }
