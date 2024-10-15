@@ -1,14 +1,17 @@
 //
-//  TrendingSeriesView.swift
+//  SeriesListView.swift
 //  MovieDBApp
 //
-//  Created by Mateusz Krówczyński on 01/08/2024.
+//  Created by Mateusz Krówczyński on 05/10/2024.
 //
 
 import SwiftUI
 
-struct OnTheAirSeriesView: View {
-    @EnvironmentObject var viewModel: MovieDBViewModel
+struct SeriesListView<Content: View>: View {
+    let title: String
+    let viewAllDestination: Content
+    let series: [SeriesModel] // Replace `Series` with your actual model type
+    let getSeriesData: () -> Void
     
     var body: some View {
         ZStack {
@@ -16,15 +19,15 @@ struct OnTheAirSeriesView: View {
             
             VStack(spacing: 8) {
                 VStack(spacing: 8) {
-                    HStack() {
-                        Text("On Air Currently")
+                    HStack {
+                        Text(title)
                             .font(.title2)
                             .foregroundStyle(.white)
                             .fontWeight(.medium)
                         
                         Spacer()
                         
-                        NavigationLink(destination: OnTheAirSeriesListView()) {
+                        NavigationLink(destination: viewAllDestination) {
                             Text("View all")
                                 .font(.subheadline)
                                 .foregroundStyle(.purpleDB)
@@ -32,12 +35,11 @@ struct OnTheAirSeriesView: View {
                     }
                     .padding(.horizontal, 20)
                     
-                    ScrollView(.horizontal){
+                    ScrollView(.horizontal) {
                         LazyHStack {
-                            ForEach(viewModel.onTheAirSeries){ onAirSeries in
-                                NavigationLink(destination: SeriesDetailView(imageName: onAirSeries.fullPosterPath, series: onAirSeries)) {
-                                    SeriesCell(movie: onAirSeries, imageURL: onAirSeries.fullPosterPath)
-                                }
+                            ForEach(series) { seriesItem in
+                                NavigationLink(destination: SeriesDetailView(imageName: seriesItem.fullPosterPath, series: seriesItem)) {
+                                    SeriesCell(movie: seriesItem, imageURL: seriesItem.fullPosterPath)
                                 }
                             }
                         }
@@ -46,11 +48,11 @@ struct OnTheAirSeriesView: View {
                     .scrollIndicators(.hidden)
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
         }
+        .task {
+            getSeriesData()
+        }
+        .toolbar(.hidden, for: .navigationBar)
+    }
 }
 
-#Preview {
-    OnTheAirSeriesView()
-        .environmentObject(MovieDBViewModel())
-}

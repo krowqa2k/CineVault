@@ -1,10 +1,3 @@
-//
-//  MovieDBViewModel.swift
-//  MovieDBApp
-//
-//  Created by admin on 26/07/2024.
-//
-
 import Foundation
 
 @MainActor
@@ -31,39 +24,42 @@ final class MovieDBViewModel: ObservableObject {
     
     init() {
         self.favoriteMoviesAndSeries = favoritesManager.favoriteMoviesAndSeries
+        
+        Task {
+            await fetchAllData()
+        }
+    }
+    
+    private func fetchAllData() async {
+        await getTrendingsData()
+        await getPopularData()
+        await getUpcomingData()
+        await getTopRatedData()
+        await getPopularActorData()
+        await getAiringTodayData()
+        await getPopularSeriesData()
+        await getTopRatedSeriesData()
+        await getOnTheAirSeriesData()
     }
     
     func addFavorite(posterPath: String) {
-        Task { @MainActor in
-            self.favoriteMoviesAndSeries.insert(posterPath)
-        }
+        favoriteMoviesAndSeries.insert(posterPath)
     }
 
     func removeFavorite(posterPath: String) {
-        Task { @MainActor in
-            self.favoriteMoviesAndSeries.remove(posterPath)
-        }
+        favoriteMoviesAndSeries.remove(posterPath)
     }
     
-    func sortUpcomingMoviesByDate() {
-        Task { @MainActor in
-            let sortedUpcoming = self.upcoming.sorted { $1.releaseDate > $0.releaseDate }
-            self.upcoming = sortedUpcoming
-        }
+    private func sortUpcomingMoviesByDate() {
+        upcoming.sort { $1.releaseDate > $0.releaseDate }
     }
     
-    func sortTopRatedMoviesByRating() {
-        Task { @MainActor in
-            let sortedTopRated = self.topRated.sorted { $0.voteAverage > $1.voteAverage }
-            self.topRated = sortedTopRated
-        }
+    private func sortTopRatedMoviesByRating() {
+        topRated.sort { $0.voteAverage > $1.voteAverage }
     }
     
-    func sortTopRatedSeriesByRating() {
-        Task { @MainActor in
-            let sortedTopRatedSeries = self.topRatedSeries.sorted { $0.voteAverage ?? 0 > $1.voteAverage ?? 0 }
-            self.topRatedSeries = sortedTopRatedSeries
-        }
+    private func sortTopRatedSeriesByRating() {
+        topRatedSeries.sort { $0.voteAverage ?? 0 > $1.voteAverage ?? 0 }
     }
     
     func getYear(from dateString: String) -> String {
@@ -79,86 +75,97 @@ final class MovieDBViewModel: ObservableObject {
         }
     }
     
-    private func updateData<T: Decodable>(fetch: @escaping () async throws -> T, update: @escaping (T) -> Void) {
-        Task {
-            do {
-                let result = try await fetch()
-                await MainActor.run {
-                    update(result)
-                }
-            } catch {
-                print("Error fetching data: \(error)")
-            }
+    private func getTrendingsData() async {
+        do {
+            let result: MovieResults = try await webService.getTrendingsData()
+            self.trendings = result.results
+        } catch {
+            print("Error fetching trendings: \(error)")
         }
     }
     
-    func getTrendingsData() {
-        updateData(fetch: webService.getTrendingsData) { [weak self] (result: MovieResults) in
-            self?.trendings = result.results
+    private func getPopularData() async {
+        do {
+            let result: MovieResults = try await webService.getPopularData()
+            self.popular = result.results
+        } catch {
+            print("Error fetching popular movies: \(error)")
         }
     }
     
-    func getPopularData() {
-        updateData(fetch: webService.getPopularData) { [weak self] (result: MovieResults) in
-            self?.popular = result.results
+    private func getUpcomingData() async {
+        do {
+            let result: MovieResults = try await webService.getUpcomingData()
+            self.upcoming = result.results
+            sortUpcomingMoviesByDate()
+        } catch {
+            print("Error fetching upcoming movies: \(error)")
         }
     }
     
-    func getUpcomingData() {
-        updateData(fetch: webService.getUpcomingData) { [weak self] (result: MovieResults) in
-            self?.upcoming = result.results
-            self?.sortUpcomingMoviesByDate()
+    private func getTopRatedData() async {
+        do {
+            let result: MovieResults = try await webService.getTopRatedData()
+            self.topRated = result.results
+            sortTopRatedMoviesByRating()
+        } catch {
+            print("Error fetching top-rated movies: \(error)")
         }
     }
     
-    func getTopRatedData() {
-        updateData(fetch: webService.getTopRatedData) { [weak self] (result: MovieResults) in
-            self?.topRated = result.results
-            self?.sortTopRatedMoviesByRating()
+    private func getPopularActorData() async {
+        do {
+            let result: ActorResults = try await webService.getPopularActorData()
+            self.popularActor = result.results
+        } catch {
+            print("Error fetching popular actors: \(error)")
         }
     }
     
-    func getPopularActorData() {
-        updateData(fetch: webService.getPopularActorData) { [weak self] (result: ActorResults) in
-            self?.popularActor = result.results
+    private func getAiringTodayData() async {
+        do {
+            let result: SeriesResults = try await webService.getAiringTodayData()
+            self.airingToday = result.results
+        } catch {
+            print("Error fetching airing today series: \(error)")
         }
     }
     
-    func getAiringTodayData() {
-        updateData(fetch: webService.getAiringTodayData) { [weak self] (result: SeriesResults) in
-            self?.airingToday = result.results
+    private func getPopularSeriesData() async {
+        do {
+            let result: SeriesResults = try await webService.getPopularSeriesData()
+            self.popularSeries = result.results
+        } catch {
+            print("Error fetching popular series: \(error)")
         }
     }
     
-    func getPopularSeriesData() {
-        updateData(fetch: webService.getPopularSeriesData) { [weak self] (result: SeriesResults) in
-            self?.popularSeries = result.results
+    private func getTopRatedSeriesData() async {
+        do {
+            let result: SeriesResults = try await webService.getTopRatedSeriesData()
+            self.topRatedSeries = result.results
+            sortTopRatedSeriesByRating()
+        } catch {
+            print("Error fetching top-rated series: \(error)")
         }
     }
     
-    func getTopRatedSeriesData() {
-        updateData(fetch: webService.getTopRatedSeriesData) { [weak self] (result: SeriesResults) in
-            self?.topRatedSeries = result.results
-            self?.sortTopRatedSeriesByRating()
+    private func getOnTheAirSeriesData() async {
+        do {
+            let result: SeriesResults = try await webService.getOnTheAirSeriesData()
+            self.onTheAirSeries = result.results
+        } catch {
+            print("Error fetching on-the-air series: \(error)")
         }
     }
     
-    func getOnTheAirSeriesData() {
-        updateData(fetch: webService.getOnTheAirSeriesData) { [weak self] (result: SeriesResults) in
-            self?.onTheAirSeries = result.results
-        }
-    }
-    
-    func getSearchDBData(query: String) {
-        Task {
-            do {
-                let result = try await webService.getSearchDBData(query: query)
-                await MainActor.run {
-                    self.searchDB = result.results
-                }
-            } catch {
-                print("Error fetching search data: \(error)")
-            }
+    func getSearchDBData(query: String) async {
+        do {
+            let result: SearchDBResults = try await webService.getSearchDBData(query: query)
+            self.searchDB = result.results
+        } catch {
+            print("Error fetching search results: \(error)")
         }
     }
 }
+

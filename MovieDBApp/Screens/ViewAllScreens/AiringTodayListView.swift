@@ -23,9 +23,6 @@ struct AiringTodayListView: View {
                     .scrollIndicators(.hidden)
             }
         }
-        .task {
-            viewModel.getAiringTodayData()
-        }
         .toolbar(.hidden, for: .navigationBar)
     }
     

@@ -23,9 +23,6 @@ struct PopularSeriesListView: View {
                     .scrollIndicators(.hidden)
             }
         }
-        .task {
-            viewModel.getPopularSeriesData()
-        }
         .toolbar(.hidden, for: .navigationBar)
     }
     

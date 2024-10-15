@@ -24,9 +24,6 @@ struct TopRatedMovieListView: View {
                     .scrollIndicators(.hidden)
             }
         }
-        .task {
-            viewModel.getTopRatedData()
-        }
         .toolbar(.hidden, for: .navigationBar)
     }
     

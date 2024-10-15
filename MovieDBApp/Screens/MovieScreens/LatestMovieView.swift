@@ -51,9 +51,6 @@ struct LatestMovieView: View {
             }
             .toolbar(.hidden, for: .navigationBar)
         }
-        .task {
-            viewModel.getTrendingsData()
-        }
     }
 }
 

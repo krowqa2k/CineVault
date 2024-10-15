@@ -24,9 +24,6 @@ struct TrendingMovieListView: View {
                     .scrollIndicators(.hidden)
             }
         }
-        .task {
-            viewModel.getTrendingsData()
-        }
         .toolbar(.hidden, for: .navigationBar)
     }
     

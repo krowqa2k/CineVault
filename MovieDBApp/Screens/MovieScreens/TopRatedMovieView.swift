@@ -45,9 +45,6 @@ struct TopRatedMovieView: View {
                 .scrollIndicators(.hidden)
             }
         }
-        .task {
-            viewModel.getTopRatedData()
-        }
     }
 }
 

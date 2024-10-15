@@ -23,9 +23,6 @@ struct PopularMovieListView: View {
                     .scrollIndicators(.hidden)
             }
         }
-        .task {
-            viewModel.getPopularData()
-        }
         .toolbar(.hidden, for: .navigationBar)
     }
     

@@ -8,7 +8,7 @@
 import SwiftUI
 
 struct TopRatedSeriesView: View {
-    @StateObject var viewModel: MovieDBViewModel = MovieDBViewModel()
+    @EnvironmentObject var viewModel: MovieDBViewModel
     
     var body: some View {
         ZStack {
@@ -46,13 +46,11 @@ struct TopRatedSeriesView: View {
                     .scrollIndicators(.hidden)
                 }
             }
-            .task {
-                viewModel.getTopRatedSeriesData()
-            }
             .toolbar(.hidden, for: .navigationBar)
         }
 }
 
 #Preview {
     TopRatedSeriesView()
+        .environmentObject(MovieDBViewModel())
 }

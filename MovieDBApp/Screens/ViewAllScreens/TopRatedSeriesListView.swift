@@ -23,9 +23,6 @@ struct TopRatedSeriesListView: View {
                     .scrollIndicators(.hidden)
             }
         }
-        .task {
-            viewModel.getTopRatedSeriesData()
-        }
         .toolbar(.hidden, for: .navigationBar)
     }
     
