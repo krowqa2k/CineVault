@@ -65,7 +65,9 @@ struct SearchView_: View {
             
             if !query.isEmpty {
                 Image(systemName: "xmark.circle.fill")
-                    .padding(.trailing,24)
+                    .font(.title2)
+                    .padding(.trailing,12)
+                    .foregroundStyle(.white)
                     .background(Color.blackDB.opacity(0.01))
                     .onTapGesture {
                         query = ""
