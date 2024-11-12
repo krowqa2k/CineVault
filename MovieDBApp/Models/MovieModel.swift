@@ -39,6 +39,10 @@ struct MovieModel: Codable, Identifiable {
         return Constants.imageGet + posterPath
     }
     
+    var releaseYear: String {
+        releaseDate.extractYearFromDate()
+    }
+    
     static var mock: MovieModel {
         MovieModel(
             adult: false,

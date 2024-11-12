@@ -53,6 +53,10 @@ struct SeriesModel: Codable, Identifiable {
         return Constants.imageGet + posterPath
     }
     
+    var firstAirYear: String {
+        firstAirDate?.extractYearFromDate() ?? "N/A"
+    }
+    
     static var mock: SeriesModel {
         SeriesModel(
             adult: true,

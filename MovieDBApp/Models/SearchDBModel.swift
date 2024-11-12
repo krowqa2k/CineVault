@@ -50,6 +50,10 @@ struct SearchDBModel: Codable, Identifiable {
         }
     }
     
+    var firstAirYear: String {
+        firstAirDate?.extractYearFromDate() ?? "N/A"
+    }
+    
     static var mock: SearchDBModel {
         SearchDBModel(
             adult: true,
