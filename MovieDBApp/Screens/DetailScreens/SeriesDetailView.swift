@@ -13,6 +13,7 @@ struct SeriesDetailView: View {
     var imageName: String = Constants.mockImage
     var series: SeriesModel = .mock
     @State private var onClick: Bool = false
+    @State private var userRating: Int = 0
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -25,6 +26,19 @@ struct SeriesDetailView: View {
                         imageOverlay
                         ,alignment: .bottom
                     )
+                
+                VStack {
+                    HStack {
+                        ForEach(1...10, id: \.self) { star in
+                            Image(systemName: star <= userRating ? "star.fill" : "star")
+                                .font(.title2)
+                                .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
+                                .onTapGesture { userRating = star }
+                        }
+                    }
+                }
+                .padding([.bottom, .horizontal])
+                
                 ScrollView(.vertical){
                     Text(series.overview ?? "")
                         .font(.title3)
@@ -53,46 +67,48 @@ struct SeriesDetailView: View {
     
     private var imageOverlay: some View {
         VStack(alignment: .leading) {
-            HStack {
-                Text(series.adult ?? false ? "18+" : "")
-                    .frame(width: 40, height: 40)
-                    .font(.headline)
-                    .foregroundStyle(.blackDB)
-                    .background(series.adult ?? false ? Color.red : .clear)
-                    .cornerRadius(12)
-                Spacer()
-                HStack {
-                    Image(systemName: "star.fill")
-                        .font(.headline)
-                        .foregroundStyle(.yellow)
-                    Text(String(format: "%.2f", series.voteAverage ?? ""))
-                        .font(.headline)
-                        .foregroundStyle(.yellow)
-                }
-                .padding(8)
-                .background(Color.blackDB)
+            Text(series.adult ?? false ? "18+" : "")
+                .frame(width: 40, height: 40)
+                .font(.headline)
+                .foregroundStyle(.blackDB)
+                .background(series.adult ?? false ? Color.red : .clear)
                 .cornerRadius(12)
-            }
-            .padding(.horizontal)
+                .padding(.horizontal)
             
             Text(series.name ?? "")
-                .font(.system(size: 26))
+                .font(.title)
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
                 .padding(.horizontal)
-            
-            Text("First Aired on: \(series.firstAirDate ?? "No Data :(")")
-                .font(.footnote)
-                .fontWeight(.medium)
-                .foregroundStyle(.gray)
-                .padding(.horizontal)
+            HStack(alignment: .bottom) {
+                Text("\(series.firstAirYear)")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.gray)
+                
+                Spacer()
+                
+                HStack {
+                    Text("User reviews")
+                        .foregroundStyle(.white)
+                        .font(.subheadline)
+                    Image(systemName: "star.fill")
+                        .font(.headline)
+                        .foregroundStyle(.yellow)
+                    Text(String(format: "%.2f", series.voteAverage ?? 0))
+                        .font(.headline)
+                        .foregroundStyle(.yellow)
+                }
+                .opacity(series.voteAverage != 0 ? 1:0)
+            }
+            .padding(.horizontal)
         }
-            .frame(maxWidth: .infinity)
-            .frame(maxHeight: 100)
-            .padding(.bottom)
-            .background(
-                LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
-            )
+        .frame(maxWidth: .infinity)
+        .frame(maxHeight: 100)
+        .padding(.bottom)
+        .background(
+            LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
+        )
         
     }
     

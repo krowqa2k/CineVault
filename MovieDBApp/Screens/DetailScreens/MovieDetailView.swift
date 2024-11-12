@@ -13,6 +13,7 @@ struct MovieDetailView: View {
     var imageName: String = Constants.mockImage
     var movie: MovieModel = .mock
     @State private var onClick: Bool = false
+    @State private var userRating: Int = 0
     @Environment(\.dismiss) var dismiss
     
     var body: some View {
@@ -22,57 +23,30 @@ struct MovieDetailView: View {
                 ImageLoader(imageURL: imageName).ignoresSafeArea(edges: .top)
                     .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
                     .overlay (
-                        VStack(alignment: .leading) {
-                            HStack {
-                                Text(movie.adult ? "18+" : "")
-                                    .frame(width: 40, height: 40)
-                                    .font(.headline)
-                                    .foregroundStyle(.blackDB)
-                                    .background(movie.adult ? Color.red : .clear)
-                                    .cornerRadius(12)
-                                Spacer()
-                                HStack {
-                                    Image(systemName: "star.fill")
-                                        .font(.headline)
-                                        .foregroundStyle(.yellow)
-                                    Text(String(format: "%.2f", movie.voteAverage))
-                                        .font(.headline)
-                                        .foregroundStyle(.yellow)
-                                }
-                                .padding(8)
-                                .background(Color.blackDB)
-                                .cornerRadius(12)
-                                .opacity(movie.voteAverage != 0 ? 1:0)
+                        imageOverlay
+                        ,alignment: .bottom)
+                
+                if movie.voteAverage != 0 {
+                    VStack {
+                        HStack {
+                            ForEach(1...10, id: \.self) { star in
+                                Image(systemName: star <= userRating ? "star.fill" : "star")
+                                    .font(.title2)
+                                    .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
+                                    .onTapGesture { userRating = star }
                             }
-                            .padding(.horizontal)
-                            
-                            Text(movie.title)
-                                .font(.title)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.white)
-                                .padding(.horizontal)
-                            
-                            Text("Release Date: \(movie.releaseDate)")
-                                .font(.footnote)
-                                .fontWeight(.medium)
-                                .foregroundStyle(.gray)
-                                .padding(.horizontal)
                         }
-                            .frame(maxWidth: .infinity)
-                            .frame(maxHeight: 100)
-                            .padding(.bottom)
-                            .background(
-                                LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
-                            )
-                        ,alignment: .bottom
-                    )
-                ScrollView(.vertical){
+                    }
+                    .padding([.bottom, .horizontal])
+                }
+                
+                ScrollView(.vertical, showsIndicators: false) {
                     Text(movie.overview)
                         .font(.title3)
                         .foregroundStyle(.gray)
-                        .padding(.horizontal)
                         .multilineTextAlignment(.leading)
                 }
+                .padding(.horizontal)
             }
             .overlay(
                 Circle()
@@ -119,6 +93,52 @@ struct MovieDetailView: View {
     }
     private func updateOnClickState() {
         onClick = viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath)
+    }
+    
+    private var imageOverlay: some View {
+        VStack(alignment: .leading) {
+            Text(movie.adult ? "18+" : "")
+                .frame(width: 40, height: 40)
+                .font(.headline)
+                .foregroundStyle(.blackDB)
+                .background(movie.adult ? Color.red : .clear)
+                .cornerRadius(12)
+                .padding(.horizontal)
+            
+            Text(movie.title)
+                .font(.title)
+                .fontWeight(.medium)
+                .foregroundStyle(.white)
+                .padding(.horizontal)
+            HStack(alignment: .bottom) {
+                Text("\(movie.releaseYear)")
+                    .font(.subheadline)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.gray)
+                
+                Spacer()
+                
+                HStack {
+                    Text("User reviews")
+                        .foregroundStyle(.white)
+                        .font(.subheadline)
+                    Image(systemName: "star.fill")
+                        .font(.headline)
+                        .foregroundStyle(.yellow)
+                    Text(String(format: "%.2f", movie.voteAverage))
+                        .font(.headline)
+                        .foregroundStyle(.yellow)
+                }
+                .opacity(movie.voteAverage != 0 ? 1:0)
+            }
+            .padding(.horizontal)
+        }
+        .frame(maxWidth: .infinity)
+        .frame(maxHeight: 100)
+        .padding(.bottom)
+        .background(
+            LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
+        )
     }
 }
 
