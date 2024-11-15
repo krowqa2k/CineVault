@@ -2,23 +2,16 @@
 //  String.swift
 //  MovieDBApp
 //
-//  Created by Mateusz on 12/11/2024.
+//  Created by Mateusz Krówczyński on 15/11/2024.
 //
 
 import Foundation
 
 extension String {
-    func extractYearFromDate() -> String {
-        let dateFormatter = DateFormatter()
-        dateFormatter.dateFormat = "yyyy-MM-dd"
-        
-        if let date = dateFormatter.date(from: self) {
-            let calendar = Calendar.current
-            let year = calendar.component(.year, from: date)
-            return "\(year)"
-        } else {
-            return "Unknown Year"
+    func extractYearFromDate() -> String? {
+        if self.count >= 4 {
+            return String(self.prefix(4))
         }
+        return nil
     }
 }
-

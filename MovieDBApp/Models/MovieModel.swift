@@ -40,7 +40,7 @@ struct MovieModel: Codable, Identifiable {
     }
     
     var releaseYear: String {
-        releaseDate.extractYearFromDate()
+        releaseDate.extractYearFromDate() ?? "N/A"
     }
     
     static var mock: MovieModel {
