@@ -5,12 +5,16 @@
 //  Created by Mateusz Krówczyński on 03/08/2024.
 //
 
+import SwiftData
 import SwiftUI
 
-struct FavoriteView_: View {
+struct UserRatingsView: View {
     
-    @EnvironmentObject var viewModel: MovieDBViewModel
+    @Environment(\.modelContext) var modelContext
+    @Query() var userRatings: [UserRatingModel]
+    
     let columns = [GridItem(.adaptive(minimum: 110, maximum: 160))]
+    @EnvironmentObject var viewModel: MovieDBViewModel
     
     var body: some View {
         ZStack {
@@ -18,13 +22,20 @@ struct FavoriteView_: View {
             VStack(spacing: 12) {
                 HStack {
                     HStack {
-                        Text("Your Favorites!")
+                        Text("Your Ratings")
                             .font(.title)
                             .fontWeight(.semibold)
                             .foregroundStyle(.purpleDB)
-                        Image(systemName: "heart.fill")
-                            .font(.title2)
-                            .foregroundStyle(.purpleDB)
+                        if #available(iOS 18.0, *) {
+                            Image(systemName: "star.fill")
+                                .font(.title2)
+                                .foregroundStyle(.yellow)
+                                .symbolEffect(.bounce.down.byLayer, options: .repeat(.periodic(delay: 0.5)))
+                        } else {
+                            Image(systemName: "star.fill")
+                                .font(.title2)
+                                .foregroundStyle(.yellow)
+                        }
                     }
                     .frame(maxWidth: .infinity, alignment: .leading)
                     .padding(.leading)
@@ -35,7 +46,8 @@ struct FavoriteView_: View {
                         .padding(.trailing)
                 }
                 .padding(.top)
-                if viewModel.favoriteMoviesAndSeries.isEmpty {
+
+                if userRatings.isEmpty {
                     Spacer()
                     HStack(spacing: 0) {
                         Image(systemName: "movieclapper")
@@ -45,49 +57,50 @@ struct FavoriteView_: View {
                             .font(.system(size: 100))
                             .foregroundStyle(.red)
                     }
-                    Text("No favorites added yet!")
+                    Text("No movie rated yet!")
                         .font(.title)
                         .fontWeight(.semibold)
                         .foregroundStyle(.purpleDB)
                 } else {
-                    Text("ℹ️ If you want to delete favorite Movie/Series, just press and hold image for one second!")
+                    Text("ℹ️ If you want to delete Movie/Series, just press and hold image for one second!")
                         .font(.subheadline)
                         .foregroundStyle(.gray)
                         .multilineTextAlignment(.leading)
                         .padding(.bottom, 12)
                         .padding(.horizontal)
                     
-                    ScrollView(.vertical) {
+                    ScrollView {
                         LazyVGrid(columns: columns, alignment: .leading) {
-                            ForEach(Array(viewModel.favoriteMoviesAndSeries), id: \.self){ favorite in
-                                ImageLoader(imageURL: favorite)
-                                    .frame(width: 110, height: 160)
-                                    .cornerRadius(12)
+                            ForEach(userRatings) { movie in
+                                UserRatingCell(userRating: movie, imageName: movie.imageName)
                                     .simultaneousGesture(
-                                        LongPressGesture(minimumDuration: 0.5).onEnded({ _ in
+                                        LongPressGesture(minimumDuration: 0.5).onEnded { _ in
                                             withAnimation(.bouncy(duration: 0.5)) {
-                                                removeFavorite(item: favorite)
+                                                removeRating(model: movie)
                                             }
-                                        })
+                                        }
                                     )
                             }
+                            .padding(.horizontal, 4)
                         }
-                        .padding(.horizontal, 4)
                     }
                 }
-                Spacer()
-                
                 Spacer()
             }
         }
     }
     
-    private func removeFavorite(item: String) {
-        viewModel.favoriteMoviesAndSeries.remove(item)
+    private func removeRating(model: UserRatingModel) {
+        do {
+            modelContext.delete(model)
+            try modelContext.save()
+        } catch {
+            print("Error removing rating: \(error.localizedDescription)")
+        }
     }
 }
 
 #Preview {
-    FavoriteView_()
+    UserRatingsView()
         .environmentObject(MovieDBViewModel())
 }
