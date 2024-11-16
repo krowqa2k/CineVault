@@ -28,7 +28,8 @@ struct SeriesModel: Codable, Identifiable {
     let originalLanguage, originalName, overview: String?
     let popularity: Double?
     let posterPath: String?
-    let firstAirDate, name: String?
+    let firstAirDate: String?
+    let name: String
     let voteAverage: Double?
     let voteCount: Int?
 

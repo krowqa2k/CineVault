@@ -17,7 +17,7 @@ struct SeriesListCell: View {
                 .frame(width: 110, height: 160)
                 .cornerRadius(16)
             VStack(alignment: .leading, spacing: 8){
-                Text(series.name ?? "")
+                Text(series.name)
                     .font(.system(size: 15))
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
