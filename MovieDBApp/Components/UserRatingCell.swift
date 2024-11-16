@@ -38,7 +38,6 @@ struct UserRatingCell: View {
         
         return UserRatingCell(userRating: exampleRating, imageName: exampleRating.imageName)
     } catch {
-        Text("Failed to create preivew: \(error.localizedDescription).")
-        return EmptyView()
+        return Text("Failed to create preivew: \(error.localizedDescription).")
     }
 }
