@@ -6,9 +6,11 @@
 //
 
 import SwiftUI
+import SwiftData
 
 struct SeriesDetailView: View {
     
+    @Environment(\.modelContext) var modelContext
     @EnvironmentObject var viewModel: MovieDBViewModel
     var imageName: String = Constants.mockImage
     var series: SeriesModel = .mock
@@ -27,13 +29,21 @@ struct SeriesDetailView: View {
                         ,alignment: .bottom
                     )
                 
-                VStack {
+                VStack(alignment: .leading, spacing: 12) {
+                    Text("Your Score:")
+                        .font(.title3)
+                        .fontWeight(.semibold)
+                        .foregroundStyle(.white.secondary)
+                    
                     HStack {
                         ForEach(1...10, id: \.self) { star in
                             Image(systemName: star <= userRating ? "star.fill" : "star")
                                 .font(.title2)
                                 .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
-                                .onTapGesture { userRating = star }
+                                .onTapGesture {
+                                    userRating = star
+                                    saveUserRating()
+                                }
                         }
                     }
                 }
@@ -58,6 +68,7 @@ struct SeriesDetailView: View {
         }
         .onAppear(perform: {
             updateOnClickState()
+            fetchUserRating()
         })
         .toolbar(.hidden, for: .navigationBar)
     }
@@ -75,7 +86,7 @@ struct SeriesDetailView: View {
                 .cornerRadius(12)
                 .padding(.horizontal)
             
-            Text(series.name ?? "")
+            Text(series.name)
                 .font(.title)
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
@@ -149,6 +160,42 @@ struct SeriesDetailView: View {
                 }
                 onClick.toggle()
             }
+    }
+    
+    private func fetchUserRating() {
+        let fetchDescriptor = FetchDescriptor<UserRatingModel>(sortBy: [])
+        
+        do {
+            let ratings = try modelContext.fetch(fetchDescriptor)
+            if let existingRating = ratings.first(where: { $0.title == series.name }) {
+                userRating = existingRating.rating
+            }
+        } catch {
+            print("Error fetching user ratings: \(error.localizedDescription)")
+        }
+    }
+    
+    private func saveUserRating() {
+        let fetchDescriptor = FetchDescriptor<UserRatingModel>(
+            predicate: #Predicate { $0.title == series.name },
+            sortBy: []
+        )
+        
+        do {
+            let ratings = try modelContext.fetch(fetchDescriptor)
+            
+            if let existingRating = ratings.first {
+                existingRating.rating = userRating
+            } else {
+                let newRating = UserRatingModel(title: series.name, imageName: imageName, rating: userRating)
+                modelContext.insert(newRating)
+            }
+            
+            try modelContext.save()
+            
+        } catch {
+            print("Error saving user rating: \(error.localizedDescription)")
+        }
     }
 }
 
