@@ -52,5 +52,4 @@ App Demonstration:
   <img src="https://github.com/user-attachments/assets/7d7b098a-5ad3-4e91-baeb-5512799ce359" alt="Screenshot 10" width="250"/>
 </div>
 
-https://github.com/user-attachments/assets/215e83b9-ca08-4e2c-8280-3e8bb4bbc54d
 
