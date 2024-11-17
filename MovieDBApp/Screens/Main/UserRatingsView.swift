@@ -15,7 +15,7 @@ struct UserRatingsView: View {
     @State private var sortOrder: [SortDescriptor<UserRatingModel>] = [SortDescriptor(\UserRatingModel.title)]
     private let columns = [GridItem(.adaptive(minimum: 110, maximum: 160))]
     
-    private var sortedUserRatings: [UserRatingModel] {
+    var sortedUserRatings: [UserRatingModel] {
         userRatings.sorted(using: sortOrder)
     }
     
@@ -73,15 +73,15 @@ struct UserRatingsView: View {
                         .padding(.horizontal)
                     
                     Menu("Sort by", systemImage: "arrow.up.arrow.down") {
-                        Button("Title: alphabetical") {
+                        Button("Title: alphabetical", systemImage: "textformat.abc") {
                             sortOrder = [SortDescriptor(\UserRatingModel.title)]
                         }
                         
-                        Button("Rating: highest to lowest") {
+                        Button("Rating: highest to lowest", systemImage: "arrow.down") {
                             sortOrder = [SortDescriptor(\UserRatingModel.rating, order: .reverse)]
                         }
                         
-                        Button("Rating: lowest to highest") {
+                        Button("Rating: lowest to highest", systemImage: "arrow.up") {
                             sortOrder = [SortDescriptor(\UserRatingModel.rating, order: .forward)]
                         }
                     }
@@ -107,6 +107,7 @@ struct UserRatingsView: View {
                 }
                 Spacer()
             }
+            .animation(.smooth, value: sortedUserRatings)
         }
     }
     
