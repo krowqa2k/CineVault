@@ -11,10 +11,13 @@ import SwiftUI
 struct UserRatingsView: View {
     
     @Environment(\.modelContext) var modelContext
-    @Query() var userRatings: [UserRatingModel]
+    @Query(sort: [SortDescriptor(\UserRatingModel.title)]) var userRatings: [UserRatingModel]
+    @State private var sortOrder: [SortDescriptor<UserRatingModel>] = [SortDescriptor(\UserRatingModel.title)]
+    private let columns = [GridItem(.adaptive(minimum: 110, maximum: 160))]
     
-    let columns = [GridItem(.adaptive(minimum: 110, maximum: 160))]
-    @EnvironmentObject var viewModel: MovieDBViewModel
+    private var sortedUserRatings: [UserRatingModel] {
+        userRatings.sorted(using: sortOrder)
+    }
     
     var body: some View {
         ZStack {
@@ -69,9 +72,26 @@ struct UserRatingsView: View {
                         .padding(.bottom, 12)
                         .padding(.horizontal)
                     
+                    Menu("Sort by", systemImage: "arrow.up.arrow.down") {
+                        Button("Title: alphabetical") {
+                            sortOrder = [SortDescriptor(\UserRatingModel.title)]
+                        }
+                        
+                        Button("Rating: highest to lowest") {
+                            sortOrder = [SortDescriptor(\UserRatingModel.rating, order: .reverse)]
+                        }
+                        
+                        Button("Rating: lowest to highest") {
+                            sortOrder = [SortDescriptor(\UserRatingModel.rating, order: .forward)]
+                        }
+                    }
+                    .frame(maxWidth: .infinity, alignment: .trailing)
+                    .padding(.horizontal, 4)
+                    .foregroundStyle(.purpleDB)
+                    
                     ScrollView {
                         LazyVGrid(columns: columns, alignment: .leading) {
-                            ForEach(userRatings) { movie in
+                            ForEach(sortedUserRatings) { movie in
                                 UserRatingCell(userRating: movie, imageName: movie.imageName)
                                     .simultaneousGesture(
                                         LongPressGesture(minimumDuration: 0.5).onEnded { _ in
@@ -102,5 +122,8 @@ struct UserRatingsView: View {
 
 #Preview {
     UserRatingsView()
-        .environmentObject(MovieDBViewModel())
+}
+
+#Preview {
+    UserRatingsView()
 }
