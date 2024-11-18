@@ -8,43 +8,53 @@
 import SwiftUI
 
 struct PopularMovieView: View {
-    
     @EnvironmentObject var viewModel: MovieDBViewModel
+    let screenWidth = UIScreen.main.bounds.width
+    @State private var currentIndex = 0
+    @State private var timer: Timer?
     
     var body: some View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
             
-            VStack(spacing: 8) {
-                HStack() {
-                    Text("Popular Movies")
-                        .font(.title2)
-                        .foregroundStyle(.white)
-                        .fontWeight(.medium)
-                    
-                    Spacer()
-                    
-                    NavigationLink(destination: PopularMovieListView()) {
-                        Text("View all")
-                            .font(.subheadline)
-                            .foregroundStyle(.purpleDB)
-                    }
-                }
-                .padding(.horizontal, 20)
-                
-                ScrollView(.horizontal){
-                    LazyHStack {
-                        ForEach(viewModel.popular){ popularMovie in
-                            NavigationLink(destination: MovieDetailView(imageName: popularMovie.fullPosterPath, movie: popularMovie)) {
-                                MovieCell(movie: popularMovie, imageURL: popularMovie.fullPosterPath)
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 0) {
+                        ForEach(viewModel.popular.indices, id: \.self) { index in
+                            NavigationLink(destination: MovieDetailView(imageName: viewModel.popular[index].fullPosterPath, movie: viewModel.popular[index])) {
+                                MovieHighlightCell(movie: viewModel.popular[index], imageURL: viewModel.popular[index].fullPosterPath)
+                                    .frame(width: screenWidth, height: 460)
+                                    .id(index) 
                             }
                         }
                     }
                 }
-                .frame(maxHeight: 260)
-                .scrollIndicators(.hidden)
+                .scrollTargetBehavior(.paging)
+                .frame(height: 440)
+                .onAppear {
+                    startAutoScroll(with: proxy)
+                }
+                .onDisappear {
+                    stopAutoScroll()
+                }
             }
         }
+    }
+    
+    private func startAutoScroll(with proxy: ScrollViewProxy) {
+        guard !viewModel.popular.isEmpty else { return }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+            withAnimation {
+                currentIndex = (currentIndex + 1) % viewModel.popular.count
+                proxy.scrollTo(currentIndex, anchor: .center)
+            }
+        }
+    }
+    
+    private func stopAutoScroll() {
+        timer?.invalidate()
+        timer = nil
     }
 }
 
@@ -52,3 +62,5 @@ struct PopularMovieView: View {
     PopularMovieView()
         .environmentObject(MovieDBViewModel())
 }
+
+

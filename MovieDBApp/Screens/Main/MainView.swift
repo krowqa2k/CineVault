@@ -72,8 +72,8 @@ struct MainView: View {
                 ZStack {
                     if selection == "Movies" {
                         LazyVStack(spacing: 16) {
-                            LatestMovieView()
                             PopularMovieView()
+                            LatestMovieView()
                             UpcomingMovieView()
                             TopRatedMovieView()
                             PopularActorView()
@@ -82,8 +82,8 @@ struct MainView: View {
                         .transition(.move(edge: .leading))
                     } else {
                         LazyVStack(spacing: 16) {
-                            OnTheAirSeriesView()
                             PopularSeriesView()
+                            OnTheAirSeriesView()
                             AiringTodaySeriesView()
                             TopRatedSeriesView()
                         }
