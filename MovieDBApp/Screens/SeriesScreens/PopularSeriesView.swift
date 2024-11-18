@@ -42,7 +42,6 @@ struct PopularSeriesView: View {
     }
     
     private func startAutoScroll(with proxy: ScrollViewProxy) {
-        // Sprawdzamy, czy tablica popularSeries nie jest pusta
         guard !viewModel.popularSeries.isEmpty else { return }
         
         timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
@@ -64,7 +63,3 @@ struct PopularSeriesView: View {
         .environmentObject(MovieDBViewModel())
 }
 
-#Preview {
-    PopularSeriesView()
-        .environmentObject(MovieDBViewModel())
-}
