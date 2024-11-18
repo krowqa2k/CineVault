@@ -11,7 +11,7 @@ final class MovieDBViewModel: ObservableObject {
     @Published private(set) var airingToday: [SeriesModel] = []
     @Published private(set) var popularSeries: [SeriesModel] = []
     @Published private(set) var onTheAirSeries: [SeriesModel] = []
-    @Published private(set) var searchDB: [SearchDBModel] = []
+    @Published var searchDB: [SearchDBModel] = []
     @Published private(set) var topRatedSeries: [SeriesModel] = []
     @Published private(set) var upcoming: [MovieModel] = []
     @Published private(set) var topRated: [MovieModel] = []

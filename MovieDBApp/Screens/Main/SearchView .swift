@@ -71,6 +71,7 @@ struct SearchView_: View {
                     .background(Color.blackDB.opacity(0.01))
                     .onTapGesture {
                         query = ""
+                        viewModel.searchDB.removeAll()
                 }
             }
         }

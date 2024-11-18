@@ -15,7 +15,7 @@ struct SearchDBResults: Codable {
 struct SearchDBModel: Codable, Identifiable {
     let adult: Bool?
     let id: Int
-    let genreIDS: [Int]
+    let genreIDS: [Int]?
     let title: String?
     let overview: String?
     let posterPath: String?
@@ -57,7 +57,8 @@ struct SearchDBModel: Codable, Identifiable {
     }
     
     var genreNames: [String] {
-        genreIDS.map { Genre(rawValue: $0)?.genreName ?? "N/A"}
+        guard let genreIDS = genreIDS, !genreIDS.isEmpty else { return ["N/A"] }
+        return genreIDS.map { Genre(rawValue: $0)?.genreName ?? "N/A" }
     }
     
     static var mock: SearchDBModel {
