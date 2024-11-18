@@ -9,45 +9,59 @@ import SwiftUI
 
 struct PopularSeriesView: View {
     @EnvironmentObject var viewModel: MovieDBViewModel
+    let screenWidth = UIScreen.main.bounds.width
+    @State private var currentIndex = 0
+    @State private var timer: Timer?
     
     var body: some View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
             
-            VStack(spacing: 8) {
-                VStack(spacing: 8) {
-                    HStack() {
-                        Text("Popular Series")
-                            .font(.title2)
-                            .foregroundStyle(.white)
-                            .fontWeight(.medium)
-                        
-                        Spacer()
-                        
-                        NavigationLink(destination: PopularSeriesListView()) {
-                            Text("View all")
-                                .font(.subheadline)
-                                .foregroundStyle(.purpleDB)
-                        }
-                    }
-                    .padding(.horizontal, 20)
-                    
-                    ScrollView(.horizontal){
-                        LazyHStack {
-                            ForEach(viewModel.popularSeries){ popularSeries in
-                                NavigationLink(destination: SeriesDetailView(imageName: popularSeries.fullPosterPath, series: popularSeries)) {
-                                    SeriesCell(movie: popularSeries, imageURL: popularSeries.fullPosterPath)
-                                }
-                                }
+            ScrollViewReader { proxy in
+                ScrollView(.horizontal, showsIndicators: false) {
+                    HStack(spacing: 0) {
+                        ForEach(viewModel.popularSeries.indices, id: \.self) { index in
+                            NavigationLink(destination: SeriesDetailView(imageName: viewModel.popularSeries[index].fullPosterPath, series: viewModel.popularSeries[index])) {
+                                SeriesHighlightCell(series: viewModel.popularSeries[index], imageURL: viewModel.popularSeries[index].fullPosterPath)
+                                    .frame(width: screenWidth, height: 460)
+                                    .id(index)
                             }
                         }
                     }
-                    .frame(maxHeight: 280)
-                    .scrollIndicators(.hidden)
+                }
+                .scrollTargetBehavior(.paging)
+                .frame(height: 440)
+                .onAppear {
+                    startAutoScroll(with: proxy)
+                }
+                .onDisappear {
+                    stopAutoScroll()
                 }
             }
-            .toolbar(.hidden, for: .navigationBar)
         }
+    }
+    
+    private func startAutoScroll(with proxy: ScrollViewProxy) {
+        // Sprawdzamy, czy tablica popularSeries nie jest pusta
+        guard !viewModel.popularSeries.isEmpty else { return }
+        
+        timer = Timer.scheduledTimer(withTimeInterval: 2.0, repeats: true) { _ in
+            withAnimation {
+                currentIndex = (currentIndex + 1) % viewModel.popularSeries.count
+                proxy.scrollTo(currentIndex, anchor: .center)
+            }
+        }
+    }
+    
+    private func stopAutoScroll() {
+        timer?.invalidate()
+        timer = nil
+    }
+}
+
+#Preview {
+    PopularSeriesView()
+        .environmentObject(MovieDBViewModel())
 }
 
 #Preview {
