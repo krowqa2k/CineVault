@@ -22,10 +22,13 @@ struct SeriesListCell: View {
                     .fontWeight(.bold)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.leading)
-                Text("Original Language: \(series.originalLanguage ?? "")")
-                    .font(.system(size: 13))
+                Text(series.firstAirYear)
+                    .font(.system(size: 14))
                     .foregroundStyle(.gray)
-                
+                Text(series.genreNames[0])
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+
                 if let adult = series.adult {
                     if adult {
                         Text("For adults")

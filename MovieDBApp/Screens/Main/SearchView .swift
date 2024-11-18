@@ -93,6 +93,9 @@ struct SearchView_: View {
                                 .font(.subheadline)
                                 .foregroundStyle(.gray)
                                 .multilineTextAlignment(.leading)
+                            Text(row.genreNames[0])
+                                .font(.subheadline)
+                                .foregroundStyle(.gray)
                             HStack(spacing: 4) {
                                 Image(systemName: "star.fill")
                                     .font(.subheadline)

@@ -15,6 +15,7 @@ struct SearchDBResults: Codable {
 struct SearchDBModel: Codable, Identifiable {
     let adult: Bool?
     let id: Int
+    let genreIDS: [Int]
     let title: String?
     let overview: String?
     let posterPath: String?
@@ -29,6 +30,7 @@ struct SearchDBModel: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case adult
         case id, title
+        case genreIDS = "genre_ids"
         case overview
         case posterPath = "poster_path"
         case popularity
@@ -54,10 +56,15 @@ struct SearchDBModel: Codable, Identifiable {
         firstAirDate?.extractYearFromDate() ?? "N/A"
     }
     
+    var genreNames: [String] {
+        genreIDS.map { Genre(rawValue: $0)?.genreName ?? "N/A"}
+    }
+    
     static var mock: SearchDBModel {
         SearchDBModel(
             adult: true,
             id: 1234,
+            genreIDS: [28],
             title: "The Dark Knight",
             overview: "opis filmu o batmanie",
             posterPath: Constants.mockImage,

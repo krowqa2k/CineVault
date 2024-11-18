@@ -15,6 +15,7 @@ struct MovieResults: Codable {
 struct MovieModel: Codable, Identifiable {
     let adult: Bool
     let id: Int
+    let genreIDS: [Int]
     let originalLanguage, originalTitle, overview: String
     let posterPath: String?
     let releaseDate, title: String
@@ -24,6 +25,7 @@ struct MovieModel: Codable, Identifiable {
     enum CodingKeys: String, CodingKey {
         case adult
         case id
+        case genreIDS = "genre_ids"
         case originalLanguage = "original_language"
         case originalTitle = "original_title"
         case overview
@@ -43,10 +45,15 @@ struct MovieModel: Codable, Identifiable {
         releaseDate.extractYearFromDate() ?? "N/A"
     }
     
+    var genreNames: [String] {
+        genreIDS.map { Genre(rawValue: $0)?.genreName ?? "N/A"}
+    }
+    
     static var mock: MovieModel {
         MovieModel(
             adult: false,
             id: 278,
+            genreIDS: [878,28,12],
             originalLanguage: "en",
             originalTitle: "The Shawshank Redemption",
             overview: "Imprisoned in the 1940s for the double murder of his wife and her lover, upstanding banker Andy Dufresne begins a new life at the Shawshank prison, where he puts his accounting skills to work for an amoral warden. During his long stretch in prison, Dufresne comes to be admired by the other inmates -- including an older prisoner named Red -- for his integrity and unquenchable sense of hope.",

@@ -22,9 +22,14 @@ struct MovieListCell: View {
                     .font(.headline)
                     .foregroundStyle(.white)
                     .multilineTextAlignment(.leading)
-                Text("Release date: \(movie.releaseDate)")
+                Text(movie.releaseYear)
                     .font(.system(size: 14))
                     .foregroundStyle(.gray)
+                
+                Text(movie.genreNames[0])
+                    .font(.subheadline)
+                    .foregroundStyle(.gray)
+                
                 HStack {
                     Image(systemName: "star.fill")
                         .font(.headline)

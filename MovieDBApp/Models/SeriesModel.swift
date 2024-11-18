@@ -22,7 +22,7 @@ struct SeriesResults: Codable {
 struct SeriesModel: Codable, Identifiable {
     let adult: Bool?
     let backdropPath: String?
-    let genreIDS: [Int]?
+    let genreIDS: [Int]
     let id: Int?
     let originCountry: [String]?
     let originalLanguage, originalName, overview: String?
@@ -56,6 +56,10 @@ struct SeriesModel: Codable, Identifiable {
     
     var firstAirYear: String {
         firstAirDate?.extractYearFromDate() ?? "N/A"
+    }
+    
+    var genreNames: [String] {
+        genreIDS.map { Genre(rawValue: $0)?.genreName ?? "N/A"}
     }
     
     static var mock: SeriesModel {

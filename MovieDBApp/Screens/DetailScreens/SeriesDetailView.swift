@@ -100,19 +100,37 @@ struct SeriesDetailView: View {
                 Spacer()
                 
                 HStack {
-                    Text("User reviews")
-                        .foregroundStyle(.white)
-                        .font(.subheadline)
                     Image(systemName: "star.fill")
-                        .font(.headline)
+                        .font(.subheadline)
                         .foregroundStyle(.yellow)
                     Text(String(format: "%.2f", series.voteAverage ?? 0))
                         .font(.headline)
                         .foregroundStyle(.yellow)
+                    Text("(\(series.voteCount ?? 0) votes)")
+                        .foregroundStyle(.white)
+                        .font(.footnote)
+                    Spacer()
                 }
                 .opacity(series.voteAverage != 0 ? 1:0)
             }
             .padding(.horizontal)
+            
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack {
+                    ForEach(series.genreNames, id: \.self) { genre in
+                        Text(genre)
+                            .font(.subheadline)
+                            .foregroundStyle(.white)
+                            .padding(6)
+                            .background(
+                                RoundedRectangle(cornerRadius: 12)
+                                    .foregroundStyle(.secondary)
+                            )
+                    }
+                }
+                .padding(.horizontal)
+                .padding(.bottom)
+            }
         }
         .frame(maxWidth: .infinity)
         .frame(maxHeight: 100)
