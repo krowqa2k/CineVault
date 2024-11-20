@@ -22,79 +22,16 @@ struct MovieDetailView: View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
-                ImageLoader(imageURL: imageName).ignoresSafeArea(edges: .top)
-                    .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
-                    .overlay (
-                        imageOverlay
-                        ,alignment: .bottom)
+                movieImage
                 
                 if movie.voteAverage != 0 {
-                    VStack(alignment: .leading, spacing: 12) {
-                        Text("Your Score:")
-                            .font(.title3)
-                            .fontWeight(.semibold)
-                            .foregroundStyle(.white.secondary)
-                        
-                        HStack {
-                            ForEach(1...10, id: \.self) { star in
-                                Image(systemName: star <= userRating ? "star.fill" : "star")
-                                    .font(.title2)
-                                    .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
-                                    .onTapGesture {
-                                        userRating = star
-                                        saveUserRating()
-                                    }
-                            }
-                        }
-                    }
-                    .padding([.bottom, .horizontal])
+                    userScore
                 }
                 
-                ScrollView(.vertical, showsIndicators: false) {
-                    Text(movie.overview)
-                        .font(.title3)
-                        .foregroundStyle(.gray)
-                        .multilineTextAlignment(.leading)
-                }
-                .padding(.horizontal)
+                movieDescription
             }
-            .overlay(
-                Circle()
-                    .frame(width: 40, height: 40)
-                    .foregroundStyle(.blackDB.opacity(0.8))
-                    .overlay(
-                        Image(systemName: "xmark")
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .foregroundStyle(.white)
-                    )
-                    .padding()
-                    .onTapGesture {
-                        dismiss()
-                    },alignment: .topLeading
-            )
-            .overlay(
-                Circle()
-                    .frame(width: 40, height: 40)
-                    .foregroundStyle(.blackDB.opacity(0.8))
-                    .overlay(
-                        Image(systemName: "heart.fill")
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .foregroundStyle(onClick ? .red : .white)
-                    )
-                    .padding()
-                    .onTapGesture {
-                        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
-                            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
-                            viewModel.removeFavorite(posterPath: movie.fullPosterPath)
-                        } else {
-                            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
-                            viewModel.addFavorite(posterPath: movie.fullPosterPath)
-                        }
-                        onClick.toggle()
-                    },alignment: .topTrailing
-            )
+            .overlay(dismissScreen, alignment: .topLeading)
+            .overlay(favoriteButton, alignment: .topTrailing)
         }
         .onAppear(perform: {
             updateOnClickState()
@@ -203,6 +140,83 @@ struct MovieDetailView: View {
         .background(
             LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
         )
+    }
+    
+    private var movieImage: some View {
+        ImageLoader(imageURL: imageName).ignoresSafeArea(edges: .top)
+            .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
+            .overlay (imageOverlay ,alignment: .bottom)
+    }
+    
+    private var userScore: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Your Score:")
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(.white.secondary)
+            
+            HStack {
+                ForEach(1...10, id: \.self) { star in
+                    Image(systemName: star <= userRating ? "star.fill" : "star")
+                        .font(.title2)
+                        .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
+                        .onTapGesture {
+                            userRating = star
+                            saveUserRating()
+                        }
+                }
+            }
+        }
+        .padding([.bottom, .horizontal])
+    }
+    
+    private var movieDescription: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            Text(movie.overview)
+                .font(.title3)
+                .foregroundStyle(.gray)
+                .multilineTextAlignment(.leading)
+        }
+        .padding(.horizontal)
+    }
+    
+    private var dismissScreen: some View {
+        Circle()
+            .frame(width: 40, height: 40)
+            .foregroundStyle(.blackDB.opacity(0.8))
+            .overlay(
+                Image(systemName: "xmark")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.white)
+            )
+            .padding()
+            .onTapGesture {
+                dismiss()
+            }
+    }
+    
+    private var favoriteButton: some View {
+        Circle()
+            .frame(width: 40, height: 40)
+            .foregroundStyle(.blackDB.opacity(0.8))
+            .overlay(
+                Image(systemName: "heart.fill")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .foregroundStyle(onClick ? .red : .white)
+            )
+            .padding()
+            .onTapGesture {
+                if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
+                    viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+                    viewModel.removeFavorite(posterPath: movie.fullPosterPath)
+                } else {
+                    viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+                    viewModel.addFavorite(posterPath: movie.fullPosterPath)
+                }
+                onClick.toggle()
+            }
     }
 }
 

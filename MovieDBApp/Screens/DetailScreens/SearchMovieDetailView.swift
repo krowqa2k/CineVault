@@ -20,101 +20,45 @@ struct SearchMovieDetailView: View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
-                ImageLoader(imageURL: imageName).ignoresSafeArea(edges: .top)
-                    .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
-                    .overlay (
-                        imageOverlay
-                        ,alignment: .bottom)
+                movieImage
                 
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Your Score:")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white.secondary)
-                    
-                    HStack {
-                        ForEach(1...10, id: \.self) { star in
-                            Image(systemName: star <= userRating ? "star.fill" : "star")
-                                .font(.title2)
-                                .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
-                                .onTapGesture { userRating = star }
-                        }
-                    }
-                }
-                .padding([.bottom, .horizontal])
+                userScore
                 
-                ScrollView(.vertical){
-                    Text(movie.overview ?? "No data :(")
-                        .font(.title3)
-                        .foregroundStyle(.gray)
-                        .padding(.horizontal)
-                        .multilineTextAlignment(.leading)
-                }
+                movieDescription
             }
-            .overlay(
-                Circle()
-                    .frame(width: 40, height: 40)
-                    .foregroundStyle(.blackDB.opacity(0.8))
-                    .overlay(
-                        Image(systemName: "xmark")
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .foregroundStyle(.white)
-                    )
-                    .padding()
-                    .onTapGesture {
-                        dismiss()
-                    },alignment: .topLeading
-            )
-            .overlay(
-                Circle()
-                    .frame(width: 40, height: 40)
-                    .foregroundStyle(.blackDB.opacity(0.8))
-                    .overlay(
-                        Image(systemName: "heart.fill")
-                            .font(.title3)
-                            .fontWeight(.medium)
-                            .foregroundStyle(onClick ? .red : .white)
-                    )
-                    .padding()
-                    .onTapGesture {
-                        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath){
-                            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
-                            viewModel.removeFavorite(posterPath: movie.fullPosterPath)
-                        } else {
-                            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
-                            viewModel.addFavorite(posterPath: movie.fullPosterPath)
-                        }
-                        onClick.toggle()
-                    },alignment: .topTrailing
-            )
+            .overlay(dismissButton, alignment: .topLeading)
+            .overlay(favoriteButton, alignment: .topTrailing)
         }
-        .onAppear(perform: {
+        .onAppear {
             updateOnClickState()
-        })
+        }
         .toolbar(.hidden, for: .navigationBar)
     }
+    
     private func updateOnClickState() {
         onClick = viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath)
     }
     
     private var imageOverlay: some View {
         VStack(alignment: .leading) {
-            Text(movie.adult ?? false ? "18+" : "")
-                .frame(width: 40, height: 40)
-                .font(.headline)
-                .foregroundStyle(.blackDB)
-                .background(movie.adult ?? false ? Color.red : .clear)
-                .cornerRadius(12)
-                .padding(.horizontal)
+            if let isAdult = movie.adult, isAdult {
+                Text("18+")
+                    .frame(width: 40, height: 40)
+                    .font(.headline)
+                    .foregroundStyle(.blackDB)
+                    .background(Color.red)
+                    .cornerRadius(12)
+                    .padding(.horizontal)
+            }
             
-            Text(movie.title ?? "")
+            Text(movie.title ?? "Unknown Title")
                 .font(.title)
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
                 .padding(.horizontal)
+            
             HStack(alignment: .bottom) {
-                Text("\(movie.firstAirYear)")
+                Text(movie.firstAirYear)
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundStyle(.gray)
@@ -129,11 +73,10 @@ struct SearchMovieDetailView: View {
                         .font(.headline)
                         .foregroundStyle(.yellow)
                     Text("(\(movie.voteCount ?? 0) votes)")
-                        .foregroundStyle(.white)
                         .font(.footnote)
-                    Spacer()
+                        .foregroundStyle(.white)
                 }
-                .opacity(movie.voteAverage != 0 ? 1:0)
+                .opacity(movie.voteAverage != 0 ? 1 : 0)
             }
             .padding(.horizontal)
             
@@ -161,9 +104,93 @@ struct SearchMovieDetailView: View {
             LinearGradient(colors: [Color.blackDB.opacity(0.001), Color.blackDB.opacity(1)], startPoint: .top, endPoint: .bottom)
         )
     }
+    
+    private var movieImage: some View {
+        ImageLoader(imageURL: imageName)
+            .ignoresSafeArea(edges: .top)
+            .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
+            .overlay(imageOverlay, alignment: .bottom)
+    }
+    
+    private var userScore: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Your Score:")
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(.white.secondary)
+            
+            HStack {
+                ForEach(1...10, id: \.self) { star in
+                    Image(systemName: star <= userRating ? "star.fill" : "star")
+                        .font(.title2)
+                        .foregroundStyle(LinearGradient(colors: [.white, .yellow, .orange], startPoint: .topTrailing, endPoint: .bottomLeading))
+                        .onTapGesture {
+                            userRating = star
+                        }
+                }
+            }
+        }
+        .padding([.bottom, .horizontal])
+    }
+    
+    private var movieDescription: some View {
+        ScrollView(.vertical, showsIndicators: false) {
+            Text(movie.overview ?? "No data :(")
+                .font(.title3)
+                .foregroundStyle(.gray)
+                .multilineTextAlignment(.leading)
+        }
+        .padding(.horizontal)
+    }
+    
+    private var dismissButton: some View {
+        Circle()
+            .frame(width: 40, height: 40)
+            .foregroundStyle(.blackDB.opacity(0.8))
+            .overlay(
+                Image(systemName: "xmark")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .foregroundStyle(.white)
+            )
+            .padding()
+            .onTapGesture {
+                dismiss()
+            }
+    }
+    
+    private var favoriteButton: some View {
+        Circle()
+            .frame(width: 40, height: 40)
+            .foregroundStyle(.blackDB.opacity(0.8))
+            .overlay(
+                Image(systemName: "heart.fill")
+                    .font(.title3)
+                    .fontWeight(.medium)
+                    .foregroundStyle(onClick ? .red : .white)
+            )
+            .padding()
+            .onTapGesture {
+                toggleFavorite()
+            }
+    }
+    
+    private func toggleFavorite() {
+        if viewModel.favoriteMoviesAndSeries.contains(movie.fullPosterPath) {
+            viewModel.favoriteMoviesAndSeries.remove(movie.fullPosterPath)
+            viewModel.removeFavorite(posterPath: movie.fullPosterPath)
+        } else {
+            viewModel.favoriteMoviesAndSeries.insert(movie.fullPosterPath)
+            viewModel.addFavorite(posterPath: movie.fullPosterPath)
+        }
+        onClick.toggle()
+    }
 }
 
 #Preview {
     SearchMovieDetailView()
         .environmentObject(MovieDBViewModel())
 }
+
+
+

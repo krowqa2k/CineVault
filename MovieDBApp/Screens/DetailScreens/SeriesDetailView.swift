@@ -22,33 +22,14 @@ struct SeriesDetailView: View {
         ZStack {
             Color.blackDB.ignoresSafeArea()
             VStack(alignment: .leading, spacing: 0) {
-                ImageLoader(imageURL: imageName).ignoresSafeArea(edges: .top)
-                    .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
-                    .overlay (
-                        imageOverlay
-                        ,alignment: .bottom
-                    )
+                seriesImage
+                    .overlay(imageOverlay, alignment: .bottom)
                 
-                VStack(alignment: .leading, spacing: 12) {
-                    Text("Your Score:")
-                        .font(.title3)
-                        .fontWeight(.semibold)
-                        .foregroundStyle(.white.secondary)
-                    
-                    HStack {
-                        ForEach(1...10, id: \.self) { star in
-                            Image(systemName: star <= userRating ? "star.fill" : "star")
-                                .font(.title2)
-                                .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
-                                .onTapGesture {
-                                    userRating = star
-                                    saveUserRating()
-                                }
-                        }
-                    }
+                if (series.voteAverage != nil) {
+                    userScore
+                        .padding(.bottom)
                 }
-                .padding([.bottom, .horizontal])
-                
+
                 ScrollView(.vertical){
                     Text(series.overview ?? "")
                         .font(.title3)
@@ -57,14 +38,8 @@ struct SeriesDetailView: View {
                         .multilineTextAlignment(.leading)
                 }
             }
-            .overlay(
-                dismissButton
-                ,alignment: .topLeading
-            )
-            .overlay(
-                addToFavoritesButton
-                ,alignment: .topTrailing
-            )
+            .overlay(dismissButton, alignment: .topLeading)
+            .overlay(addToFavoritesButton, alignment: .topTrailing)
         }
         .onAppear(perform: {
             updateOnClickState()
@@ -214,6 +189,33 @@ struct SeriesDetailView: View {
         } catch {
             print("Error saving user rating: \(error.localizedDescription)")
         }
+    }
+    
+    private var seriesImage: some View {
+        ImageLoader(imageURL: imageName).ignoresSafeArea(edges: .top)
+            .frame(height: UIScreen.main.bounds.height / 1.7, alignment: .top)
+    }
+    
+    private var userScore: some View {
+        VStack(alignment: .leading, spacing: 12) {
+            Text("Your Score:")
+                .font(.title3)
+                .fontWeight(.semibold)
+                .foregroundStyle(.white.secondary)
+            
+            HStack {
+                ForEach(1...10, id: \.self) { star in
+                    Image(systemName: star <= userRating ? "star.fill" : "star")
+                        .font(.title2)
+                        .foregroundStyle(LinearGradient(colors: [.white,.yellow,.orange], startPoint: .topTrailing, endPoint: .bottomLeading))
+                        .onTapGesture {
+                            userRating = star
+                            saveUserRating()
+                        }
+                }
+            }
+        }
+        .padding([.bottom, .horizontal])
     }
 }
 
