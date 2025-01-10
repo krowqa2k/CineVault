@@ -24,13 +24,13 @@ struct PopularMovieView: View {
                             NavigationLink(destination: MovieDetailView(imageName: viewModel.popular[index].fullPosterPath, movie: viewModel.popular[index])) {
                                 MovieHighlightCell(movie: viewModel.popular[index], imageURL: viewModel.popular[index].fullPosterPath)
                                     .frame(width: screenWidth, height: 460)
-                                    .id(index) 
+                                    .id(index)
                             }
                         }
                     }
                 }
                 .scrollTargetBehavior(.paging)
-                .frame(height: 440)
+                .scrollTargetBehavior(.viewAligned)
                 .onAppear {
                     startAutoScroll(with: proxy)
                 }

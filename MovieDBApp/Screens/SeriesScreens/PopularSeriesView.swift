@@ -30,7 +30,7 @@ struct PopularSeriesView: View {
                     }
                 }
                 .scrollTargetBehavior(.paging)
-                .frame(height: 440)
+                .scrollTargetBehavior(.viewAligned)
                 .onAppear {
                     startAutoScroll(with: proxy)
                 }
