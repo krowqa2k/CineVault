@@ -20,11 +20,11 @@ struct MainView: View {
                 SplashLaunchScreen()
                     .transition(.opacity)
                     .zIndex(1)
+            } else {
+                mainContent
+                    .opacity(isShowingSplash ? 0 : 1)
+                    .animation(.easeIn(duration: 0.2), value: isShowingSplash)
             }
-            
-            mainContent
-                .opacity(isShowingSplash ? 0 : 1)
-                .animation(.easeIn(duration: 0.2), value: isShowingSplash)
         }
         .onAppear {
             DispatchQueue.main.asyncAfter(deadline: .now() + 5) { 
