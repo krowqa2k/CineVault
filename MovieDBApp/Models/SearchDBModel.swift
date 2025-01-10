@@ -52,8 +52,18 @@ struct SearchDBModel: Codable, Identifiable {
         }
     }
     
-    var firstAirYear: String {
-        firstAirDate?.extractYearFromDate() ?? "N/A"
+    var titleName: String {
+        if let title = title {
+            return title
+        } else if let name = name {
+            return name
+        } else {
+            return "Unknown Title"
+        }
+    }
+    
+    var releaseYear: String {
+        releaseDate?.extractYearFromDate() ?? firstAirDate?.extractYearFromDate() ?? "N/A"
     }
     
     var genreNames: [String] {
@@ -75,7 +85,7 @@ struct SearchDBModel: Codable, Identifiable {
             voteCount: 25215,
             firstAirDate: "2008/09/10",
             profilePath: Constants.mockImage,
-            name: "The Dark Knight "
+            name: "The Dark Knight"
         )
     }
 }

@@ -51,19 +51,17 @@ struct SearchMovieDetailView: View {
                     .padding(.horizontal)
             }
             
-            Text(movie.title ?? "Unknown Title")
+            Text(movie.titleName)
                 .font(.title)
                 .fontWeight(.medium)
                 .foregroundStyle(.white)
                 .padding(.horizontal)
             
             HStack(alignment: .bottom) {
-                Text(movie.firstAirYear)
+                Text(movie.releaseYear)
                     .font(.subheadline)
                     .fontWeight(.medium)
                     .foregroundStyle(.gray)
-                
-                Spacer()
                 
                 HStack {
                     Image(systemName: "star.fill")
