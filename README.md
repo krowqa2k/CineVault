@@ -1,3 +1,6 @@
+# DO NOT clone this repository.
+This is the original repository for CineVault but it's missing one crucial file and the code won't compile. Please use the repository from my pinned repos. 
+
 🍿 CineVault
 
 It's my first Big SwiftUI independent project which taught me the basics of SwiftUI. I focused on proccesing the API calls and format the data properly into movies/series/actors. 
